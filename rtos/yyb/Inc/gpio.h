@@ -1,0 +1,3 @@
+/* BMI160 CS Pin */
+#define GPIO_PORT_BMI160_CS 		GPIOA
+#define GPIO_PIN_BMI160_CS 			GPIO_PIN_4
