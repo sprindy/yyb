@@ -132,6 +132,12 @@
           <name>$PROJ_DIR$\..\Drivers\BSP\DISPLAY\display.c</name>
         </file>
       </group>
+      <group>
+        <name>flash</name>
+        <file>
+          <name>$PROJ_DIR$\..\Drivers\BSP\flash\flash_drv.c</name>
+        </file>
+      </group>
     </group>
     <group>
       <name>CMSIS</name>

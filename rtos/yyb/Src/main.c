@@ -46,6 +46,7 @@
 #include "cmsis_os.h"
 #include "usb_device.h"
 #include "gpio.h"
+#include "flash_drv.h"
 
 /* USER CODE BEGIN Includes */
 
@@ -100,6 +101,7 @@ int main(void)
   SystemClock_Config();
 
   /* Initialize all configured peripherals */
+  flash_init();
   MX_GPIO_Init();
   MX_CRC_Init();
   MX_USART2_UART_Init();
