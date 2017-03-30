@@ -1,0 +1,8 @@
+# rtos
+rtos/yyb/G*
+rtos/yyb/EWARM/settings/*
+rtos/yyb/EWARM/mvr_controller.dep
+rtos/yyb/EWARM/mvr_controller/*
+rtos/yyb/EWARM/mvr_controller_debug/*
+rtos/yyb/EWARM/EW*.tmp
+
