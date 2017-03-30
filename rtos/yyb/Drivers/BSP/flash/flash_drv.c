@@ -3,7 +3,7 @@
 #include "stm32f4xx_hal_flash.h"
 #include "stm32f4xx_hal_flash_ex.h"
 #include "flash_drv.h"
-#include "htc_memory_define.h"
+#include "flash_define.h"
 #include "FreeRTOS.h"
 #include "semphr.h"
 #include "component.h"
