@@ -1,0 +1,32 @@
+Protel Design System Design Rule Check
+PCB File : Documents\Copy of PCB2.PCB
+Date     : 2-May-2014 
+Time     : 18:04:17
+
+Processing Rule : Clearance Constraint (Gap=8mil) (Disabled)(On the board ),(On the board )
+Rule Violations :0
+
+Processing Rule : Hole Size Constraint (Min=1mil) (Max=100mil) (On the board )
+Rule Violations :0
+
+Processing Rule : Width Constraint (Min=1mil) (Max=20mil) (Prefered=8mil) (On the board )
+Rule Violations :0
+
+Processing Rule : Broken-Net Constraint ( (On the board ) )
+Rule Violations :0
+
+Processing Rule : Short-Circuit Constraint (Allowed=Not Allowed) (On the board ),(On the board )
+Rule Violations :0
+
+Processing Rule : Clearance Constraint (Gap=4mil) (On the board ),(On the board )
+Rule Violations :0
+
+Processing Rule : Clearance Constraint (Gap=5mil) (Disabled)(On the board ),(On the board )
+Rule Violations :0
+
+Processing Rule : Clearance Constraint (Gap=6mil) (Disabled)(On the board ),(On the board )
+Rule Violations :0
+
+
+Violations Detected : 0
+Time Elapsed        : 00:00:00
