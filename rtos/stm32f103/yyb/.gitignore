@@ -1,0 +1,8 @@
+# rtos
+./G*
+./EWARM/settings/*
+./EWARM/yyb.dep
+./EWARM/yyb/*
+./EWARM/yyb_debug/*
+./EWARM/EW*.tmp
+
