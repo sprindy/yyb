@@ -102,7 +102,7 @@ int main(void)
   MX_USART2_UART_Init();
 
   /* USER CODE BEGIN 2 */
-  display_one_line(0xffffffff);
+  display_init();
   /* USER CODE END 2 */
 
   /* USER CODE BEGIN RTOS_MUTEX */

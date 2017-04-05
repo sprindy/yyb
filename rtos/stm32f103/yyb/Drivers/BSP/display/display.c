@@ -1,5 +1,34 @@
 #include "stm32f1xx_hal.h"
+#include "cmsis_os.h"
+#include "stdio.h"
 #include "display.h"
+
+osThreadId displayTaskHandle;
+
+void display_thread_work(void const * argument)
+{
+	while(1)
+	{
+		/* printf("turn all leds on\r\n"); */
+		display_one_line(0xffffffff);
+		osDelay(1000);
+		/* printf("turn all leds off\r\n"); */
+		display_one_line(0x0);
+		osDelay(1000);
+	}
+}
+osStatus display_init(void)
+{
+	osStatus ret = osOK;
+
+	osThreadDef(displayTask, display_thread_work, osPriorityNormal, 0, 128);
+	displayTaskHandle = osThreadCreate(osThread(displayTask), NULL);
+
+	if(displayTaskHandle == NULL)
+		ret = osErrorResource;
+
+	return ret;
+}
 
 /* 1: led on */
 /* 0: led off */

@@ -1,8 +1,13 @@
 # rtos
-./G*
-./EWARM/settings/*
+G*
+gtags_files
+./EWARM/settings*
 ./EWARM/yyb.dep
 ./EWARM/yyb/*
-./EWARM/yyb_debug/*
+./EWARM/yyb_debug*
 ./EWARM/EW*.tmp
+../../../.DS_Store
+../../../._.DS_Store
+../../../hw/.DS_Store
+../../../hw/._.DS_Store
 
