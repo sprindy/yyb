@@ -2,6 +2,7 @@
 #include "cmsis_os.h"
 #include "stdio.h"
 #include "display.h"
+#include "gpio.h"
 
 osThreadId displayTaskHandle;
 
@@ -9,14 +10,16 @@ void display_thread_work(void const * argument)
 {
 	while(1)
 	{
-		/* printf("turn all leds on\r\n"); */
+		printf("turn all leds on\r\n");
 		display_one_line(0xffffffff);
 		osDelay(1000);
-		/* printf("turn all leds off\r\n"); */
+		printf("turn all leds off\r\n");
 		display_one_line(0x0);
 		osDelay(1000);
+		HAL_GPIO_WritePin(GPIO_PORT_POWER_LANCH, GPIO_PIN_POWER_LANCH, GPIO_PIN_RESET);
 	}
 }
+
 osStatus display_init(void)
 {
 	osStatus ret = osOK;

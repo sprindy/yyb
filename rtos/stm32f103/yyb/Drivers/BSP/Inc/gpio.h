@@ -8,9 +8,9 @@
 
 /* power pin */
 #define GPIO_PORT_POWER_IN 			GPIOA
-#define GPIO_GIN_POWER_IN 			GPIO_PIN_8
+#define GPIO_PIN_POWER_IN 			GPIO_PIN_8
 #define GPIO_PORT_POWER_LANCH 		GPIOD
-#define GPIO_GIN_POWER_LANCH		GPIO_PIN_2
+#define GPIO_PIN_POWER_LANCH		GPIO_PIN_2
 
 /* usart pin */
 #define GPIO_PORT_USART_TX 			GPIOA
