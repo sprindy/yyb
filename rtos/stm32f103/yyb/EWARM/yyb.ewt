@@ -106,6 +106,9 @@
         <name>$PROJ_DIR$\..\Src\myprintf.c</name>
       </file>
       <file>
+        <name>$PROJ_DIR$\..\Src\sensor_task.c</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$\..\Src\stm32f1xx_hal_msp.c</name>
       </file>
       <file>
@@ -130,9 +133,57 @@
     <group>
       <name>BSP</name>
       <group>
+        <name>bmi160</name>
+        <file>
+          <name>$PROJ_DIR$\..\Drivers\BSP\bmi160\BMI160_ACC_GYRO_Driver.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\..\Drivers\BSP\bmi160\BMI160_ACC_GYRO_Driver.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\..\Drivers\BSP\bmi160\BMI160_ACC_GYRO_Driver_Api.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\..\Drivers\BSP\bmi160\BMI160_ACC_GYRO_Driver_Api.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\..\Drivers\BSP\bmi160\BMI160_ACC_GYRO_Driver_HL.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\..\Drivers\BSP\bmi160\BMI160_ACC_GYRO_Driver_HL.h</name>
+        </file>
+      </group>
+      <group>
         <name>display</name>
         <file>
           <name>$PROJ_DIR$\..\Drivers\BSP\display\display.c</name>
+        </file>
+      </group>
+      <group>
+        <name>flash</name>
+        <file>
+          <name>$PROJ_DIR$\..\Drivers\BSP\flash\flash_define.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\..\Drivers\BSP\flash\flash_drv.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\..\Drivers\BSP\flash\flash_drv.h</name>
+        </file>
+      </group>
+      <group>
+        <name>gpio</name>
+        <file>
+          <name>$PROJ_DIR$\..\Drivers\BSP\gpio\gpio.c</name>
+        </file>
+      </group>
+      <group>
+        <name>X_NUCLEO_IKS01A1</name>
+        <file>
+          <name>$PROJ_DIR$\..\Drivers\BSP\X_NUCLEO_IKS01A1\x_nucleo_iks01a1_accelero.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\..\Drivers\BSP\X_NUCLEO_IKS01A1\x_nucleo_iks01a1_accelero.h</name>
         </file>
       </group>
     </group>
@@ -233,6 +284,12 @@
       </file>
       <file>
         <name>$PROJ_DIR$\..\Middlewares\Third_Party\FreeRTOS\Source\timers.c</name>
+      </file>
+    </group>
+    <group>
+      <name>shell</name>
+      <file>
+        <name>$PROJ_DIR$\..\Middlewares\shell\command.c</name>
       </file>
     </group>
     <group>

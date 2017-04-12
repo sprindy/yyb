@@ -94,3 +94,6 @@
 #define GPIO_PIN_LED_D30			GPIO_PIN_14
 #define GPIO_PORT_LED_D31 			GPIOB
 #define GPIO_PIN_LED_D31 			GPIO_PIN_15
+
+void gpio_init(void);
+void gpio_dump_status(void);

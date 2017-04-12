@@ -31,7 +31,7 @@ void display_thread_work(void const * argument)
 	while(1)
 	{
 		int data_line = data[i*4]<<24 | data[i*4+1]<<16 | data[i*4+2]<<8 | data[i*4+3];
-		printf("turn all leds on: index(%d), 0x%x\r\n", i, data_line);
+		/* printf("turn all leds on: index(%d), 0x%x\r\n", i, data_line); */
 		display_one_line(data_line);
 		osDelay(10);
 		if(++i == 32) {
