@@ -1,0 +1,26 @@
+var struct_n_r_f___f_i_c_r___type =
+[
+    [ "RESERVED0", "struct_n_r_f___f_i_c_r___type.html#a322a9595eaa0024bf723fea012f8070c", null ],
+    [ "CODEPAGESIZE", "struct_n_r_f___f_i_c_r___type.html#a8568cfaadc1fb8d029c06a64b7251abc", null ],
+    [ "CODESIZE", "struct_n_r_f___f_i_c_r___type.html#a98b7025d3965616dcccf2046c59f654c", null ],
+    [ "RESERVED1", "struct_n_r_f___f_i_c_r___type.html#aa7185a3f25675a1ce6870a3bcc9740b9", null ],
+    [ "CLENR0", "struct_n_r_f___f_i_c_r___type.html#afefbaf7b0cd383ad32075f66a3e1bd49", null ],
+    [ "PPFC", "struct_n_r_f___f_i_c_r___type.html#aa06aaa1dcedc6827280b29495127ae94", null ],
+    [ "RESERVED2", "struct_n_r_f___f_i_c_r___type.html#a13d8c36a296a876371d8e463cfce0bc5", null ],
+    [ "NUMRAMBLOCK", "struct_n_r_f___f_i_c_r___type.html#a82eaf7d84a29c741c919b485028868f1", null ],
+    [ "SIZERAMBLOCK", "struct_n_r_f___f_i_c_r___type.html#a36c31d68d1a865a440b0e1c0ccb8ad2c", null ],
+    [ "SIZERAMBLOCKS", "struct_n_r_f___f_i_c_r___type.html#acdf43eeb042ea857572db86a109ef3d3", null ],
+    [ "RESERVED3", "struct_n_r_f___f_i_c_r___type.html#affbb945c0b0debfaaf7b8cad6694c8d8", null ],
+    [ "CONFIGID", "struct_n_r_f___f_i_c_r___type.html#adb6ddafead5b97585f6a90ae4fff97b6", null ],
+    [ "DEVICEID", "struct_n_r_f___f_i_c_r___type.html#abaf57fc4f87a6e79cb3893f5bfa301c3", null ],
+    [ "RESERVED4", "struct_n_r_f___f_i_c_r___type.html#a5be6ee872a56ca3d4796d6bb287ec307", null ],
+    [ "ER", "struct_n_r_f___f_i_c_r___type.html#aefaeee6775c360e422030bb25646ae25", null ],
+    [ "IR", "struct_n_r_f___f_i_c_r___type.html#ab958877936d5891011e7ee67a515c2b3", null ],
+    [ "DEVICEADDRTYPE", "struct_n_r_f___f_i_c_r___type.html#aaa5836cad84af2919e67eb26ca0a46c5", null ],
+    [ "DEVICEADDR", "struct_n_r_f___f_i_c_r___type.html#af92e2e53bbb68ae79a1ef346ba0d37a3", null ],
+    [ "OVERRIDEEN", "struct_n_r_f___f_i_c_r___type.html#a2222b330b12ae070a55d17fd61457a53", null ],
+    [ "NRF_1MBIT", "struct_n_r_f___f_i_c_r___type.html#a53399db45749de5a00b5d2f809ab18fa", null ],
+    [ "RESERVED5", "struct_n_r_f___f_i_c_r___type.html#a98b3dcad7af79620f64458827a6f68a9", null ],
+    [ "BLE_1MBIT", "struct_n_r_f___f_i_c_r___type.html#a8215f82fb0310edd7c29d4aadc44b674", null ],
+    [ "INFO", "struct_n_r_f___f_i_c_r___type.html#ae96d2f3932398c9835d460921804bf4e", null ]
+];

@@ -1,0 +1,83 @@
+#projectname
+{
+	font: 300% Tahoma, Arial,sans-serif;
+	margin: 0px;
+	padding: 2px 0px;
+}
+
+
+/* Fixed width contents area */
+
+body {
+        background-color: #d1d1d1;
+        color: #444;
+        margin: 0;
+}
+
+div.header {
+		width: 960px;
+		background-color: #FFF;
+		border-bottom: 1px solid #D5D5D5;
+		margin-top: 10px;
+		margin-left: auto;
+		margin-right: auto;
+		padding-left: 12px;
+		padding-right:12px;
+		border-top-right-radius: 8px;
+		border-top-left-radius: 8px;
+		background-image: none;
+		}
+		
+div.headertitle {
+		font-size: 20px;
+		padding-left: 0px;
+		
+		}
+		
+#titlearea {
+        background-color: #FFF;
+		border-bottom: none;
+		padding-bottom: 5px;
+}
+
+div.contents {
+        margin-top: 0px;
+		margin-bottom: 10px;
+        padding: 12px;
+        margin-left: auto;
+        margin-right: auto;
+        width: 960px;
+		background-color: #FFF;
+        border-bottom-left-radius: 8px;
+		border-bottom-right-radius: 8px;
+		min-height: 750px;
+}
+
+hr.footer {
+        display: none;
+}
+
+.footer {
+        background-color: #d1d1d1;
+}
+
+
+/* Table attributes */
+
+table.doxtable {
+		margin-left: auto;
+		margin-right: auto;
+		margin-top: 15px;
+        margin-bottom: 10px;
+		font-size: 13px;
+}
+/* Image and table caption */
+
+.caption {
+		color: #444;
+		font-weight: 600;
+		font-size: 13px;
+		
+		
+}
+

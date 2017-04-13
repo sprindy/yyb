@@ -1,0 +1,27 @@
+var struct_n_r_f___l_p_c_o_m_p___type =
+[
+    [ "TASKS_START", "struct_n_r_f___l_p_c_o_m_p___type.html#a484680fd136474753ded00b41638afa7", null ],
+    [ "TASKS_STOP", "struct_n_r_f___l_p_c_o_m_p___type.html#af6d48780485dfbe3fe1c23e113d7c9d9", null ],
+    [ "TASKS_SAMPLE", "struct_n_r_f___l_p_c_o_m_p___type.html#a5840e0816951f4c4c267f10d4812950b", null ],
+    [ "RESERVED0", "struct_n_r_f___l_p_c_o_m_p___type.html#a00034f4f77ea4bf0d3b00322e81ec99d", null ],
+    [ "EVENTS_READY", "struct_n_r_f___l_p_c_o_m_p___type.html#a84d5880ee14c8404e01e3890b11b2f9a", null ],
+    [ "EVENTS_DOWN", "struct_n_r_f___l_p_c_o_m_p___type.html#a199bfb920dba6482b0ac45168eb91f9e", null ],
+    [ "EVENTS_UP", "struct_n_r_f___l_p_c_o_m_p___type.html#af81b8a248deb0be0ede45e7822f84f79", null ],
+    [ "EVENTS_CROSS", "struct_n_r_f___l_p_c_o_m_p___type.html#a99fe3f071dcf24fe266dd2f33419c7a3", null ],
+    [ "RESERVED1", "struct_n_r_f___l_p_c_o_m_p___type.html#a5e2b427dabf6be7a82dff60dca9a9660", null ],
+    [ "SHORTS", "struct_n_r_f___l_p_c_o_m_p___type.html#aa0317428c0f247295dd5fab2a0a972e0", null ],
+    [ "RESERVED2", "struct_n_r_f___l_p_c_o_m_p___type.html#aafefdba414fdac79b27311317c813974", null ],
+    [ "INTENSET", "struct_n_r_f___l_p_c_o_m_p___type.html#a9e21fffaac207a1401a76895b280830c", null ],
+    [ "INTENCLR", "struct_n_r_f___l_p_c_o_m_p___type.html#a5ae8ebc8d7ef49fbff088b43ff8d9c26", null ],
+    [ "RESERVED3", "struct_n_r_f___l_p_c_o_m_p___type.html#a780b89dac9fc479b2b0b1c155e745182", null ],
+    [ "RESULT", "struct_n_r_f___l_p_c_o_m_p___type.html#a2aae35ebfb86de1c9a55f7efd55a0662", null ],
+    [ "RESERVED4", "struct_n_r_f___l_p_c_o_m_p___type.html#ade4eef71cabe4291252ee8d1c82ca246", null ],
+    [ "ENABLE", "struct_n_r_f___l_p_c_o_m_p___type.html#afe267161c16c90517765c6b2dc5cf95c", null ],
+    [ "PSEL", "struct_n_r_f___l_p_c_o_m_p___type.html#ae6e883569035537d1467129b03ef8009", null ],
+    [ "REFSEL", "struct_n_r_f___l_p_c_o_m_p___type.html#abddf69c750017f6deef160e03cf784d4", null ],
+    [ "EXTREFSEL", "struct_n_r_f___l_p_c_o_m_p___type.html#a88dbc8a48e14b7825c1842ef1d7319a9", null ],
+    [ "RESERVED5", "struct_n_r_f___l_p_c_o_m_p___type.html#af08e1963a14c30432d81c0944677b639", null ],
+    [ "ANADETECT", "struct_n_r_f___l_p_c_o_m_p___type.html#a8ab1c75f9014c645b4ba9953f4cc2c67", null ],
+    [ "RESERVED6", "struct_n_r_f___l_p_c_o_m_p___type.html#a0169c36dc57cc4bfb82e2b355c77dc4e", null ],
+    [ "POWER", "struct_n_r_f___l_p_c_o_m_p___type.html#a65bff76f3af24c37708a1006d54720c7", null ]
+];

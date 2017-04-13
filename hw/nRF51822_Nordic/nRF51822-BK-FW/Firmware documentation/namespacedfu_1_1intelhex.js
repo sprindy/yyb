@@ -1,0 +1,28 @@
+var namespacedfu_1_1intelhex =
+[
+    [ "_DeprecatedParam", "classdfu_1_1intelhex_1_1___deprecated_param.html", null ],
+    [ "IntelHex", "classdfu_1_1intelhex_1_1_intel_hex.html", "classdfu_1_1intelhex_1_1_intel_hex" ],
+    [ "IntelHex16bit", "classdfu_1_1intelhex_1_1_intel_hex16bit.html", "classdfu_1_1intelhex_1_1_intel_hex16bit" ],
+    [ "Record", "classdfu_1_1intelhex_1_1_record.html", "classdfu_1_1intelhex_1_1_record" ],
+    [ "_BadFileNotation", "classdfu_1_1intelhex_1_1___bad_file_notation.html", null ],
+    [ "IntelHexError", "classdfu_1_1intelhex_1_1_intel_hex_error.html", "classdfu_1_1intelhex_1_1_intel_hex_error" ],
+    [ "_EndOfFile", "classdfu_1_1intelhex_1_1___end_of_file.html", "classdfu_1_1intelhex_1_1___end_of_file" ],
+    [ "HexReaderError", "classdfu_1_1intelhex_1_1_hex_reader_error.html", "classdfu_1_1intelhex_1_1_hex_reader_error" ],
+    [ "AddressOverlapError", "classdfu_1_1intelhex_1_1_address_overlap_error.html", "classdfu_1_1intelhex_1_1_address_overlap_error" ],
+    [ "HexRecordError", "classdfu_1_1intelhex_1_1_hex_record_error.html", "classdfu_1_1intelhex_1_1_hex_record_error" ],
+    [ "RecordLengthError", "classdfu_1_1intelhex_1_1_record_length_error.html", "classdfu_1_1intelhex_1_1_record_length_error" ],
+    [ "RecordTypeError", "classdfu_1_1intelhex_1_1_record_type_error.html", "classdfu_1_1intelhex_1_1_record_type_error" ],
+    [ "RecordChecksumError", "classdfu_1_1intelhex_1_1_record_checksum_error.html", "classdfu_1_1intelhex_1_1_record_checksum_error" ],
+    [ "EOFRecordError", "classdfu_1_1intelhex_1_1_e_o_f_record_error.html", "classdfu_1_1intelhex_1_1_e_o_f_record_error" ],
+    [ "ExtendedAddressRecordError", "classdfu_1_1intelhex_1_1_extended_address_record_error.html", "classdfu_1_1intelhex_1_1_extended_address_record_error" ],
+    [ "ExtendedSegmentAddressRecordError", "classdfu_1_1intelhex_1_1_extended_segment_address_record_error.html", "classdfu_1_1intelhex_1_1_extended_segment_address_record_error" ],
+    [ "ExtendedLinearAddressRecordError", "classdfu_1_1intelhex_1_1_extended_linear_address_record_error.html", "classdfu_1_1intelhex_1_1_extended_linear_address_record_error" ],
+    [ "StartAddressRecordError", "classdfu_1_1intelhex_1_1_start_address_record_error.html", "classdfu_1_1intelhex_1_1_start_address_record_error" ],
+    [ "StartSegmentAddressRecordError", "classdfu_1_1intelhex_1_1_start_segment_address_record_error.html", "classdfu_1_1intelhex_1_1_start_segment_address_record_error" ],
+    [ "StartLinearAddressRecordError", "classdfu_1_1intelhex_1_1_start_linear_address_record_error.html", "classdfu_1_1intelhex_1_1_start_linear_address_record_error" ],
+    [ "DuplicateStartAddressRecordError", "classdfu_1_1intelhex_1_1_duplicate_start_address_record_error.html", "classdfu_1_1intelhex_1_1_duplicate_start_address_record_error" ],
+    [ "InvalidStartAddressValueError", "classdfu_1_1intelhex_1_1_invalid_start_address_value_error.html", "classdfu_1_1intelhex_1_1_invalid_start_address_value_error" ],
+    [ "NotEnoughDataError", "classdfu_1_1intelhex_1_1_not_enough_data_error.html", "classdfu_1_1intelhex_1_1_not_enough_data_error" ],
+    [ "BadAccess16bit", "classdfu_1_1intelhex_1_1_bad_access16bit.html", "classdfu_1_1intelhex_1_1_bad_access16bit" ],
+    [ "EmptyIntelHexError", "classdfu_1_1intelhex_1_1_empty_intel_hex_error.html", "classdfu_1_1intelhex_1_1_empty_intel_hex_error" ]
+];

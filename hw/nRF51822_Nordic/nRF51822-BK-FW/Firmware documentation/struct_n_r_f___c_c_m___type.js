@@ -1,0 +1,26 @@
+var struct_n_r_f___c_c_m___type =
+[
+    [ "TASKS_KSGEN", "struct_n_r_f___c_c_m___type.html#a78bf0b3bac8790050e61d165568477c9", null ],
+    [ "TASKS_CRYPT", "struct_n_r_f___c_c_m___type.html#a08a4c95956bf8797b803a1c6bb6f2231", null ],
+    [ "TASKS_STOP", "struct_n_r_f___c_c_m___type.html#af6d48780485dfbe3fe1c23e113d7c9d9", null ],
+    [ "RESERVED0", "struct_n_r_f___c_c_m___type.html#a00034f4f77ea4bf0d3b00322e81ec99d", null ],
+    [ "EVENTS_ENDKSGEN", "struct_n_r_f___c_c_m___type.html#a972ad4a45612aea015147f9701b5a562", null ],
+    [ "EVENTS_ENDCRYPT", "struct_n_r_f___c_c_m___type.html#a80d9acf4cba69c797861724ba505e51f", null ],
+    [ "EVENTS_ERROR", "struct_n_r_f___c_c_m___type.html#ab13d007fdedda6866353f0288b65e813", null ],
+    [ "RESERVED1", "struct_n_r_f___c_c_m___type.html#ada8e00c784644d932c0ecc280a9bcf16", null ],
+    [ "SHORTS", "struct_n_r_f___c_c_m___type.html#aa0317428c0f247295dd5fab2a0a972e0", null ],
+    [ "RESERVED2", "struct_n_r_f___c_c_m___type.html#aafefdba414fdac79b27311317c813974", null ],
+    [ "INTENSET", "struct_n_r_f___c_c_m___type.html#a9e21fffaac207a1401a76895b280830c", null ],
+    [ "INTENCLR", "struct_n_r_f___c_c_m___type.html#a5ae8ebc8d7ef49fbff088b43ff8d9c26", null ],
+    [ "RESERVED3", "struct_n_r_f___c_c_m___type.html#a780b89dac9fc479b2b0b1c155e745182", null ],
+    [ "MICSTATUS", "struct_n_r_f___c_c_m___type.html#ac51309da4e18826c7e86aa8f99020069", null ],
+    [ "RESERVED4", "struct_n_r_f___c_c_m___type.html#ade4eef71cabe4291252ee8d1c82ca246", null ],
+    [ "ENABLE", "struct_n_r_f___c_c_m___type.html#afe267161c16c90517765c6b2dc5cf95c", null ],
+    [ "MODE", "struct_n_r_f___c_c_m___type.html#a85444f56cd69d2ea9b5f4bfd5a65bd51", null ],
+    [ "CNFPTR", "struct_n_r_f___c_c_m___type.html#a1208b6e51f30ca39feaf641c33bafb7a", null ],
+    [ "INPTR", "struct_n_r_f___c_c_m___type.html#a48d4420752333f4f1046fed7607d81fd", null ],
+    [ "OUTPTR", "struct_n_r_f___c_c_m___type.html#acea19c6e546edde71ab9a6f8584e7b9d", null ],
+    [ "SCRATCHPTR", "struct_n_r_f___c_c_m___type.html#a964a2ca1853b060dd60842970db4797c", null ],
+    [ "RESERVED5", "struct_n_r_f___c_c_m___type.html#a0258fdab8004b73e6945edf956ee8606", null ],
+    [ "POWER", "struct_n_r_f___c_c_m___type.html#a65bff76f3af24c37708a1006d54720c7", null ]
+];
