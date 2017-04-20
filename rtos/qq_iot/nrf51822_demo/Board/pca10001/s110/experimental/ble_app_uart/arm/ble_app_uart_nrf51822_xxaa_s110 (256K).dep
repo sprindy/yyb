@@ -1,0 +1,434 @@
+Dependencies for Project 'ble_app_uart', Target 'nrf51822_xxaa_s110 (256K)': (DO NOT MODIFY !)
+F (.\..\..\..\..\..\..\Source\templates\arm\arm_startup_nrf51.s)(0x54C9E110)(--cpu Cortex-M0 --li --pd "__EVAL SETA 1" -g --apcs=interwork --pd "__MICROLIB SETA 1"-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Device\Nordic\nRF51822\Include--list .\_build\arm_startup_nrf51.lst --xref -o .\_build\arm_startup_nrf51.o --depend .\_build\arm_startup_nrf51.d)
+F (.\..\..\..\..\..\..\Source\templates\system_nrf51.c)(0x54C9E110)(-c --cpu Cortex-M0 -D__EVAL -D__MICROLIB --li -g -O0 --apcs=interwork --enum_is_int -I.. -I..\..\..\..\..\..\Include -I..\..\..\..\..\..\Include\app_common -I..\..\..\..\..\..\Include\ble -I..\..\..\..\..\..\Include\ble\ble_services -I..\..\..\..\..\..\Include\s110 -I..\..\..\..\..\..\Include\sd_common -I..\txblelib --c99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Device\Nordic\nRF51822\Include-DBOARD_PCA10001 -DNRF51 -DDEBUG_NRF_USER -DBLE_STACK_SUPPORT_REQD -o .\_build\system_nrf51.o --omf_browse .\_build\system_nrf51.crf --depend .\_build\system_nrf51.d)
+I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C7B744)
+I (C:\Keil\ARM\ARMCC\include\stdbool.h)(0x51C7B744)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\nrf.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\nrf51.h)(0x54C9E10E)
+I (C:\Keil\ARM\CMSIS\Include\core_cm0.h)(0x51C7B54A)
+I (C:\Keil\ARM\CMSIS\Include\core_cmInstr.h)(0x51C7B54A)
+I (C:\Keil\ARM\CMSIS\Include\core_cmFunc.h)(0x51C7B54A)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\system_nrf51.h)(0x54C9E10E)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\nrf51_bitfields.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\nrf51_deprecated.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\compiler_abstraction.h)(0x54C9E10C)
+F (.\..\main.c)(0x55E5690F)(-c --cpu Cortex-M0 -D__EVAL -D__MICROLIB --li -g -O0 --apcs=interwork --enum_is_int -I.. -I..\..\..\..\..\..\Include -I..\..\..\..\..\..\Include\app_common -I..\..\..\..\..\..\Include\ble -I..\..\..\..\..\..\Include\ble\ble_services -I..\..\..\..\..\..\Include\s110 -I..\..\..\..\..\..\Include\sd_common -I..\txblelib --c99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Device\Nordic\nRF51822\Include-DBOARD_PCA10001 -DNRF51 -DDEBUG_NRF_USER -DBLE_STACK_SUPPORT_REQD -o .\_build\main.o --omf_browse .\_build\main.crf --depend .\_build\main.d)
+I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C7B744)
+I (C:\Keil\ARM\ARMCC\include\string.h)(0x51C7B744)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\nordic_common.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\nrf.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\nrf51.h)(0x54C9E10E)
+I (C:\Keil\ARM\CMSIS\Include\core_cm0.h)(0x51C7B54A)
+I (C:\Keil\ARM\CMSIS\Include\core_cmInstr.h)(0x51C7B54A)
+I (C:\Keil\ARM\CMSIS\Include\core_cmFunc.h)(0x51C7B54A)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\system_nrf51.h)(0x54C9E10E)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\nrf51_bitfields.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\nrf51_deprecated.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\compiler_abstraction.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\ble_hci.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\ble\ble_advdata.h)(0x54C9E10C)
+I (C:\Keil\ARM\ARMCC\include\stdbool.h)(0x51C7B744)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\ble.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\ble_ranges.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\ble_types.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\ble_gap.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\nrf_svc.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\ble_l2cap.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\ble_err.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\nrf_error.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\ble_gatt.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\ble_gattc.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\ble_gatts.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\app_common\app_util.h)(0x54C9E10A)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\app_common\app_error.h)(0x54C9E10A)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\ble\ble_conn_params.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\ble\ble_services\ble_srv_common.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\sd_common\softdevice_handler.h)(0x54C9E10C)
+I (C:\Keil\ARM\ARMCC\include\stdlib.h)(0x51C7B744)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\nrf_sdm.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\nrf_soc.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\nrf_error_soc.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\nrf_error_sdm.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\app_common\app_scheduler.h)(0x54C9E10A)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\sd_common\ble_stack_handler_types.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\sd_common\ant_stack_handler_types.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\app_common\app_timer.h)(0x54C9E10A)
+I (C:\Keil\ARM\ARMCC\include\stdio.h)(0x51C7B744)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\app_common\app_button.h)(0x54C9E10A)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\nrf_gpio.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\app_common\app_gpiote.h)(0x54C9E10A)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Board\pca10001\s110\experimental\ble_app_uart\ble_nus.h)(0x54C9E10E)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\simple_uart.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\boards.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\boards\pca10001.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\ble\ble_error_log.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\ble\ble_flash.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\ble\ble_debug_assert_handler.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\nrf_delay.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\app_common\pstorage.h)(0x54C9E10A)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Board\pca10001\s110\experimental\ble_app_uart\pstorage_platform.h)(0x54C9E10E)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Board\pca10001\s110\experimental\ble_app_uart\txblelib\fh_impl.h)(0x55D442B0)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Board\pca10001\s110\experimental\ble_app_uart\ble_qqs.h)(0x54F7B0A6)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Board\pca10001\s110\experimental\ble_app_uart\txblelib\ff_syshdr.h)(0x554827B1)
+I (C:\Keil\ARM\ARMCC\include\stddef.h)(0x51C7B744)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Board\pca10001\s110\experimental\ble_app_uart\txblelib\ff_inc.h)(0x554868D6)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Board\pca10001\s110\experimental\ble_app_uart\txblelib\fd_engine.h)(0x554827B1)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Board\pca10001\s110\experimental\ble_app_uart\txblelib\oc_dump.h)(0x55D442B0)
+F (..\..\..\..\..\..\Source\ble\ble_services\ble_srv_common.c)(0x54C9E110)(-c --cpu Cortex-M0 -D__EVAL -D__MICROLIB --li -g -O0 --apcs=interwork --enum_is_int -I.. -I..\..\..\..\..\..\Include -I..\..\..\..\..\..\Include\app_common -I..\..\..\..\..\..\Include\ble -I..\..\..\..\..\..\Include\ble\ble_services -I..\..\..\..\..\..\Include\s110 -I..\..\..\..\..\..\Include\sd_common -I..\txblelib --c99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Device\Nordic\nRF51822\Include-DBOARD_PCA10001 -DNRF51 -DDEBUG_NRF_USER -DBLE_STACK_SUPPORT_REQD -o .\_build\ble_srv_common.o --omf_browse .\_build\ble_srv_common.crf --depend .\_build\ble_srv_common.d)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\ble\ble_services\ble_srv_common.h)(0x54C9E10C)
+I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C7B744)
+I (C:\Keil\ARM\ARMCC\include\stdbool.h)(0x51C7B744)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\ble_types.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\app_common\app_util.h)(0x54C9E10A)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\compiler_abstraction.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\nrf51.h)(0x54C9E10E)
+I (C:\Keil\ARM\CMSIS\Include\core_cm0.h)(0x51C7B54A)
+I (C:\Keil\ARM\CMSIS\Include\core_cmInstr.h)(0x51C7B54A)
+I (C:\Keil\ARM\CMSIS\Include\core_cmFunc.h)(0x51C7B54A)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\system_nrf51.h)(0x54C9E10E)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\app_common\app_error.h)(0x54C9E10A)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\nrf_error.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\ble_gap.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\ble_ranges.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\nrf_svc.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\ble_gatt.h)(0x54C9E10C)
+I (C:\Keil\ARM\ARMCC\include\string.h)(0x51C7B744)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\nordic_common.h)(0x54C9E10C)
+F (..\ble_nus.c)(0x54C9E10E)(-c --cpu Cortex-M0 -D__EVAL -D__MICROLIB --li -g -O0 --apcs=interwork --enum_is_int -I.. -I..\..\..\..\..\..\Include -I..\..\..\..\..\..\Include\app_common -I..\..\..\..\..\..\Include\ble -I..\..\..\..\..\..\Include\ble\ble_services -I..\..\..\..\..\..\Include\s110 -I..\..\..\..\..\..\Include\sd_common -I..\txblelib --c99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Device\Nordic\nRF51822\Include-DBOARD_PCA10001 -DNRF51 -DDEBUG_NRF_USER -DBLE_STACK_SUPPORT_REQD -o .\_build\ble_nus.o --omf_browse .\_build\ble_nus.crf --depend .\_build\ble_nus.d)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Board\pca10001\s110\experimental\ble_app_uart\ble_nus.h)(0x54C9E10E)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\ble.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\ble_ranges.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\ble_types.h)(0x54C9E10C)
+I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C7B744)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\ble_gap.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\nrf_svc.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\ble_l2cap.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\ble_err.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\nrf_error.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\ble_gatt.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\ble_gattc.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\ble_gatts.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\ble\ble_services\ble_srv_common.h)(0x54C9E10C)
+I (C:\Keil\ARM\ARMCC\include\stdbool.h)(0x51C7B744)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\app_common\app_util.h)(0x54C9E10A)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\compiler_abstraction.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\nrf51.h)(0x54C9E10E)
+I (C:\Keil\ARM\CMSIS\Include\core_cm0.h)(0x51C7B54A)
+I (C:\Keil\ARM\CMSIS\Include\core_cmInstr.h)(0x51C7B54A)
+I (C:\Keil\ARM\CMSIS\Include\core_cmFunc.h)(0x51C7B54A)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\system_nrf51.h)(0x54C9E10E)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\app_common\app_error.h)(0x54C9E10A)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\nordic_common.h)(0x54C9E10C)
+I (C:\Keil\ARM\ARMCC\include\string.h)(0x51C7B744)
+F (..\ble_qqs.c)(0x54F7B96E)(-c --cpu Cortex-M0 -D__EVAL -D__MICROLIB --li -g -O0 --apcs=interwork --enum_is_int -I.. -I..\..\..\..\..\..\Include -I..\..\..\..\..\..\Include\app_common -I..\..\..\..\..\..\Include\ble -I..\..\..\..\..\..\Include\ble\ble_services -I..\..\..\..\..\..\Include\s110 -I..\..\..\..\..\..\Include\sd_common -I..\txblelib --c99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Device\Nordic\nRF51822\Include-DBOARD_PCA10001 -DNRF51 -DDEBUG_NRF_USER -DBLE_STACK_SUPPORT_REQD -o .\_build\ble_qqs.o --omf_browse .\_build\ble_qqs.crf --depend .\_build\ble_qqs.d)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Board\pca10001\s110\experimental\ble_app_uart\ble_qqs.h)(0x54F7B0A6)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\ble.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\ble_ranges.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\ble_types.h)(0x54C9E10C)
+I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C7B744)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\ble_gap.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\nrf_svc.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\ble_l2cap.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\ble_err.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\nrf_error.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\ble_gatt.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\ble_gattc.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\ble_gatts.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\ble\ble_services\ble_srv_common.h)(0x54C9E10C)
+I (C:\Keil\ARM\ARMCC\include\stdbool.h)(0x51C7B744)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\app_common\app_util.h)(0x54C9E10A)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\compiler_abstraction.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\nrf51.h)(0x54C9E10E)
+I (C:\Keil\ARM\CMSIS\Include\core_cm0.h)(0x51C7B54A)
+I (C:\Keil\ARM\CMSIS\Include\core_cmInstr.h)(0x51C7B54A)
+I (C:\Keil\ARM\CMSIS\Include\core_cmFunc.h)(0x51C7B54A)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\system_nrf51.h)(0x54C9E10E)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\app_common\app_error.h)(0x54C9E10A)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\nordic_common.h)(0x54C9E10C)
+I (C:\Keil\ARM\ARMCC\include\string.h)(0x51C7B744)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Board\pca10001\s110\experimental\ble_app_uart\txblelib\fh_impl.h)(0x55D442B0)
+I (C:\Keil\ARM\ARMCC\include\stdio.h)(0x51C7B744)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\nrf.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\nrf51_bitfields.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\nrf51_deprecated.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Board\pca10001\s110\experimental\ble_app_uart\txblelib\ff_syshdr.h)(0x554827B1)
+I (C:\Keil\ARM\ARMCC\include\stddef.h)(0x51C7B744)
+I (C:\Keil\ARM\ARMCC\include\stdlib.h)(0x51C7B744)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Board\pca10001\s110\experimental\ble_app_uart\txblelib\ff_inc.h)(0x554868D6)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Board\pca10001\s110\experimental\ble_app_uart\txblelib\fd_engine.h)(0x554827B1)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\app_common\pstorage.h)(0x54C9E10A)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Board\pca10001\s110\experimental\ble_app_uart\pstorage_platform.h)(0x54C9E10E)
+F (..\..\..\..\..\..\Source\ble\ble_advdata.c)(0x54C9E110)(-c --cpu Cortex-M0 -D__EVAL -D__MICROLIB --li -g -O0 --apcs=interwork --enum_is_int -I.. -I..\..\..\..\..\..\Include -I..\..\..\..\..\..\Include\app_common -I..\..\..\..\..\..\Include\ble -I..\..\..\..\..\..\Include\ble\ble_services -I..\..\..\..\..\..\Include\s110 -I..\..\..\..\..\..\Include\sd_common -I..\txblelib --c99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Device\Nordic\nRF51822\Include-DBOARD_PCA10001 -DNRF51 -DDEBUG_NRF_USER -DBLE_STACK_SUPPORT_REQD -o .\_build\ble_advdata.o --omf_browse .\_build\ble_advdata.crf --depend .\_build\ble_advdata.d)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\ble\ble_advdata.h)(0x54C9E10C)
+I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C7B744)
+I (C:\Keil\ARM\ARMCC\include\stdbool.h)(0x51C7B744)
+I (C:\Keil\ARM\ARMCC\include\string.h)(0x51C7B744)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\ble.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\ble_ranges.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\ble_types.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\ble_gap.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\nrf_svc.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\ble_l2cap.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\ble_err.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\nrf_error.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\ble_gatt.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\ble_gattc.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\ble_gatts.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\app_common\app_util.h)(0x54C9E10A)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\compiler_abstraction.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\nrf51.h)(0x54C9E10E)
+I (C:\Keil\ARM\CMSIS\Include\core_cm0.h)(0x51C7B54A)
+I (C:\Keil\ARM\CMSIS\Include\core_cmInstr.h)(0x51C7B54A)
+I (C:\Keil\ARM\CMSIS\Include\core_cmFunc.h)(0x51C7B54A)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\system_nrf51.h)(0x54C9E10E)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\app_common\app_error.h)(0x54C9E10A)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\nordic_common.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\ble\ble_services\ble_srv_common.h)(0x54C9E10C)
+F (..\..\..\..\..\..\Source\ble\ble_conn_params.c)(0x54C9E110)(-c --cpu Cortex-M0 -D__EVAL -D__MICROLIB --li -g -O0 --apcs=interwork --enum_is_int -I.. -I..\..\..\..\..\..\Include -I..\..\..\..\..\..\Include\app_common -I..\..\..\..\..\..\Include\ble -I..\..\..\..\..\..\Include\ble\ble_services -I..\..\..\..\..\..\Include\s110 -I..\..\..\..\..\..\Include\sd_common -I..\txblelib --c99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Device\Nordic\nRF51822\Include-DBOARD_PCA10001 -DNRF51 -DDEBUG_NRF_USER -DBLE_STACK_SUPPORT_REQD -o .\_build\ble_conn_params.o --omf_browse .\_build\ble_conn_params.crf --depend .\_build\ble_conn_params.d)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\ble\ble_conn_params.h)(0x54C9E10C)
+I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C7B744)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\ble.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\ble_ranges.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\ble_types.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\ble_gap.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\nrf_svc.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\ble_l2cap.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\ble_err.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\nrf_error.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\ble_gatt.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\ble_gattc.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\ble_gatts.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\ble\ble_services\ble_srv_common.h)(0x54C9E10C)
+I (C:\Keil\ARM\ARMCC\include\stdbool.h)(0x51C7B744)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\app_common\app_util.h)(0x54C9E10A)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\compiler_abstraction.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\nrf51.h)(0x54C9E10E)
+I (C:\Keil\ARM\CMSIS\Include\core_cm0.h)(0x51C7B54A)
+I (C:\Keil\ARM\CMSIS\Include\core_cmInstr.h)(0x51C7B54A)
+I (C:\Keil\ARM\CMSIS\Include\core_cmFunc.h)(0x51C7B54A)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\system_nrf51.h)(0x54C9E10E)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\app_common\app_error.h)(0x54C9E10A)
+I (C:\Keil\ARM\ARMCC\include\stdlib.h)(0x51C7B744)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\nordic_common.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\ble_hci.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\app_common\app_timer.h)(0x54C9E10A)
+I (C:\Keil\ARM\ARMCC\include\stdio.h)(0x51C7B744)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\app_common\app_scheduler.h)(0x54C9E10A)
+F (..\..\..\..\..\..\Source\sd_common\softdevice_handler.c)(0x54C9E110)(-c --cpu Cortex-M0 -D__EVAL -D__MICROLIB --li -g -O0 --apcs=interwork --enum_is_int -I.. -I..\..\..\..\..\..\Include -I..\..\..\..\..\..\Include\app_common -I..\..\..\..\..\..\Include\ble -I..\..\..\..\..\..\Include\ble\ble_services -I..\..\..\..\..\..\Include\s110 -I..\..\..\..\..\..\Include\sd_common -I..\txblelib --c99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Device\Nordic\nRF51822\Include-DBOARD_PCA10001 -DNRF51 -DDEBUG_NRF_USER -DBLE_STACK_SUPPORT_REQD -o .\_build\softdevice_handler.o --omf_browse .\_build\softdevice_handler.crf --depend .\_build\softdevice_handler.d)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\sd_common\softdevice_handler.h)(0x54C9E10C)
+I (C:\Keil\ARM\ARMCC\include\stdlib.h)(0x51C7B744)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\nrf_sdm.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\nrf_svc.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\nrf51.h)(0x54C9E10E)
+I (C:\Keil\ARM\CMSIS\Include\core_cm0.h)(0x51C7B54A)
+I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C7B744)
+I (C:\Keil\ARM\CMSIS\Include\core_cmInstr.h)(0x51C7B54A)
+I (C:\Keil\ARM\CMSIS\Include\core_cmFunc.h)(0x51C7B54A)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\system_nrf51.h)(0x54C9E10E)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\nrf_soc.h)(0x54C9E10C)
+I (C:\Keil\ARM\ARMCC\include\stdbool.h)(0x51C7B744)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\nrf51_bitfields.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\nrf_error_soc.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\nrf_error.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\nrf_error_sdm.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\app_common\app_error.h)(0x54C9E10A)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\app_common\app_scheduler.h)(0x54C9E10A)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\app_common\app_util.h)(0x54C9E10A)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\compiler_abstraction.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\sd_common\ble_stack_handler_types.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\ble.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\ble_ranges.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\ble_types.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\ble_gap.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\ble_l2cap.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\ble_err.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\ble_gatt.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\ble_gattc.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\ble_gatts.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\sd_common\ant_stack_handler_types.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\nordic_common.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\nrf_assert.h)(0x54C9E10C)
+F (..\..\..\..\..\..\Source\simple_uart\simple_uart.c)(0x54C9E10E)(-c --cpu Cortex-M0 -D__EVAL -D__MICROLIB --li -g -O0 --apcs=interwork --enum_is_int -I.. -I..\..\..\..\..\..\Include -I..\..\..\..\..\..\Include\app_common -I..\..\..\..\..\..\Include\ble -I..\..\..\..\..\..\Include\ble\ble_services -I..\..\..\..\..\..\Include\s110 -I..\..\..\..\..\..\Include\sd_common -I..\txblelib --c99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Device\Nordic\nRF51822\Include-DBOARD_PCA10001 -DNRF51 -DDEBUG_NRF_USER -DBLE_STACK_SUPPORT_REQD -o .\_build\simple_uart.o --omf_browse .\_build\simple_uart.crf --depend .\_build\simple_uart.d)
+I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C7B744)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\nrf.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\nrf51.h)(0x54C9E10E)
+I (C:\Keil\ARM\CMSIS\Include\core_cm0.h)(0x51C7B54A)
+I (C:\Keil\ARM\CMSIS\Include\core_cmInstr.h)(0x51C7B54A)
+I (C:\Keil\ARM\CMSIS\Include\core_cmFunc.h)(0x51C7B54A)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\system_nrf51.h)(0x54C9E10E)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\nrf51_bitfields.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\nrf51_deprecated.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\compiler_abstraction.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\simple_uart.h)(0x54C9E10C)
+I (C:\Keil\ARM\ARMCC\include\stdbool.h)(0x51C7B744)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\nrf_delay.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\nrf_gpio.h)(0x54C9E10C)
+F (..\..\..\..\..\..\Source\app_common\app_timer.c)(0x54C9E110)(-c --cpu Cortex-M0 -D__EVAL -D__MICROLIB --li -g -O0 --apcs=interwork --enum_is_int -I.. -I..\..\..\..\..\..\Include -I..\..\..\..\..\..\Include\app_common -I..\..\..\..\..\..\Include\ble -I..\..\..\..\..\..\Include\ble\ble_services -I..\..\..\..\..\..\Include\s110 -I..\..\..\..\..\..\Include\sd_common -I..\txblelib --c99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Device\Nordic\nRF51822\Include-DBOARD_PCA10001 -DNRF51 -DDEBUG_NRF_USER -DBLE_STACK_SUPPORT_REQD -o .\_build\app_timer.o --omf_browse .\_build\app_timer.crf --depend .\_build\app_timer.d)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\app_common\app_timer.h)(0x54C9E10A)
+I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C7B744)
+I (C:\Keil\ARM\ARMCC\include\stdbool.h)(0x51C7B744)
+I (C:\Keil\ARM\ARMCC\include\stdio.h)(0x51C7B744)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\app_common\app_error.h)(0x54C9E10A)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\nrf_error.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\app_common\app_util.h)(0x54C9E10A)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\compiler_abstraction.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\nrf51.h)(0x54C9E10E)
+I (C:\Keil\ARM\CMSIS\Include\core_cm0.h)(0x51C7B54A)
+I (C:\Keil\ARM\CMSIS\Include\core_cmInstr.h)(0x51C7B54A)
+I (C:\Keil\ARM\CMSIS\Include\core_cmFunc.h)(0x51C7B54A)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\system_nrf51.h)(0x54C9E10E)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\app_common\app_scheduler.h)(0x54C9E10A)
+I (C:\Keil\ARM\ARMCC\include\stdlib.h)(0x51C7B744)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\nrf51_bitfields.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\nrf_soc.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\nrf_svc.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\nrf_error_soc.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\nrf_delay.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\nrf.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\nrf51_deprecated.h)(0x54C9E10C)
+F (..\..\..\..\..\..\Source\app_common\retarget.c)(0x54C9E110)(-c --cpu Cortex-M0 -D__EVAL -D__MICROLIB --li -g -O0 --apcs=interwork --enum_is_int -I.. -I..\..\..\..\..\..\Include -I..\..\..\..\..\..\Include\app_common -I..\..\..\..\..\..\Include\ble -I..\..\..\..\..\..\Include\ble\ble_services -I..\..\..\..\..\..\Include\s110 -I..\..\..\..\..\..\Include\sd_common -I..\txblelib --c99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Device\Nordic\nRF51822\Include-DBOARD_PCA10001 -DNRF51 -DDEBUG_NRF_USER -DBLE_STACK_SUPPORT_REQD -o .\_build\retarget.o --omf_browse .\_build\retarget.crf --depend .\_build\retarget.d)
+I (C:\Keil\ARM\ARMCC\include\stdio.h)(0x51C7B744)
+I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C7B744)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\app_common\app_uart.h)(0x54C9E10A)
+I (C:\Keil\ARM\ARMCC\include\stdbool.h)(0x51C7B744)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\app_common\app_util.h)(0x54C9E10A)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\compiler_abstraction.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\nrf51.h)(0x54C9E10E)
+I (C:\Keil\ARM\CMSIS\Include\core_cm0.h)(0x51C7B54A)
+I (C:\Keil\ARM\CMSIS\Include\core_cmInstr.h)(0x51C7B54A)
+I (C:\Keil\ARM\CMSIS\Include\core_cmFunc.h)(0x51C7B54A)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\system_nrf51.h)(0x54C9E10E)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\app_common\app_error.h)(0x54C9E10A)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\nrf_error.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\nordic_common.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\simple_uart.h)(0x54C9E10C)
+F (..\..\..\..\..\..\Source\app_common\app_button.c)(0x54C9E110)(-c --cpu Cortex-M0 -D__EVAL -D__MICROLIB --li -g -O0 --apcs=interwork --enum_is_int -I.. -I..\..\..\..\..\..\Include -I..\..\..\..\..\..\Include\app_common -I..\..\..\..\..\..\Include\ble -I..\..\..\..\..\..\Include\ble\ble_services -I..\..\..\..\..\..\Include\s110 -I..\..\..\..\..\..\Include\sd_common -I..\txblelib --c99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Device\Nordic\nRF51822\Include-DBOARD_PCA10001 -DNRF51 -DDEBUG_NRF_USER -DBLE_STACK_SUPPORT_REQD -o .\_build\app_button.o --omf_browse .\_build\app_button.crf --depend .\_build\app_button.d)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\app_common\app_button.h)(0x54C9E10A)
+I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C7B744)
+I (C:\Keil\ARM\ARMCC\include\stdbool.h)(0x51C7B744)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\nrf.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\nrf51.h)(0x54C9E10E)
+I (C:\Keil\ARM\CMSIS\Include\core_cm0.h)(0x51C7B54A)
+I (C:\Keil\ARM\CMSIS\Include\core_cmInstr.h)(0x51C7B54A)
+I (C:\Keil\ARM\CMSIS\Include\core_cmFunc.h)(0x51C7B54A)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\system_nrf51.h)(0x54C9E10E)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\nrf51_bitfields.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\nrf51_deprecated.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\compiler_abstraction.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\app_common\app_error.h)(0x54C9E10A)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\nrf_error.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\app_common\app_scheduler.h)(0x54C9E10A)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\nrf_gpio.h)(0x54C9E10C)
+I (C:\Keil\ARM\ARMCC\include\string.h)(0x51C7B744)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\nordic_common.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\app_common\app_util.h)(0x54C9E10A)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\app_common\app_gpiote.h)(0x54C9E10A)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\app_common\app_timer.h)(0x54C9E10A)
+I (C:\Keil\ARM\ARMCC\include\stdio.h)(0x51C7B744)
+F (..\..\..\..\..\..\Source\app_common\app_gpiote.c)(0x54C9E110)(-c --cpu Cortex-M0 -D__EVAL -D__MICROLIB --li -g -O0 --apcs=interwork --enum_is_int -I.. -I..\..\..\..\..\..\Include -I..\..\..\..\..\..\Include\app_common -I..\..\..\..\..\..\Include\ble -I..\..\..\..\..\..\Include\ble\ble_services -I..\..\..\..\..\..\Include\s110 -I..\..\..\..\..\..\Include\sd_common -I..\txblelib --c99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Device\Nordic\nRF51822\Include-DBOARD_PCA10001 -DNRF51 -DDEBUG_NRF_USER -DBLE_STACK_SUPPORT_REQD -o .\_build\app_gpiote.o --omf_browse .\_build\app_gpiote.crf --depend .\_build\app_gpiote.d)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\app_common\app_gpiote.h)(0x54C9E10A)
+I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C7B744)
+I (C:\Keil\ARM\ARMCC\include\stdbool.h)(0x51C7B744)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\nrf.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\nrf51.h)(0x54C9E10E)
+I (C:\Keil\ARM\CMSIS\Include\core_cm0.h)(0x51C7B54A)
+I (C:\Keil\ARM\CMSIS\Include\core_cmInstr.h)(0x51C7B54A)
+I (C:\Keil\ARM\CMSIS\Include\core_cmFunc.h)(0x51C7B54A)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\system_nrf51.h)(0x54C9E10E)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\nrf51_bitfields.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\nrf51_deprecated.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\compiler_abstraction.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\app_common\app_error.h)(0x54C9E10A)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\nrf_error.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\app_common\app_util.h)(0x54C9E10A)
+I (C:\Keil\ARM\ARMCC\include\stdlib.h)(0x51C7B744)
+I (C:\Keil\ARM\ARMCC\include\string.h)(0x51C7B744)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\nrf_gpio.h)(0x54C9E10C)
+F (..\..\..\..\..\..\Source\app_common\pstorage.c)(0x54C9E110)(-c --cpu Cortex-M0 -D__EVAL -D__MICROLIB --li -g -O0 --apcs=interwork --enum_is_int -I.. -I..\..\..\..\..\..\Include -I..\..\..\..\..\..\Include\app_common -I..\..\..\..\..\..\Include\ble -I..\..\..\..\..\..\Include\ble\ble_services -I..\..\..\..\..\..\Include\s110 -I..\..\..\..\..\..\Include\sd_common -I..\txblelib --c99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Device\Nordic\nRF51822\Include-DBOARD_PCA10001 -DNRF51 -DDEBUG_NRF_USER -DBLE_STACK_SUPPORT_REQD -o .\_build\pstorage.o --omf_browse .\_build\pstorage.crf --depend .\_build\pstorage.d)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\app_common\pstorage.h)(0x54C9E10A)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Board\pca10001\s110\experimental\ble_app_uart\pstorage_platform.h)(0x54C9E10E)
+I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C7B744)
+I (C:\Keil\ARM\ARMCC\include\stdlib.h)(0x51C7B744)
+I (C:\Keil\ARM\ARMCC\include\string.h)(0x51C7B744)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\nordic_common.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\nrf_error.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\nrf_assert.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\nrf.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\nrf51.h)(0x54C9E10E)
+I (C:\Keil\ARM\CMSIS\Include\core_cm0.h)(0x51C7B54A)
+I (C:\Keil\ARM\CMSIS\Include\core_cmInstr.h)(0x51C7B54A)
+I (C:\Keil\ARM\CMSIS\Include\core_cmFunc.h)(0x51C7B54A)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\system_nrf51.h)(0x54C9E10E)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\nrf51_bitfields.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\nrf51_deprecated.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\compiler_abstraction.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\nrf_soc.h)(0x54C9E10C)
+I (C:\Keil\ARM\ARMCC\include\stdbool.h)(0x51C7B744)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\nrf_svc.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\nrf_error_soc.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\app_common\app_util.h)(0x54C9E10A)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\app_common\app_error.h)(0x54C9E10A)
+F (..\..\..\..\..\..\Source\nrf_delay\nrf_delay.c)(0x54C9E110)(-c --cpu Cortex-M0 -D__EVAL -D__MICROLIB --li -g -O0 --apcs=interwork --enum_is_int -I.. -I..\..\..\..\..\..\Include -I..\..\..\..\..\..\Include\app_common -I..\..\..\..\..\..\Include\ble -I..\..\..\..\..\..\Include\ble\ble_services -I..\..\..\..\..\..\Include\s110 -I..\..\..\..\..\..\Include\sd_common -I..\txblelib --c99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Device\Nordic\nRF51822\Include-DBOARD_PCA10001 -DNRF51 -DDEBUG_NRF_USER -DBLE_STACK_SUPPORT_REQD -o .\_build\nrf_delay.o --omf_browse .\_build\nrf_delay.crf --depend .\_build\nrf_delay.d)
+I (C:\Keil\ARM\ARMCC\include\stdio.h)(0x51C7B744)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\compiler_abstraction.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\nrf.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\nrf51.h)(0x54C9E10E)
+I (C:\Keil\ARM\CMSIS\Include\core_cm0.h)(0x51C7B54A)
+I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C7B744)
+I (C:\Keil\ARM\CMSIS\Include\core_cmInstr.h)(0x51C7B54A)
+I (C:\Keil\ARM\CMSIS\Include\core_cmFunc.h)(0x51C7B54A)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\system_nrf51.h)(0x54C9E10E)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\nrf51_bitfields.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\nrf51_deprecated.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\nrf_delay.h)(0x54C9E10C)
+F (..\txblelib\fd_engine.h)(0x554827B1)()
+F (..\txblelib\ff_inc.h)(0x554868D6)()
+F (..\txblelib\ff_syshdr.h)(0x554827B1)()
+F (..\txblelib\txble.lib)(0x562E0EDC)()
+F (..\txblelib\fh_impl.c)(0x562DD493)(-c --cpu Cortex-M0 -D__EVAL -D__MICROLIB --li -g -O0 --apcs=interwork --enum_is_int -I.. -I..\..\..\..\..\..\Include -I..\..\..\..\..\..\Include\app_common -I..\..\..\..\..\..\Include\ble -I..\..\..\..\..\..\Include\ble\ble_services -I..\..\..\..\..\..\Include\s110 -I..\..\..\..\..\..\Include\sd_common -I..\txblelib --c99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Device\Nordic\nRF51822\Include-DBOARD_PCA10001 -DNRF51 -DDEBUG_NRF_USER -DBLE_STACK_SUPPORT_REQD -o .\_build\fh_impl.o --omf_browse .\_build\fh_impl.crf --depend .\_build\fh_impl.d)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Board\pca10001\s110\experimental\ble_app_uart\txblelib\fh_impl.h)(0x55D442B0)
+I (C:\Keil\ARM\ARMCC\include\stdio.h)(0x51C7B744)
+I (C:\Keil\ARM\ARMCC\include\string.h)(0x51C7B744)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\nrf.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\nrf51.h)(0x54C9E10E)
+I (C:\Keil\ARM\CMSIS\Include\core_cm0.h)(0x51C7B54A)
+I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C7B744)
+I (C:\Keil\ARM\CMSIS\Include\core_cmInstr.h)(0x51C7B54A)
+I (C:\Keil\ARM\CMSIS\Include\core_cmFunc.h)(0x51C7B54A)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\system_nrf51.h)(0x54C9E10E)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\nrf51_bitfields.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\nrf51_deprecated.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\compiler_abstraction.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Board\pca10001\s110\experimental\ble_app_uart\ble_qqs.h)(0x54F7B0A6)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\ble.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\ble_ranges.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\ble_types.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\ble_gap.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\nrf_svc.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\ble_l2cap.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\ble_err.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\nrf_error.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\ble_gatt.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\ble_gattc.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\s110\ble_gatts.h)(0x54C9E10C)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\ble\ble_services\ble_srv_common.h)(0x54C9E10C)
+I (C:\Keil\ARM\ARMCC\include\stdbool.h)(0x51C7B744)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\app_common\app_util.h)(0x54C9E10A)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\app_common\app_error.h)(0x54C9E10A)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Board\pca10001\s110\experimental\ble_app_uart\txblelib\ff_syshdr.h)(0x554827B1)
+I (C:\Keil\ARM\ARMCC\include\stddef.h)(0x51C7B744)
+I (C:\Keil\ARM\ARMCC\include\stdlib.h)(0x51C7B744)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Board\pca10001\s110\experimental\ble_app_uart\txblelib\ff_inc.h)(0x554868D6)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Board\pca10001\s110\experimental\ble_app_uart\txblelib\fd_engine.h)(0x554827B1)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Include\app_common\pstorage.h)(0x54C9E10A)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Board\pca10001\s110\experimental\ble_app_uart\pstorage_platform.h)(0x54C9E10E)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Board\pca10001\s110\experimental\ble_app_uart\txblelib\oc_dump.h)(0x55D442B0)
+F (..\txblelib\oc_dump.c)(0x55497B2E)(-c --cpu Cortex-M0 -D__EVAL -D__MICROLIB --li -g -O0 --apcs=interwork --enum_is_int -I.. -I..\..\..\..\..\..\Include -I..\..\..\..\..\..\Include\app_common -I..\..\..\..\..\..\Include\ble -I..\..\..\..\..\..\Include\ble\ble_services -I..\..\..\..\..\..\Include\s110 -I..\..\..\..\..\..\Include\sd_common -I..\txblelib --c99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Device\Nordic\nRF51822\Include-DBOARD_PCA10001 -DNRF51 -DDEBUG_NRF_USER -DBLE_STACK_SUPPORT_REQD -o .\_build\oc_dump.o --omf_browse .\_build\oc_dump.crf --depend .\_build\oc_dump.d)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Board\pca10001\s110\experimental\ble_app_uart\txblelib\oc_dump.h)(0x55D442B0)
+I (E:\Work\BluetoothDevice_proj\trunk\Firefly\firefly_device\demo\nrf51822_demo\Board\pca10001\s110\experimental\ble_app_uart\txblelib\ff_syshdr.h)(0x554827B1)
+I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C7B744)
+I (C:\Keil\ARM\ARMCC\include\stddef.h)(0x51C7B744)
+I (C:\Keil\ARM\ARMCC\include\stdbool.h)(0x51C7B744)
+I (C:\Keil\ARM\ARMCC\include\stdlib.h)(0x51C7B744)
+I (C:\Keil\ARM\ARMCC\include\string.h)(0x51C7B744)
+I (C:\Keil\ARM\ARMCC\include\stdio.h)(0x51C7B744)

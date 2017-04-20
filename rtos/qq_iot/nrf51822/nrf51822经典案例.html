@@ -1,0 +1,1260 @@
+<!DOCTYPE html>
+<!-- saved from url=(0073)file:///var/folders/82/ywy495cj4h7318sqpl0s_pf40000gn/T/86.html#step-4-h5 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="utf-8"><style>body {
+  width: 45em;
+  border: 1px solid #ddd;
+  outline: 1300px solid #fff;
+  margin: 16px auto;
+}
+
+body .markdown-body
+{
+  padding: 30px;
+}
+
+@font-face {
+  font-family: fontawesome-mini;
+  src: url(data:font/woff;charset=utf-8;base64,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) format('woff');
+}
+
+@font-face {
+  font-family: octicons-anchor;
+  src: url(data:font/woff;charset=utf-8;base64,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) format('woff');
+}
+
+.markdown-body {
+  font-family: sans-serif;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  color: #333333;
+  overflow: hidden;
+  font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  word-wrap: break-word;
+}
+
+.markdown-body a {
+  background: transparent;
+}
+
+.markdown-body a:active,
+.markdown-body a:hover {
+  outline: 0;
+}
+
+.markdown-body b,
+.markdown-body strong {
+  font-weight: bold;
+}
+
+.markdown-body mark {
+  background: #ff0;
+  color: #000;
+  font-style: italic;
+  font-weight: bold;
+}
+
+.markdown-body sub,
+.markdown-body sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+.markdown-body sup {
+  top: -0.5em;
+}
+.markdown-body sub {
+  bottom: -0.25em;
+}
+
+.markdown-body h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+
+.markdown-body img {
+  border: 0;
+}
+
+.markdown-body hr {
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  height: 0;
+}
+
+.markdown-body pre {
+  overflow: auto;
+}
+
+.markdown-body code,
+.markdown-body kbd,
+.markdown-body pre,
+.markdown-body samp {
+  font-family: monospace, monospace;
+  font-size: 1em;
+}
+
+.markdown-body input {
+  color: inherit;
+  font: inherit;
+  margin: 0;
+}
+
+.markdown-body html input[disabled] {
+  cursor: default;
+}
+
+.markdown-body input {
+  line-height: normal;
+}
+
+.markdown-body input[type="checkbox"] {
+  box-sizing: border-box;
+  padding: 0;
+}
+
+.markdown-body table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.markdown-body td,
+.markdown-body th {
+  padding: 0;
+}
+
+.markdown-body .codehilitetable {
+  border: 0;
+  border-spacing: 0;
+}
+
+.markdown-body .codehilitetable tr {
+  border: 0;
+}
+
+.markdown-body .codehilitetable pre,
+.markdown-body .codehilitetable div.codehilite {
+  margin: 0;
+}
+
+.markdown-body .linenos,
+.markdown-body .code,
+.markdown-body .codehilitetable td {
+  border: 0;
+  padding: 0;
+}
+
+.markdown-body td:not(.linenos) .linenodiv {
+  padding: 0 !important;
+}
+
+.markdown-body .code {
+  width: 100%;
+}
+
+.markdown-body .linenos div pre,
+.markdown-body .linenodiv pre,
+.markdown-body .linenodiv {
+  border: 0;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  -webkit-border-top-left-radius: 3px;
+  -webkit-border-bottom-left-radius: 3px;
+  -moz-border-radius-topleft: 3px;
+  -moz-border-radius-bottomleft: 3px;
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+
+.markdown-body .code div pre,
+.markdown-body .code div {
+  border: 0;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  -webkit-border-top-right-radius: 3px;
+  -webkit-border-bottom-right-radius: 3px;
+  -moz-border-radius-topright: 3px;
+  -moz-border-radius-bottomright: 3px;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+
+.markdown-body * {
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.markdown-body input {
+  font: 13px Helvetica, arial, freesans, clean, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
+  line-height: 1.4;
+}
+
+.markdown-body a {
+  color: #4183c4;
+  text-decoration: none;
+}
+
+.markdown-body a:hover,
+.markdown-body a:focus,
+.markdown-body a:active {
+  text-decoration: underline;
+}
+
+.markdown-body hr {
+  height: 0;
+  margin: 15px 0;
+  overflow: hidden;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.markdown-body hr:before,
+.markdown-body hr:after {
+  display: table;
+  content: " ";
+}
+
+.markdown-body hr:after {
+  clear: both;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  line-height: 1.1;
+}
+
+.markdown-body h1 {
+  font-size: 30px;
+}
+
+.markdown-body h2 {
+  font-size: 21px;
+}
+
+.markdown-body h3 {
+  font-size: 16px;
+}
+
+.markdown-body h4 {
+  font-size: 14px;
+}
+
+.markdown-body h5 {
+  font-size: 12px;
+}
+
+.markdown-body h6 {
+  font-size: 11px;
+}
+
+.markdown-body blockquote {
+  margin: 0;
+}
+
+.markdown-body ul,
+.markdown-body ol {
+  padding: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body ol ol,
+.markdown-body ul ol {
+  list-style-type: lower-roman;
+}
+
+.markdown-body ul ul ol,
+.markdown-body ul ol ol,
+.markdown-body ol ul ol,
+.markdown-body ol ol ol {
+  list-style-type: lower-alpha;
+}
+
+.markdown-body dd {
+  margin-left: 0;
+}
+
+.markdown-body code,
+.markdown-body pre,
+.markdown-body samp {
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  font-size: 12px;
+}
+
+.markdown-body pre {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body kbd {
+  background-color: #e7e7e7;
+  background-image: -moz-linear-gradient(#fefefe, #e7e7e7);
+  background-image: -webkit-linear-gradient(#fefefe, #e7e7e7);
+  background-image: linear-gradient(#fefefe, #e7e7e7);
+  background-repeat: repeat-x;
+  border-radius: 2px;
+  border: 1px solid #cfcfcf;
+  color: #000;
+  padding: 3px 5px;
+  line-height: 10px;
+  font: 11px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  display: inline-block;
+}
+
+.markdown-body>*:first-child {
+  margin-top: 0 !important;
+}
+
+.markdown-body>*:last-child {
+  margin-bottom: 0 !important;
+}
+
+.markdown-body .headeranchor-link {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  display: block;
+  padding-right: 6px;
+  padding-left: 30px;
+  margin-left: -30px;
+}
+
+.markdown-body .headeranchor-link:focus {
+  outline: none;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  position: relative;
+  margin-top: 1em;
+  margin-bottom: 16px;
+  font-weight: bold;
+  line-height: 1.4;
+}
+
+.markdown-body h1 .headeranchor,
+.markdown-body h2 .headeranchor,
+.markdown-body h3 .headeranchor,
+.markdown-body h4 .headeranchor,
+.markdown-body h5 .headeranchor,
+.markdown-body h6 .headeranchor {
+  display: none;
+  color: #000;
+  vertical-align: middle;
+}
+
+.markdown-body h1:hover .headeranchor-link,
+.markdown-body h2:hover .headeranchor-link,
+.markdown-body h3:hover .headeranchor-link,
+.markdown-body h4:hover .headeranchor-link,
+.markdown-body h5:hover .headeranchor-link,
+.markdown-body h6:hover .headeranchor-link {
+  height: 1em;
+  padding-left: 8px;
+  margin-left: -30px;
+  line-height: 1;
+  text-decoration: none;
+}
+
+.markdown-body h1:hover .headeranchor-link .headeranchor,
+.markdown-body h2:hover .headeranchor-link .headeranchor,
+.markdown-body h3:hover .headeranchor-link .headeranchor,
+.markdown-body h4:hover .headeranchor-link .headeranchor,
+.markdown-body h5:hover .headeranchor-link .headeranchor,
+.markdown-body h6:hover .headeranchor-link .headeranchor {
+  display: inline-block;
+}
+
+.markdown-body h1 {
+  padding-bottom: 0.3em;
+  font-size: 2.25em;
+  line-height: 1.2;
+  border-bottom: 1px solid #eee;
+}
+
+.markdown-body h2 {
+  padding-bottom: 0.3em;
+  font-size: 1.75em;
+  line-height: 1.225;
+  border-bottom: 1px solid #eee;
+}
+
+.markdown-body h3 {
+  font-size: 1.5em;
+  line-height: 1.43;
+}
+
+.markdown-body h4 {
+  font-size: 1.25em;
+}
+
+.markdown-body h5 {
+  font-size: 1em;
+}
+
+.markdown-body h6 {
+  font-size: 1em;
+  color: #777;
+}
+
+.markdown-body p,
+.markdown-body blockquote,
+.markdown-body ul,
+.markdown-body ol,
+.markdown-body dl,
+.markdown-body table,
+.markdown-body pre,
+.markdown-body .admonition {
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.markdown-body hr {
+  height: 4px;
+  padding: 0;
+  margin: 16px 0;
+  background-color: #e7e7e7;
+  border: 0 none;
+}
+
+.markdown-body ul,
+.markdown-body ol {
+  padding-left: 2em;
+}
+
+.markdown-body ul ul,
+.markdown-body ul ol,
+.markdown-body ol ol,
+.markdown-body ol ul {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body li>p {
+  margin-top: 16px;
+}
+
+.markdown-body dl {
+  padding: 0;
+}
+
+.markdown-body dl dt {
+  padding: 0;
+  margin-top: 16px;
+  font-size: 1em;
+  font-style: italic;
+  font-weight: bold;
+}
+
+.markdown-body dl dd {
+  padding: 0 16px;
+  margin-bottom: 16px;
+}
+
+.markdown-body blockquote {
+  padding: 0 15px;
+  color: #777;
+  border-left: 4px solid #ddd;
+}
+
+.markdown-body blockquote>:first-child {
+  margin-top: 0;
+}
+
+.markdown-body blockquote>:last-child {
+  margin-bottom: 0;
+}
+
+.markdown-body table {
+  display: block;
+  width: 100%;
+  overflow: auto;
+  word-break: normal;
+  word-break: keep-all;
+}
+
+.markdown-body table th {
+  font-weight: bold;
+}
+
+.markdown-body table th,
+.markdown-body table td {
+  padding: 6px 13px;
+  border: 1px solid #ddd;
+}
+
+.markdown-body table tr {
+  background-color: #fff;
+  border-top: 1px solid #ccc;
+}
+
+.markdown-body table tr:nth-child(2n) {
+  background-color: #f8f8f8;
+}
+
+.markdown-body img {
+  max-width: 100%;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.markdown-body code,
+.markdown-body samp {
+  padding: 0;
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
+  margin: 0;
+  font-size: 85%;
+  background-color: rgba(0,0,0,0.04);
+  border-radius: 3px;
+}
+
+.markdown-body code:before,
+.markdown-body code:after {
+  letter-spacing: -0.2em;
+  content: "\00a0";
+}
+
+.markdown-body pre>code {
+  padding: 0;
+  margin: 0;
+  font-size: 100%;
+  word-break: normal;
+  white-space: pre;
+  background: transparent;
+  border: 0;
+}
+
+.markdown-body .codehilite {
+  margin-bottom: 16px;
+}
+
+.markdown-body .codehilite pre,
+.markdown-body pre {
+  padding: 16px;
+  overflow: auto;
+  font-size: 85%;
+  line-height: 1.45;
+  background-color: #f7f7f7;
+  border-radius: 3px;
+}
+
+.markdown-body .codehilite pre {
+  margin-bottom: 0;
+  word-break: normal;
+}
+
+.markdown-body pre {
+  word-wrap: normal;
+}
+
+.markdown-body pre code {
+  display: inline;
+  max-width: initial;
+  padding: 0;
+  margin: 0;
+  overflow: initial;
+  line-height: inherit;
+  word-wrap: normal;
+  background-color: transparent;
+  border: 0;
+}
+
+.markdown-body pre code:before,
+.markdown-body pre code:after {
+  content: normal;
+}
+
+/* Admonition */
+.markdown-body .admonition {
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  position: relative;
+  border-radius: 3px;
+  border: 1px solid #e0e0e0;
+  border-left: 6px solid #333;
+  padding: 10px 10px 10px 30px;
+}
+
+.markdown-body .admonition table {
+  color: #333;
+}
+
+.markdown-body .admonition p {
+  padding: 0;
+}
+
+.markdown-body .admonition-title {
+  font-weight: bold;
+  margin: 0;
+}
+
+.markdown-body .admonition>.admonition-title {
+  color: #333;
+}
+
+.markdown-body .attention>.admonition-title {
+  color: #a6d796;
+}
+
+.markdown-body .caution>.admonition-title {
+  color: #d7a796;
+}
+
+.markdown-body .hint>.admonition-title {
+  color: #96c6d7;
+}
+
+.markdown-body .danger>.admonition-title {
+  color: #c25f77;
+}
+
+.markdown-body .question>.admonition-title {
+  color: #96a6d7;
+}
+
+.markdown-body .note>.admonition-title {
+  color: #d7c896;
+}
+
+.markdown-body .admonition:before,
+.markdown-body .attention:before,
+.markdown-body .caution:before,
+.markdown-body .hint:before,
+.markdown-body .danger:before,
+.markdown-body .question:before,
+.markdown-body .note:before {
+  font: normal normal 16px fontawesome-mini;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  line-height: 1.5;
+  color: #333;
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding-top: 10px;
+  padding-left: 10px;
+}
+
+.markdown-body .admonition:before {
+  content: "\f056\00a0";
+  color: 333;
+}
+
+.markdown-body .attention:before {
+  content: "\f058\00a0";
+  color: #a6d796;
+}
+
+.markdown-body .caution:before {
+  content: "\f06a\00a0";
+  color: #d7a796;
+}
+
+.markdown-body .hint:before {
+  content: "\f05a\00a0";
+  color: #96c6d7;
+}
+
+.markdown-body .danger:before {
+  content: "\f057\00a0";
+  color: #c25f77;
+}
+
+.markdown-body .question:before {
+  content: "\f059\00a0";
+  color: #96a6d7;
+}
+
+.markdown-body .note:before {
+  content: "\f040\00a0";
+  color: #d7c896;
+}
+
+.markdown-body .admonition::after {
+  content: normal;
+}
+
+.markdown-body .attention {
+  border-left: 6px solid #a6d796;
+}
+
+.markdown-body .caution {
+  border-left: 6px solid #d7a796;
+}
+
+.markdown-body .hint {
+  border-left: 6px solid #96c6d7;
+}
+
+.markdown-body .danger {
+  border-left: 6px solid #c25f77;
+}
+
+.markdown-body .question {
+  border-left: 6px solid #96a6d7;
+}
+
+.markdown-body .note {
+  border-left: 6px solid #d7c896;
+}
+
+.markdown-body .admonition>*:first-child {
+  margin-top: 0 !important;
+}
+
+.markdown-body .admonition>*:last-child {
+  margin-bottom: 0 !important;
+}
+
+/* progress bar*/
+.markdown-body .progress {
+  display: block;
+  width: 300px;
+  margin: 10px 0;
+  height: 24px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  background-color: #ededed;
+  position: relative;
+  box-shadow: inset -1px 1px 3px rgba(0, 0, 0, .1);
+}
+
+.markdown-body .progress-label {
+  position: absolute;
+  text-align: center;
+  font-weight: bold;
+  width: 100%; margin: 0;
+  line-height: 24px;
+  color: #333;
+  text-shadow: 1px 1px 0 #fefefe, -1px -1px 0 #fefefe, -1px 1px 0 #fefefe, 1px -1px 0 #fefefe, 0 1px 0 #fefefe, 0 -1px 0 #fefefe, 1px 0 0 #fefefe, -1px 0 0 #fefefe, 1px 1px 2px #000;
+  -webkit-font-smoothing: antialiased !important;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.markdown-body .progress-bar {
+  height: 24px;
+  float: left;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  background-color: #96c6d7;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .5), inset 0 -1px 0 rgba(0, 0, 0, .1);
+  background-size: 30px 30px;
+  background-image: -webkit-linear-gradient(
+    135deg, rgba(255, 255, 255, .4) 27%,
+    transparent 27%,
+    transparent 52%, rgba(255, 255, 255, .4) 52%,
+    rgba(255, 255, 255, .4) 77%,
+    transparent 77%, transparent
+  );
+  background-image: -moz-linear-gradient(
+    135deg,
+    rgba(255, 255, 255, .4) 27%, transparent 27%,
+    transparent 52%, rgba(255, 255, 255, .4) 52%,
+    rgba(255, 255, 255, .4) 77%, transparent 77%,
+    transparent
+  );
+  background-image: -ms-linear-gradient(
+    135deg,
+    rgba(255, 255, 255, .4) 27%, transparent 27%,
+    transparent 52%, rgba(255, 255, 255, .4) 52%,
+    rgba(255, 255, 255, .4) 77%, transparent 77%,
+    transparent
+  );
+  background-image: -o-linear-gradient(
+    135deg,
+    rgba(255, 255, 255, .4) 27%, transparent 27%,
+    transparent 52%, rgba(255, 255, 255, .4) 52%,
+    rgba(255, 255, 255, .4) 77%, transparent 77%,
+    transparent
+  );
+  background-image: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, .4) 27%, transparent 27%,
+    transparent 52%, rgba(255, 255, 255, .4) 52%,
+    rgba(255, 255, 255, .4) 77%, transparent 77%,
+    transparent
+  );
+}
+
+.markdown-body .progress-100plus .progress-bar {
+  background-color: #a6d796;
+}
+
+.markdown-body .progress-80plus .progress-bar {
+  background-color: #c6d796;
+}
+
+.markdown-body .progress-60plus .progress-bar {
+  background-color: #d7c896;
+}
+
+.markdown-body .progress-40plus .progress-bar {
+  background-color: #d7a796;
+}
+
+.markdown-body .progress-20plus .progress-bar {
+  background-color: #d796a6;
+}
+
+.markdown-body .progress-0plus .progress-bar {
+  background-color: #c25f77;
+}
+
+.markdown-body .candystripe-animate .progress-bar{
+  -webkit-animation: animate-stripes 3s linear infinite;
+  -moz-animation: animate-stripes 3s linear infinite;
+  animation: animate-stripes 3s linear infinite;
+}
+
+@-webkit-keyframes animate-stripes {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 60px 0;
+  }
+}
+
+@-moz-keyframes animate-stripes {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 60px 0;
+  }
+}
+
+@keyframes animate-stripes {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 60px 0;
+  }
+}
+
+.markdown-body .gloss .progress-bar {
+  box-shadow:
+    inset 0 4px 12px rgba(255, 255, 255, .7),
+    inset 0 -12px 0 rgba(0, 0, 0, .05);
+}
+
+/* Multimarkdown Critic Blocks */
+.markdown-body .critic_mark {
+  background: #ff0;
+}
+
+.markdown-body .critic_delete {
+  color: #c82829;
+  text-decoration: line-through;
+}
+
+.markdown-body .critic_insert {
+  color: #718c00 ;
+  text-decoration: underline;
+}
+
+.markdown-body .critic_comment {
+  color: #8e908c;
+  font-style: italic;
+}
+
+.markdown-body .headeranchor {
+  font: normal normal 16px octicons-anchor;
+  line-height: 1;
+  display: inline-block;
+  text-decoration: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.headeranchor:before {
+  content: '\f05c';
+}
+
+.markdown-body .task-list-item {
+  list-style-type: none;
+}
+
+.markdown-body .task-list-item+.task-list-item {
+  margin-top: 3px;
+}
+
+.markdown-body .task-list-item input {
+  margin: 0 4px 0.25em -20px;
+  vertical-align: middle;
+}
+
+/* Media */
+@media only screen and (min-width: 480px) {
+  .markdown-body {
+    font-size:14px;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .markdown-body {
+    font-size:16px;
+  }
+}
+
+@media print {
+  .markdown-body * {
+    background: transparent !important;
+    color: black !important;
+    filter:none !important;
+    -ms-filter: none !important;
+  }
+
+  .markdown-body {
+    font-size:12pt;
+    max-width:100%;
+    outline:none;
+    border: 0;
+  }
+
+  .markdown-body a,
+  .markdown-body a:visited {
+    text-decoration: underline;
+  }
+
+  .markdown-body .headeranchor-link {
+    display: none;
+  }
+
+  .markdown-body a[href]:after {
+    content: " (" attr(href) ")";
+  }
+
+  .markdown-body abbr[title]:after {
+    content: " (" attr(title) ")";
+  }
+
+  .markdown-body .ir a:after,
+  .markdown-body a[href^="javascript:"]:after,
+  .markdown-body a[href^="#"]:after {
+    content: "";
+  }
+
+  .markdown-body pre {
+    white-space: pre;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+
+  .markdown-body pre,
+  .markdown-body blockquote {
+    border: 1px solid #999;
+    padding-right: 1em;
+    page-break-inside: avoid;
+  }
+
+  .markdown-body .progress,
+  .markdown-body .progress-bar {
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+  }
+
+  .markdown-body .progress {
+    border: 1px solid #ddd;
+  }
+
+  .markdown-body .progress-bar {
+    height: 22px;
+    border-right: 1px solid #ddd;
+  }
+
+  .markdown-body tr,
+  .markdown-body img {
+    page-break-inside: avoid;
+  }
+
+  .markdown-body img {
+    max-width: 100% !important;
+  }
+
+  .markdown-body p,
+  .markdown-body h2,
+  .markdown-body h3 {
+    orphans: 3;
+    widows: 3;
+  }
+
+  .markdown-body h2,
+  .markdown-body h3 {
+    page-break-after: avoid;
+  }
+}
+</style><title>nrf51822经典案例</title></head><body><article class="markdown-body"><h1 id="nrf51822"><a name="user-content-nrf51822" href="file:///var/folders/82/ywy495cj4h7318sqpl0s_pf40000gn/T/86.html#nrf51822" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>nrf51822经典案例</h1>
+<hr>
+<div class="toc">
+<ul>
+<li><a href="file:///var/folders/82/ywy495cj4h7318sqpl0s_pf40000gn/T/86.html#nrf51822">nrf51822经典案例</a><ul>
+<li><a href="file:///var/folders/82/ywy495cj4h7318sqpl0s_pf40000gn/T/86.html#step-1">Step 1. 编写设备代码</a><ul>
+<li><a href="file:///var/folders/82/ywy495cj4h7318sqpl0s_pf40000gn/T/86.html#11">1.1 配置蓝牙广播</a></li>
+<li><a href="file:///var/folders/82/ywy495cj4h7318sqpl0s_pf40000gn/T/86.html#12">1.2 配置初始数据</a></li>
+<li><a href="file:///var/folders/82/ywy495cj4h7318sqpl0s_pf40000gn/T/86.html#13-fd_engineh">1.3 实现fd_engine.h中的函数</a></li>
+<li><a href="file:///var/folders/82/ywy495cj4h7318sqpl0s_pf40000gn/T/86.html#14-fd_engineh">1.4 调用fd_engine.h中的函数</a></li>
+</ul>
+</li>
+<li><a href="file:///var/folders/82/ywy495cj4h7318sqpl0s_pf40000gn/T/86.html#step-2">Step 2. 手机测试</a><ul>
+<li><a href="file:///var/folders/82/ywy495cj4h7318sqpl0s_pf40000gn/T/86.html#21-firefly">2.1 Firefly</a></li>
+<li><a href="file:///var/folders/82/ywy495cj4h7318sqpl0s_pf40000gn/T/86.html#22-qq">2.2 QQ</a></li>
+<li><a href="file:///var/folders/82/ywy495cj4h7318sqpl0s_pf40000gn/T/86.html#23">2.3 添加功能</a></li>
+<li><a href="file:///var/folders/82/ywy495cj4h7318sqpl0s_pf40000gn/T/86.html#24">2.4 使用手机发送</a></li>
+<li><a href="file:///var/folders/82/ywy495cj4h7318sqpl0s_pf40000gn/T/86.html#25">2.5 手机接收数据</a></li>
+</ul>
+</li>
+<li><a href="file:///var/folders/82/ywy495cj4h7318sqpl0s_pf40000gn/T/86.html#step-3">Step 3. 平台配置</a><ul>
+<li><a href="file:///var/folders/82/ywy495cj4h7318sqpl0s_pf40000gn/T/86.html#31">3.1 申请内测</a></li>
+<li><a href="file:///var/folders/82/ywy495cj4h7318sqpl0s_pf40000gn/T/86.html#32">3.2 上传设备相关资料</a></li>
+<li><a href="file:///var/folders/82/ywy495cj4h7318sqpl0s_pf40000gn/T/86.html#33-demo">3.3 替换demo中的配置</a></li>
+</ul>
+</li>
+<li><a href="./nrf51822经典案例_files/nrf51822经典案例.html">Step 4. 高阶H5</a></li>
+<li><a href="file:///var/folders/82/ywy495cj4h7318sqpl0s_pf40000gn/T/86.html#4-faq">4. FAQ</a><ul>
+<li><a href="file:///var/folders/82/ywy495cj4h7318sqpl0s_pf40000gn/T/86.html#q">Q：提示“设备未认证”？</a></li>
+<li><a href="file:///var/folders/82/ywy495cj4h7318sqpl0s_pf40000gn/T/86.html#q46">Q：提示“绑定失败，蓝牙设备注册失败，错误码：46”</a></li>
+<li><a href="file:///var/folders/82/ywy495cj4h7318sqpl0s_pf40000gn/T/86.html#qpost_resultret_code33">Q：post_result(ret_code=33)</a></li>
+<li><a href="file:///var/folders/82/ywy495cj4h7318sqpl0s_pf40000gn/T/86.html#q_1">Q：第一次绑定成功，测试一切正常，下次却连接不上</a></li>
+<li><a href="file:///var/folders/82/ywy495cj4h7318sqpl0s_pf40000gn/T/86.html#qqq-xxx">Q：我绑定的时候提示“该设备已被QQ xxx绑定”</a></li>
+<li><a href="file:///var/folders/82/ywy495cj4h7318sqpl0s_pf40000gn/T/86.html#q-q">Q: 手Q绑定时提示“请检查设备是否正常，确保设备在手机附近”</a></li>
+<li><a href="file:///var/folders/82/ywy495cj4h7318sqpl0s_pf40000gn/T/86.html#qft_set_default">Q：代码里FT_SET_DEFAULT是做什么的</a></li>
+<li><a href="file:///var/folders/82/ywy495cj4h7318sqpl0s_pf40000gn/T/86.html#qseq_noprop_id">Q：seq_no和prop_id有什么规定吗？</a></li>
+<li><a href="file:///var/folders/82/ywy495cj4h7318sqpl0s_pf40000gn/T/86.html#q_2">Q：蓝牙登记列表格式是怎样的</a></li>
+<li><a href="file:///var/folders/82/ywy495cj4h7318sqpl0s_pf40000gn/T/86.html#q_3">Q：广播字段可以包含其他数据吗</a></li>
+<li><a href="file:///var/folders/82/ywy495cj4h7318sqpl0s_pf40000gn/T/86.html#q1002">Q：提示”绑定失败，请确认设备电源已打开。1002”</a></li>
+<li><a href="file:///var/folders/82/ywy495cj4h7318sqpl0s_pf40000gn/T/86.html#qq">Q：支持绑定的手Q版本</a></li>
+<li><a href="file:///var/folders/82/ywy495cj4h7318sqpl0s_pf40000gn/T/86.html#qfh_get_property">Q：fh_get_property如才能调用</a></li>
+<li><a href="file:///var/folders/82/ywy495cj4h7318sqpl0s_pf40000gn/T/86.html#q_4">Q：各种错误码的含义</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<p>本文档主要引导您从我们提供的nrf51822demo开始，配合离线测试工具Firefly，一步一步的绑定成功，然后再使用手Q做最后测试的过程。<br>
+虽然Firefly绑定成功过，不代表此设备可以投入生产。但还是强烈建议先用Firefly测试，因为只要做少量修改，就能适最终产品。</p>
+<h2 id="step-1"><a name="user-content-step-1" href="file:///var/folders/82/ywy495cj4h7318sqpl0s_pf40000gn/T/86.html#step-1" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Step 1. 编写设备代码</h2>
+<h3 21="21" id="11"><a name="user-content-11" href="file:///var/folders/82/ywy495cj4h7318sqpl0s_pf40000gn/T/86.html#11" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>1.1 配置蓝牙广播</h3>
+<p>QQ物联的蓝牙广播标准如下</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>值</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ServiceUUID</td>
+<td>0xFEBA</td>
+<td>标识QQ物联</td>
+</tr>
+<tr>
+<td>Write(0x08)  Characteristics UUID</td>
+<td>0000fec7-feba-f1f1-99c0-7e0ce07d0c03</td>
+<td>App向Device传输数据</td>
+</tr>
+<tr>
+<td>Indicate(0x20) Characteristics UUID</td>
+<td>0000fec8-feba-f1f1-99c0-7e0ce07d0c03</td>
+<td>Device向App传输数据</td>
+</tr>
+<tr>
+<td>Read(0x02) Characteristics UUID</td>
+<td>0000fec9-feba-f1f1-99c0-7e0ce07d0c03</td>
+<td>Device不发广播时标识设备</td>
+</tr>
+<tr>
+<td>manufature specific data</td>
+<td>以 PID(4字节)开头，以MAC(6字节)结尾</td>
+<td>Device发广播时标识设备</td>
+</tr>
+</tbody>
+</table>
+<p>ServiceUUID和Characteristic的值是固定的，按照格式填写即可。manufature的计算如下：比如某设备PID=1000000352(0x3B9ACB60)，MAC地址=F2:AF:0C:C1:FC:FD，则manufature字段是{0x60, 0xcb, 0x9a, 0x3b, 0xfd, 0xfc, 0xc1, 0x0c, 0xaf, 0xf2}。</p>
+<p>设置完后，打开 <a href="http://qzonestyle.gtimg.cn/qzone/vas/opensns/res/doc/Firefly_20150519.ipa">firefly</a>，点击扫描。如配置正常，就可以看到设备出现在搜索结果中；如果没有找到，请用LigthBlue检测上述配置是否正确。<br>
+<img alt="ligth blue" src="./nrf51822经典案例_files/22.png"></p>
+<h3 id="12"><a name="user-content-12" href="file:///var/folders/82/ywy495cj4h7318sqpl0s_pf40000gn/T/86.html#12" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>1.2 配置初始数据</h3>
+<p>接下来，您需要到 <a href=""></a><a href="http://iot.open.qq.com/wiki/#!SDK/BLE.md"></a><a href="http://iot.open.qq.com/wiki/#!SDK/BLE.md">http://iot.open.qq.com/wiki/#!SDK/BLE.md</a> 下载最新的SDK，链接我们的静态库。</p>
+<p>初始数据每个设备都不相同，demo里面我们针对测试开发板简单定义一组宏</p>
+<pre><code>/*********************************************************************************************************
+** you can modify here
+*********************************************************************************************************/
+//TODO: 不要直接用这里的FT_LICENSE，请通过firefly生成
+#define FT_LICENSE {0x30,0x45,0x02,0x21,0x00,0xec,0xab,0xfd,0x51,0x81,0x88,0x6f,0x35,0x33,0xaf,0x3f,0x09,0x20,0x1e,0x57,0xbb,0xda,0xb8,0x86,0x0d,0xbe,0xb1,0x8c,0xe1,0x17,0x08,0xd8,0x80,0x61,0x63,0x68,0xba,0x02,0x20,0x57,0xca,0x1e,0xe1,0x0e,0x7a,0x82,0x97,0xdd,0x22,0xe9,0x22,0x56,0xb4,0x01,0xad,0xd4,0x68,0x09,0x1b,0x9e,0x10,0xe6,0xf2,0x12,0x74,0xd0,0x41,0x03,0xce,0xec,0xdb}
+
+
+/*********************************************************************************************************
+** value for Demo App
+*********************************************************************************************************/
+#define FT_DEFAULT_PID  1000000358
+
+#define FT_DEFAULT_AUTH_KEY {0x12,0xc5,0xc3,0x66,0xad,0xd8,0x07,0x81,0x8e,0x13,0xc5,0x1e,0xd3,0x83,0x65,0x8e}
+#define FT_DEFAULT_PUK  {0x03,0xad,0x53,0x43,0x94,0xbb,0xc9,0x02,0xac,0x40,0x0c,0xcf,0xec,0x73,0xf4,0xa3,0x42,0x0c,0xfb,0x37,0x49,0xe3,0x13,0x95,0x17}
+</code></pre>
+<p>对于您的开发板，只需要修改FT_LICENSE。FT_LICENSE的生成非常简单，在 <a href="http://qzonestyle.gtimg.cn/qzone/vas/opensns/res/doc/Firefly_20150519.ipa">firefly</a>发现设备后，回复“+数字”得到该设备的license。</p>
+<p>代码中定义了一个结构体，用来储存上面的值</p>
+<pre><code>typedef struct _QQ_SEC_INFO {
+    uint8_t  license[FT_MAX_LICENSE_LEN];
+    uint16_t licenselen;
+    uint8_t  din[DIN_LEN];
+    uint32_t pid;
+    uint8_t  authkey[AUTH_KEY_LEN];
+    uint8_t  pukstr[PUK_STR_BUFFER_LEN];
+}QQSecInfo;
+</code></pre>
+<p>我们把所有数据储存在此结构体中，以便实现load/save操作。同时，也方便在批量生产时，为每一台设备写入信息。</p>
+<h3 id="13-fd_engineh"><a name="user-content-13-fd_engineh" href="file:///var/folders/82/ywy495cj4h7318sqpl0s_pf40000gn/T/86.html#13-fd_engineh" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>1.3 实现fd_engine.h中的函数</h3>
+<p>fd_engine.h中有部分函数是交给硬件厂商实现的，这部分函数都是以fh_xxx开头。</p>
+<ul>
+<li><code>int8_t fh_send(uint8_t* datum,uint16_t length);</code> 这个函数是SDK在发送数据时调用的。厂商将数据发送完毕后，<em>需要调用<code>void fd_flush(struct fd_engine_s* engine);</code>告知SDK</em>，否则SDK不会继续发送数据。</li>
+<li><code>void fh_load_mac(uint8_t* zone);</code>返回设备的mac地址。比如我们这台设备返回的是”F2AF0CC1FCFD”，是一个12字节、没有\0结尾的字符串。注意顺序和大小写</li>
+<li>fd_save_din/fd_load_din需要用到NVRAM或Flash</li>
+<li>license、authkey、puk等参照demo实现，用我们上面定义的结构体即可</li>
+<li>其它方法根据需要自行实现或留空</li>
+</ul>
+<h3 id="14-fd_engineh"><a name="user-content-14-fd_engineh" href="file:///var/folders/82/ywy495cj4h7318sqpl0s_pf40000gn/T/86.html#14-fd_engineh" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>1.4 调用fd_engine.h中的函数</h3>
+<p>实现了fd_engine.h中的函数后，工程就可以编译通过。但是要让SDK正常运行，还需要按顺序调用下面方法。</p>
+<ul>
+<li>分配一块空间，调用<code>struct fd_engine_s* fd_init(uint8_t* zone,uint16_t size);</code>创建一个全局fd_engine_s对象</li>
+<li>设备连接/断开时，调用fd_connect/fd_disconnet</li>
+<li>在接收数据的地方，调用<code>int8_t fd_received(struct fd_engine_s* engine, uint8_t* datum,uint16_t length);</code>，将收到的数据传给SDK</li>
+</ul>
+<h2 id="step-2"><a name="user-content-step-2" href="file:///var/folders/82/ywy495cj4h7318sqpl0s_pf40000gn/T/86.html#step-2" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Step 2. 手机测试</h2>
+<h3 id="21-firefly"><a name="user-content-21-firefly" href="file:///var/folders/82/ywy495cj4h7318sqpl0s_pf40000gn/T/86.html#21-firefly" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>2.1 Firefly</h3>
+<p>打开Firefly，按提示输入数字，测试绑定功能。如果绑定成功，可以看到以下输出</p>
+<p><img alt="绑定成功" src="./nrf51822经典案例_files/12.jpg"></p>
+<p>如果失败，请仔细对照1.3和1.4步骤。</p>
+<h3 id="22-qq"><a name="user-content-22-qq" href="file:///var/folders/82/ywy495cj4h7318sqpl0s_pf40000gn/T/86.html#22-qq" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>2.2 QQ</h3>
+<p>手机QQ也可以绑定测试Firefly成功的设备。</p>
+<p>首先，您需要把设备的Mac地址给到我们，由我们在后台登记。然后会发给你二维码，在手Q中扫描此二维码即可。</p>
+<pre><code>二维码是一个链接，包含pid和sn。具体原理可以参考我们的经典案例
+</code></pre>
+<h3 id="23"><a name="user-content-23" href="file:///var/folders/82/ywy495cj4h7318sqpl0s_pf40000gn/T/86.html#23" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>2.3 添加功能</h3>
+<p>我们现在做一个简单的亮灯功能：通过手机让开发板上面的灯亮起来。</p>
+<p>在开发板实现<code>int8_t fh_set_property(ff_property_t* prop);</code>方法</p>
+<pre><code>int8_t fh_set_property(ff_property_t* prop)
+{
+    leds_ctrl(mLED_3, 2); //亮灯
+    return 0;
+}
+</code></pre>
+<p>App和开发板的数据交换，都是通过ff_property_t结构体。<br>
+当SDK收到手机发过来的请求，会回调上面这个函数。参数prop中比较重要的是<code>prop_id</code>，相当于方法名；<code>value</code>可以理解为参数。<br>
+上面代码非常简单，只要收到任何消息，就亮灯表示已收到。</p>
+<h3 id="24"><a name="user-content-24" href="file:///var/folders/82/ywy495cj4h7318sqpl0s_pf40000gn/T/86.html#24" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>2.4 使用手机发送</h3>
+<p>QQ上点开设备，会看到一个html5页面。html5通过调用js方法，可以实现通过手机向蓝牙设备发送数据的功能<br>
+<img alt="data" src="./nrf51822经典案例_files/10.jpg"></p>
+<p>点击send。如果一切正常，现在应该可以看到开发板上灯有闪动。</p>
+<h3 id="25"><a name="user-content-25" href="file:///var/folders/82/ywy495cj4h7318sqpl0s_pf40000gn/T/86.html#25" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>2.5 手机接收数据</h3>
+<p>现在我们实现另一个功能：按下开发板按钮，手机上收到一条消息。代码如下</p>
+<pre><code>static void button_event_handler(uint8_t pin_no, uint8_t button_action)
+{
+if (pin_no == mBUTTON_3 &amp;&amp; button_action == APP_BUTTON_RELEASE)
+  {
+        char *value = "btn 3 press";
+        ff_property_t ffprop;
+        memset(&amp;ffprop,0,sizeof(ffprop));
+        ffprop.seq_no = 1;
+        ffprop.len = strlen(value) + 1;
+        ffprop.prop_id = 100000085;
+        ffprop.value = (uint8_t*)value;
+
+        fd_set_property(g_fd_engine, &amp;ffprop);
+    }
+}
+</code></pre>
+<p><code>button_event_handler</code>是开发板上按键回调函数，<code>fd_set_property</code>是设备向手机发送数据到方法。<br>
+按下mBUTTON_3，看到这样的消息提示，证明接收成功<br>
+<img alt="recv" src="./nrf51822经典案例_files/11.PNG"></p>
+<p>至此，设备已基本可用。接下来，您只需要申请我们内测，并修改少量工程里面的数据，就可以自行接入到QQ物联平台。</p>
+<h2 id="step-3"><a name="user-content-step-3" href="file:///var/folders/82/ywy495cj4h7318sqpl0s_pf40000gn/T/86.html#step-3" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Step 3. 平台配置</h2>
+<h3 id="31"><a name="user-content-31" href="file:///var/folders/82/ywy495cj4h7318sqpl0s_pf40000gn/T/86.html#31" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>3.1 申请内测</h3>
+<p>申请内测地址 <a href=""></a><a href="http://iot.open.qq.com/home/reg"></a><a href="http://iot.open.qq.com/home/reg">http://iot.open.qq.com/home/reg</a>，申请成功后可进后台配置添加蓝牙设备。</p>
+<h3 id="32"><a name="user-content-32" href="file:///var/folders/82/ywy495cj4h7318sqpl0s_pf40000gn/T/86.html#32" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>3.2 上传设备相关资料</h3>
+<p>下载 <a href="http://qzonestyle.gtimg.cn/qzone/vas/opensns/res/doc/key_tools2.2b.zip">key_tools</a>，生成产品公钥和密钥</p>
+<p><img alt="public pem" src="./nrf51822经典案例_files/1.jpg"></p>
+<p>打开 <a href="http://iot.open.qq.com/">iot.open.qq.com</a>, 点击“设备信息”，按要求上传公钥与蓝牙地址登记表。</p>
+<p><img alt="add device" src="./nrf51822经典案例_files/0.png"></p>
+<p>登记你的设备MAC地址<br>
+<img alt="config device" src="./nrf51822经典案例_files/2.png"></p>
+<p>确认后点击“提交审核”</p>
+<h3 id="33-demo"><a name="user-content-33-demo" href="file:///var/folders/82/ywy495cj4h7318sqpl0s_pf40000gn/T/86.html#33-demo" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>3.3 替换demo中的配置</h3>
+<p>您需要将demo中的配置替换为您产品使用的值。需要替换的有FT_DEFAULT_PID，FT_DEFAULT_AUTH_KEY，FT_DEFAULT_PUK，FT_LICENSE。</p>
+<p>FT_DEFAULT_PID是您申请的PID。</p>
+<p>下载服务器公钥，打开文件，将内容拷贝到key_tools中，生成authkey和puk。<br>
+<img alt="imprt" src="./nrf51822经典案例_files/31.png"><br>
+替换FT_DEFAULT_AUTH_KEY，FT_DEFAULT_PUK。</p>
+<p>key_tools证书生成批量licnece，替换FT_LICENSE。</p>
+<h2 id="step-4-h5"><a name="user-content-step-4-h5" href="./nrf51822经典案例_files/nrf51822经典案例.html" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Step 4. 高阶H5</h2>
+<p>我们的测试页面显然不能满足您的产品需要，您可以使用后台提供的在线模版，或着自行设计该页面。</p>
+<h2 id="4-faq"><a name="user-content-4-faq" href="file:///var/folders/82/ywy495cj4h7318sqpl0s_pf40000gn/T/86.html#4-faq" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>4. FAQ</h2>
+<h3 id="q"><a name="user-content-q" href="file:///var/folders/82/ywy495cj4h7318sqpl0s_pf40000gn/T/86.html#q" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Q：提示“设备未认证”？</h3>
+<p>A：你设备的mac地址没有在平台上登记，或登记后还没有审核通过。每次添加设备都需要重新审核</p>
+<h3 id="q46"><a name="user-content-q46" href="file:///var/folders/82/ywy495cj4h7318sqpl0s_pf40000gn/T/86.html#q46" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Q：提示“绑定失败，蓝牙设备注册失败，错误码：46”</h3>
+<p>A：请以下步骤确认：1、firefly中的s_public.pem、public.pem和网站上的一致；2、firefly可以绑定成功。<br>
+如果你是用的demo里面的PID，请不要重新生成产品公钥。如果已生成，请先卸载firefly，重启设备（排除document下有残留文件），然后重装，并按照上面的步骤重新生成license。</p>
+<h3 id="qpost_resultret_code33"><a name="user-content-qpost_resultret_code33" href="file:///var/folders/82/ywy495cj4h7318sqpl0s_pf40000gn/T/86.html#qpost_resultret_code33" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Q：post_result(ret_code=33)</h3>
+<p>A：FireFly目前不支持其他公私钥，请使用我们demo你们的authkey、puk、pid，并把mac地址发给我们代为登记。官网上的key_tools能帮助生产其他pid相应的authkey、puk、licence。</p>
+<h3 id="q_1"><a name="user-content-q_1" href="file:///var/folders/82/ywy495cj4h7318sqpl0s_pf40000gn/T/86.html#q_1" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Q：第一次绑定成功，测试一切正常，下次却连接不上</h3>
+<p>A：请确认fd_load_din/fd_save_din已正确实现，且din的值保存到NVRAM或Flash中。绑定成功后SDK会调用fd_save_din，每次连接时会调用fd_load_din。如果不是绑定时保存的din，就会出现连接不上的情况</p>
+<h3 id="qqq-xxx"><a name="user-content-qqq-xxx" href="file:///var/folders/82/ywy495cj4h7318sqpl0s_pf40000gn/T/86.html#qqq-xxx" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Q：我绑定的时候提示“该设备已被QQ xxx绑定”</h3>
+<p>A：让对方解绑</p>
+<h3 id="q-q"><a name="user-content-q-q" href="file:///var/folders/82/ywy495cj4h7318sqpl0s_pf40000gn/T/86.html#q-q" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Q: 手Q绑定时提示“请检查设备是否正常，确保设备在手机附近”</h3>
+<p>A：可能是mac地址没有登记，或者二维码中sn对应了其它设备的mac地址。请在平台上下载登记表检查。</p>
+<h3 id="qft_set_default"><a name="user-content-qft_set_default" href="file:///var/folders/82/ywy495cj4h7318sqpl0s_pf40000gn/T/86.html#qft_set_default" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Q：代码里FT_SET_DEFAULT是做什么的</h3>
+<p>A：第一次运行时我们会打开这个宏，从代码里面读取puk等信息并写人到flash；下一次运行我们会关掉这个宏，这样就直接从flash里面获取。量产时一般由别的工具写入flash，所以应予以关闭</p>
+<h3 id="qseq_noprop_id"><a name="user-content-qseq_noprop_id" href="file:///var/folders/82/ywy495cj4h7318sqpl0s_pf40000gn/T/86.html#qseq_noprop_id" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Q：seq_no和prop_id有什么规定吗？</h3>
+<p>A：seq_no一般从1开始递增，没有特殊规定，视应用而定；prop_id不能随便使用，以后台分配为准。</p>
+<h3 id="q_2"><a name="user-content-q_2" href="file:///var/folders/82/ywy495cj4h7318sqpl0s_pf40000gn/T/86.html#q_2" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Q：蓝牙登记列表格式是怎样的</h3>
+<p>A：CSV格式，第一列sn，第二列mac地址</p>
+<pre><code>0280E10034120000,02:80:E1:00:34:12
+0480E10034120000,04:80:E1:00:34:12
+0402EC2500FD0000,04:02:EC:25:00:FD
+20736A1010010000,20:73:6A:10:10:01
+</code></pre>
+<p>sn要求16位，可以是任意的由数字和字母组成。示例中用的MAC地址，真实环境不建议这样，以免被人伪造sn。</p>
+<h3 id="q_3"><a name="user-content-q_3" href="file:///var/folders/82/ywy495cj4h7318sqpl0s_pf40000gn/T/86.html#q_3" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Q：广播字段可以包含其他数据吗</h3>
+<p>A：QQ定义广播的manufature字段前4字节为PID，后6字节为MAC。可以在中间放其他数据</p>
+<h3 id="q1002"><a name="user-content-q1002" href="file:///var/folders/82/ywy495cj4h7318sqpl0s_pf40000gn/T/86.html#q1002" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Q：提示”绑定失败，请确认设备电源已打开。1002”</h3>
+<p>A：广播设置错误，或PUK、AUTH_KEY等长度不对。请检测代码。</p>
+<h3 id="qq"><a name="user-content-qq" href="file:///var/folders/82/ywy495cj4h7318sqpl0s_pf40000gn/T/86.html#qq" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Q：支持绑定的手Q版本</h3>
+<p>A：Android ≥ 5.6，iOS ≥ 5.7</p>
+<h3 id="qfh_get_property"><a name="user-content-qfh_get_property" href="file:///var/folders/82/ywy495cj4h7318sqpl0s_pf40000gn/T/86.html#qfh_get_property" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Q：fh_get_property如才能调用</h3>
+<p>如需让fh_get_property被调用，H5发送代码，apiName需要将set_data_point改为get_data_point，此接口不会把value传到设备中。  </p>
+<h3 id="q_4"><a name="user-content-q_4" href="file:///var/folders/82/ywy495cj4h7318sqpl0s_pf40000gn/T/86.html#q_4" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Q：各种错误码的含义</h3>
+<p>A：详见网站 <a href=""></a><a href="http://iot.open.qq.com/wiki/#!SDK/Errcode.md"></a><a href="http://iot.open.qq.com/wiki/#!SDK/Errcode.md">http://iot.open.qq.com/wiki/#!SDK/Errcode.md</a></p></article></body></html>
