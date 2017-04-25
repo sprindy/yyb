@@ -27,6 +27,7 @@ public class DrawView extends View {
     public DrawView(Context context, AttributeSet attrs) {
         super(context, attrs);
         //创建一个与该View相同大小的缓存区
+        //// TODO: 4/25/17 override API to set width and hight of my_drew 
         cacheBitmap = Bitmap.createBitmap(VIEW_WIDTH,VIEW_HEIGHT, Bitmap.Config.RGB_565);
         cacheCanvas = new Canvas();
         path = new Path();
