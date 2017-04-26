@@ -3,7 +3,6 @@ package com.sprindy.handdraw;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -21,7 +20,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -32,10 +30,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public static final int REQUEST_ENABLE_BT = 1;
     public String TAG = "sprindy_yyb";
-    private BluetoothController mController = new BluetoothController();
-    private ListView ble_listView;
-    private ArrayAdapter<String> bleListAdapter;
-    private List<String> bleListData = new ArrayList<String>();
+    private BleController mBleController = new BleController();
 
     /** Called when the activity is first created. */
     EmbossMaskFilter emboss;
@@ -54,55 +49,34 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btn_ble_support.setOnClickListener(this);
         btn_ble_scan.setOnClickListener(this);
 
-        // the sample offer by AndroidDevelop: "android.R.layout.simple_list_item_1"
-        // do not change to "R.id.list_ble", or will be kill process when List.add
-        bleListAdapter = new ArrayAdapter<String>(MainActivity.this,
-                android.R.layout.simple_list_item_1, bleListData);
-        ble_listView = (ListView)findViewById(R.id.list_ble);
-        ble_listView.setAdapter(bleListAdapter);
+        mBleController.bleListInit(this);
 
-        // Register for broadcasts when a device is discovered.
-        IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
-        registerReceiver(mReceiver, filter);
     }
+
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btn_ble_enable:
-                mController.turnOnBluetooth(this, REQUEST_ENABLE_BT);
+                mBleController.turnOnBluetooth(this, REQUEST_ENABLE_BT);
                 break;
             case R.id.btn_ble_scan:
-                mController.startScanBluetooth(this);
+                mBleController.startScanBle(this, true);
                 break;
         }
 
     }
 
-    // Create a BroadcastReceiver for ACTION_FOUND.
-    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            if (BluetoothDevice.ACTION_FOUND.equals(action)) {
-                // Discovery has found a device. Get the BluetoothDevice
-                // object and its info from the Intent.
-                BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                String deviceName = device.getName();
-                String deviceHardwareAddress = device.getAddress(); // MAC address
-
-                Log.d(TAG, "onReceive():" + deviceName + " " + deviceHardwareAddress);
-                bleListData.add(deviceName + "\n" + deviceHardwareAddress);
-                bleListAdapter.notifyDataSetChanged();
-            }
-        }
-    };
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
 
+        //stop scan ble.
+        mBleController.startScanBle(this, false);
+
         // Don't forget to unregister the ACTION_FOUND receiver.
-        unregisterReceiver(mReceiver);
+        //call it when use bt not ble.
+        //unregisterReceiver(mReceiver);
     }
 
     //负责创建选项菜单
