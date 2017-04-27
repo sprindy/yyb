@@ -49,6 +49,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btn_ble_support.setOnClickListener(this);
         btn_ble_scan.setOnClickListener(this);
 
+//        ListView list_ble = (ListView)findViewById(R.id.list_ble);
+//        list_ble.setOnClickListener(this);
+
         mBleController.bleListInit(this);
 
     }
@@ -63,6 +66,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btn_ble_scan:
                 mBleController.startScanBle(this, true);
                 break;
+            case R.id.list_ble:
+                mBleController.connectBle(this);
+                break;
+            default:break;
         }
 
     }

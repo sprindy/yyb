@@ -6,6 +6,8 @@ import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.os.Handler;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -18,14 +20,14 @@ import java.util.List;
  * Created by sprindy on 4/26/17.
  */
 
-public class BleController {
+public class BleController{
     public String TAG = "sprindy_ble";
     private BluetoothAdapter mBleAdapter;
     private boolean mScanning;
     private Handler mHandler;
     private ListView ble_listView;
-    private ArrayAdapter<String> bleListAdapter;
-    private List<String> bleListData = new ArrayList<String>();
+    private BleAdapter bleListAdapter;
+    private List<Ble> bleListData = new ArrayList<Ble>();
 
     // Stops scanning after 10 seconds.
     private static final long SCAN_PERIOD = 10000;
@@ -34,13 +36,31 @@ public class BleController {
         mBleAdapter = BluetoothAdapter.getDefaultAdapter();
     }
 
-    public void bleListInit(Activity activity){
+    public void bleListInit(final Activity activity){
         // the sample offer by AndroidDevelop: "android.R.layout.simple_list_item_1"
         // do not change to "R.id.list_ble", or will be kill process when List.add
-        bleListAdapter = new ArrayAdapter<String>(activity,
-                android.R.layout.simple_list_item_1, bleListData);
+        bleListAdapter = new BleAdapter(activity,
+                R.layout.ble_item, bleListData);
         ble_listView = (ListView)activity.findViewById(R.id.list_ble);
         ble_listView.setAdapter(bleListAdapter);
+
+//        ble_listView.setOnClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                Ble ble = bleListData.get(position);
+////                Toast.makeText(activity.this, ble.getDeviceName() + " " + ble.getDeviceHwAddress(),
+////                        Toast.LENGTH_SHORT).show();
+//                Log.d(TAG, ble.getDeviceName() + " " + ble.getDeviceHwAddress());
+//            }
+//        });
+    }
+
+    public void connectBle(Activity activity) {
+        int position = 0;
+        Ble ble = bleListData.get(position);
+        Toast.makeText(activity, ble.getDeviceName() + " " + ble.getDeviceHwAddress(),
+                        Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "connectBle(): " + ble.getDeviceName() + " " + ble.getDeviceHwAddress());
     }
 
     /**
@@ -99,7 +119,8 @@ public class BleController {
                             String deviceHardwareAddress = device.getAddress(); // MAC address
 
                             Log.d(TAG, "mLeScanCallback():" + deviceName + " " + deviceHardwareAddress);
-                            bleListData.add(deviceName + "\n" + deviceHardwareAddress);
+                            Ble ble = new Ble(deviceName, deviceHardwareAddress);
+                            bleListData.add(ble);
                             //android.view.ViewRootImpl$CalledFromWrongThreadException: Only the
                             // original thread that created a view hierarchy can touch its views.
                             bleListAdapter.notifyDataSetChanged();
