@@ -1,0 +1,37 @@
+diff --git a/hw/nRF51822_Nordic/nRF51822-BK-FW/Source Code/nrf51_beacon/common/ble_bcs/ble_bcs.c b/hw/nRF51822_Nordic/nRF51822-BK-FW/Source Code/nrf51_beacon/common/ble_bcs/ble_bcs.c
+index c57f34d..c184657 100755
+--- a/hw/nRF51822_Nordic/nRF51822-BK-FW/Source Code/nrf51_beacon/common/ble_bcs/ble_bcs.c	
++++ b/hw/nRF51822_Nordic/nRF51822-BK-FW/Source Code/nrf51_beacon/common/ble_bcs/ble_bcs.c	
+@@ -397,6 +397,7 @@ static uint32_t beacon_led_char_add(ble_bcs_t * p_bcs, const ble_bcs_init_t * p_
+     ble_gatts_attr_t    attr_char_value;
+     ble_uuid_t          ble_uuid;
+     ble_gatts_attr_md_t attr_md;
++		uint8_t 						led_state[BCS_DATA_LED_LEN];
+ 
+     memset(&char_md, 0, sizeof(char_md));
+     
+@@ -428,7 +429,10 @@ static uint32_t beacon_led_char_add(ble_bcs_t * p_bcs, const ble_bcs_init_t * p_
+     attr_char_value.init_len     = BCS_DATA_LED_LEN;
+     attr_char_value.init_offs    = 0;
+     attr_char_value.max_len      = BCS_DATA_LED_LEN;
+-    attr_char_value.p_value      = &p_bcs_init->p_beacon->data.led_state;
++		
++		led_state[1] = 0x5a;
++		led_state[0] = (p_bcs_init->p_beacon->data.led_state & 0xFF00);
++    attr_char_value.p_value      = led_state;
+     
+     return sd_ble_gatts_characteristic_add(p_bcs->service_handle, &char_md,
+                                                &attr_char_value,
+diff --git a/hw/nRF51822_Nordic/nRF51822-BK-FW/Source Code/nrf51_beacon/common/ble_bcs/ble_bcs.h b/hw/nRF51822_Nordic/nRF51822-BK-FW/Source Code/nrf51_beacon/common/ble_bcs/ble_bcs.h
+index 987f0af..994ebfb 100755
+--- a/hw/nRF51822_Nordic/nRF51822-BK-FW/Source Code/nrf51_beacon/common/ble_bcs/ble_bcs.h	
++++ b/hw/nRF51822_Nordic/nRF51822-BK-FW/Source Code/nrf51_beacon/common/ble_bcs/ble_bcs.h	
+@@ -57,7 +57,7 @@
+ #define BCS_DATA_ID_LEN                 16
+ #define BCS_DATA_COMPANY_ID_LEN          2
+ #define BCS_DATA_ADV_INT_LEN             2
+-#define BCS_DATA_LED_LEN                 1
++#define BCS_DATA_LED_LEN                 2
+ 
+ typedef enum {
+     beacon_maj_min_data,
