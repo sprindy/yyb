@@ -50,7 +50,7 @@
 #define BCS_UUID_BEACON_ID_CHAR         0x1524
 #define BCS_UUID_BEACON_COMPANY_ID_CHAR 0x1527
 #define BCS_UUID_BEACON_ADV_INT_CHAR    0x1528
-#define BCS_UUID_BEACON_LED_CHAR        0x1530
+#define BCS_UUID_BEACON_LED_CHAR        0x1529
 
 #define BCS_DATA_MAJ_MIN_LEN             4
 #define BCS_DATA_CALIB_LEN               1
