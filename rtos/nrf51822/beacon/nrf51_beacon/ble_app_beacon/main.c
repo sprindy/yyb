@@ -39,6 +39,8 @@
 #include "dfu_app_handler_mod.h"
 #include "led_softblink.h"
 #include "beacon.h"
+#include "display.h"
+#include "uart_drv.h"
 
 /* Button definitions */
 #define BOOTLOADER_BUTTON_PIN           BUTTON_0                                    /**< Button used to enter DFU mode. */
@@ -785,7 +787,6 @@ static void beacon_setup(beacon_mode_t mode)
     else
     {
         advertising_init(mode);
-        
         if (p_beacon->data.led_state)
         {
             led_softblink_start(APP_BEACON_MODE_LED_MSK);
@@ -820,7 +821,7 @@ static void beacon_start(beacon_mode_t mode)
 {
     uint32_t err_code;
     uint32_t count;
-    
+
     // Check if storage access is in progress.
     err_code = pstorage_access_status_get(&count);
     APP_ERROR_CHECK(err_code);
@@ -829,14 +830,14 @@ static void beacon_start(beacon_mode_t mode)
         m_beacon_start = false;
         // Setup beacon mode
         beacon_setup(m_beacon_mode);
-        
+
         // Start advertising
         advertising_start();
     }
     else
     {
         m_beacon_start = true;
-    }        
+    }
 }
 
 /** @brief Function for reading the beacon mode button.
@@ -861,11 +862,13 @@ int main(void)
     APP_SCHED_INIT(SCHED_MAX_EVENT_DATA_SIZE, SCHED_QUEUE_SIZE);
     APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_MAX_TIMERS, APP_TIMER_OP_QUEUE_SIZE, false);
     APP_GPIOTE_INIT(APP_GPIOTE_MAX_USERS);
-    buttons_init();    
+	uart_init();
+    buttons_init();
     leds_init();
+	/* display_init(); */
     ble_stack_init();
     flash_access_init();
-    
+
     // Read beacon mode
     m_beacon_mode = beacon_mode_button_read();
     // Read beacon params from flash
@@ -875,7 +878,7 @@ int main(void)
         // No valid params found, write default params.
         beacon_params_default_set();
     }
-    
+
     beacon_start(m_beacon_mode);
 
     // Enter main loop.
