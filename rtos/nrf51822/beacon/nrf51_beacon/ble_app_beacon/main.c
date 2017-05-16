@@ -39,6 +39,7 @@
 #include "dfu_app_handler_mod.h"
 #include "led_softblink.h"
 #include "beacon.h"
+#include "app_uart.h"
 #include "display.h"
 #include "uart_drv.h"
 
@@ -415,7 +416,13 @@ static void beacon_write_handler(ble_bcs_t * p_lbs, beacon_data_type_t type, uin
             break;
         
         case beacon_led_data:
-            tmp.data.led_state = data[0];
+            /* tmp.data.led_state = data[0]; */
+			printf("%s receiver led data:", __func__);
+			for(int i=0; i<BCS_DATA_LED_LEN; i++ ) {
+				tmp.data.led_state[i] = data[i];
+				printf("0x%x ", data[i]);
+			}
+			printf("\n");
             break;
         
         default:
@@ -754,7 +761,7 @@ static void beacon_params_default_set(void)
     tmp.data.magic_byte   = MAGIC_FLASH_BYTE;
     tmp.data.adv_interval = APP_BEACON_DEFAULT_ADV_INTERVAL_MS;
     tmp.data.company_id   = APP_DEFAULT_COMPANY_IDENTIFIER;
-    tmp.data.led_state    = 0x01;
+    tmp.data.led_state[0]    = 0x01;
     
     beacon_data[BEACON_MANUF_DAT_MINOR_L_IDX] = (uint8_t)(NRF_FICR->DEVICEADDR[0] & 0xFFUL);
     beacon_data[BEACON_MANUF_DAT_MINOR_H_IDX] = (uint8_t)((NRF_FICR->DEVICEADDR[0] >>  8) & 0xFFUL);
@@ -774,8 +781,11 @@ static void beacon_params_default_set(void)
 */
 static void beacon_setup(beacon_mode_t mode)
 {
+	/* mode = beacon_mode_normal; */
+	/* mode = beacon_mode_config; */
     if(mode == beacon_mode_config)
     {
+	printf("config mode\n");
         gap_params_init();
         services_init();
         advertising_init(mode);
@@ -783,14 +793,25 @@ static void beacon_setup(beacon_mode_t mode)
         sec_params_init();
         led_softblink_off_time_set(2000);
         led_softblink_start(APP_CONFIG_MODE_LED_MSK);
+	printf("led timer started\n");
+		display_timer_start();
+	printf("display timer started\n");
     }
     else
     {
+	printf("normal mode\n");
+        ///**/gap_params_init();
+        ///**/services_init();
         advertising_init(mode);
-        if (p_beacon->data.led_state)
+        ///**/conn_params_init();
+        ///**/sec_params_init();
+        if (p_beacon->data.led_state[0])
         {
             led_softblink_start(APP_BEACON_MODE_LED_MSK);
+	printf("led timer started\n");
         }
+		display_timer_start();
+	printf("display timer started\n");
     }    
 }
 
@@ -867,19 +888,25 @@ int main(void)
     leds_init();
 	/* display_init(); */
     ble_stack_init();
+	printf("ble inited\n");
     flash_access_init();
+	printf("flash inited\n");
 
     // Read beacon mode
     m_beacon_mode = beacon_mode_button_read();
+	printf("read beacon mode:%s\n", m_beacon_mode ? "normal" : "config");
     // Read beacon params from flash
     p_beacon = beacon_params_get();
+	/* printf("mode get\n"); */
     if (p_beacon->data.magic_byte != MAGIC_FLASH_BYTE)
     {
         // No valid params found, write default params.
         beacon_params_default_set();
     }
+	/* printf("beacon gong to start\n"); */
 
     beacon_start(m_beacon_mode);
+	printf("beacon started\n");
 
     // Enter main loop.
     for (;;)

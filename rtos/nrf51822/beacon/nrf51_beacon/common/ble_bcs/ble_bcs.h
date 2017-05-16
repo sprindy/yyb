@@ -57,7 +57,7 @@
 #define BCS_DATA_ID_LEN                 16
 #define BCS_DATA_COMPANY_ID_LEN          2
 #define BCS_DATA_ADV_INT_LEN             2
-#define BCS_DATA_LED_LEN                 1
+#define BCS_DATA_LED_LEN                20
 
 typedef enum {
     beacon_maj_min_data,
@@ -93,6 +93,7 @@ typedef struct ble_bcs_s
     ble_gatts_char_handles_t     beacon_comp_id_char_handles;
     ble_gatts_char_handles_t     beacon_adv_int_char_handles;
     ble_gatts_char_handles_t     beacon_led_char_handles;
+    /* ble_gatts_char_handles_t     beacon_display_data_handles; */
     uint8_t                      uuid_type;
     uint16_t                     conn_handle;  
     bool                         is_notifying;

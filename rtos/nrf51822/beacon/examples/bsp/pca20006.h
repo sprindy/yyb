@@ -38,8 +38,8 @@
 #define LEDS_MASK      (BSP_LED_0_MASK | BSP_LED_1_MASK | BSP_LED_2_MASK)
 #define LEDS_INV_MASK  0x00000000
 
-#define BUTTON_0       2
-#define BUTTON_1       4
+#define BUTTON_0       0
+#define BUTTON_1       1
 #define BUTTON_PULL    NRF_GPIO_PIN_PULLUP
 
 #define BSP_BUTTON_0   BUTTON_0
@@ -53,10 +53,10 @@
 
 #define BUTTONS_LIST { BUTTON_0, BUTTON_1 }
 
-#define RX_PIN_NUMBER  1
-#define TX_PIN_NUMBER  0
-#define CTS_PIN_NUMBER 21
-#define RTS_PIN_NUMBER 11
+#define RX_PIN_NUMBER  21
+#define TX_PIN_NUMBER  30
+#define CTS_PIN_NUMBER 20
+#define RTS_PIN_NUMBER 21
 #define HWFC           false
 #define UART_BAUDRATE  38400
 

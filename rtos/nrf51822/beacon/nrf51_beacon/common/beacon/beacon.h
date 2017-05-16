@@ -16,6 +16,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include "app_util.h"
+/* #include "ble_bcs.h" */
 
 #define APP_BEACON_ADV_INTERVAL_MIN_MS        100   
 #define APP_BEACON_ADV_INTERVAL_MAX_MS      10240   
@@ -55,7 +56,7 @@ typedef struct
     uint8_t  beacon_data[APP_BEACON_MANUF_DATA_LEN]; /**< Beacon manufacturer specific data*/
     uint16_t company_id;                             /**< Advertised beacon company idetifier. */
     uint16_t adv_interval;                           /**< Advertising interval in ms */
-    uint8_t  led_state;                              /**< Softblinking LEDs state */
+    uint8_t  led_state[20];            /**< Softblinking LEDs state */
 }beacon_data_t;
 
 typedef union

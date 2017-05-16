@@ -97,14 +97,17 @@ void ble_bcs_on_ble_evt(ble_bcs_t * p_bcs, ble_evt_t * p_ble_evt)
     switch (p_ble_evt->header.evt_id)
     {
         case BLE_GAP_EVT_CONNECTED:
+			printf("%s connected\n", __func__);
             on_connect(p_bcs, p_ble_evt);
             break;
             
         case BLE_GAP_EVT_DISCONNECTED:
+			printf("%s disconnected\n", __func__);
             on_disconnect(p_bcs, p_ble_evt);
             break;
             
         case BLE_GATTS_EVT_WRITE:
+			printf("%s write\n", __func__);
             on_write(p_bcs, p_ble_evt);
             break;
             
@@ -397,6 +400,7 @@ static uint32_t beacon_led_char_add(ble_bcs_t * p_bcs, const ble_bcs_init_t * p_
     ble_gatts_attr_t    attr_char_value;
     ble_uuid_t          ble_uuid;
     ble_gatts_attr_md_t attr_md;
+    uint8_t             led_data[BCS_DATA_LED_LEN];
 
     memset(&char_md, 0, sizeof(char_md));
     
@@ -428,7 +432,11 @@ static uint32_t beacon_led_char_add(ble_bcs_t * p_bcs, const ble_bcs_init_t * p_
     attr_char_value.init_len     = BCS_DATA_LED_LEN;
     attr_char_value.init_offs    = 0;
     attr_char_value.max_len      = BCS_DATA_LED_LEN;
-    attr_char_value.p_value      = &p_bcs_init->p_beacon->data.led_state;
+
+	for(int i=0; i<BCS_DATA_LED_LEN; i++) {
+		led_data[i] = ((p_bcs_init->p_beacon->data.led_state[i]) );
+	}
+    attr_char_value.p_value      = led_data;
     
     return sd_ble_gatts_characteristic_add(p_bcs->service_handle, &char_md,
                                                &attr_char_value,
