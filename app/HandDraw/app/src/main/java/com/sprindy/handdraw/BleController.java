@@ -301,21 +301,48 @@ public class BleController{
         return false;
     }
 
-    public boolean writeDisplayData() {
+    public void delay() {
+        for (int j = 0; j < 0xffff; j++) {
+            for (int k = 0; k < 400; k++) {
+                ;
+            }
+        }
+    }
+
+    public boolean writeDisplayData(int[] data) {
         if (bluetoothGatt == null)
             return false;
+        if (data.length == 0) {
+            Log.d(TAG, "writeDisplayData no data");
+            return false;
+        }
+        if (data.length%16 !=0) {
+            Log.d(TAG, "writeDisplayData length not 16 multiple: " + data.length);
+            return false;
+        }
 
         if (mLedSettingsCharacteristic != null) {
-            final byte[] sendData = new byte[20];
-            for (int i=0; i<sendData.length; i++) {
-                sendData[i] = (byte) i;
+            final byte[] packageData = new byte[20];
+            //TODO 0xff will regards as -1
+            for (int i=0; i<data.length/16; i++) {
+                packageData[0] = (byte) data.length;
+                packageData[1] = (byte) i;
+                packageData[2] = (byte) 1; //led enable
+                packageData[3] = (byte) 0; //reserved
+                for (int j = 0; j < 16; j++) {
+                    packageData[j+4] = (byte) data[i*16 + j];   //usefull display data
+                }
+
+                mLedSettingsCharacteristic.setValue(packageData);
+                mLedSettingsCharacteristic.setWriteType(BluetoothGattCharacteristic.WRITE_TYPE_NO_RESPONSE);
+                bluetoothGatt.writeCharacteristic(mLedSettingsCharacteristic);  //16 bytes of display data
+                Log.d(TAG, "writeDisplayData " + i);
+                delay();
             }
-            mLedSettingsCharacteristic.setValue(sendData);
-            bluetoothGatt.writeCharacteristic(mLedSettingsCharacteristic);
             return true;
         }
-            return false;
-
+        return false;
+    }
 
     public void connectBle(Activity activity) {
         int position = 0;

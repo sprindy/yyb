@@ -1,3 +1,6 @@
 G*
+*.swp
 nrf51_beacon/ble_app_beacon/pca20006/s110/arm/RTE*
 nrf51_beacon/ble_app_beacon/pca20006/s110/arm/_build*
+nrf51_beacon/ble_app_beacon/pca20006/s110/arm/JLinkLog.txt
+nrf51_beacon/ble_app_beacon/pca20006/s110/arm/ble_app_beacon_s110_pca20006.uvguix.sprindy
