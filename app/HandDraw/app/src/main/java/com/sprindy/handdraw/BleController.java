@@ -55,10 +55,13 @@ public class BleController{
     public final static int SERVICE_CALIBRATION = 3;
 
     public static final UUID CONFIG_SERVICE_UUID = new UUID(0x955A15230FE2F5AAl, 0xA09484B8D4F3E8ADl);
+    //#define BLE_GAP_AD_TYPE_SERVICE_DATA_128BIT_UUID            0x21 //< Service Data - 128-bit UUID.
     private static final UUID CONFIG_UUID_CHARACTERISTIC_UUID = new UUID(0x955A15240FE2F5AAl, 0xA09484B8D4F3E8ADl);
+    //#define BLE_GAP_AD_TYPE_TX_POWER_LEVEL                      0x0A //< Transmit power level.
     private static final UUID CONFIG_RSSI_CHARACTERISTIC_UUID = new UUID(0x955A15250FE2F5AAl, 0xA09484B8D4F3E8ADl);
     private static final UUID CONFIG_MAJOR_MINOR_CHARACTERISTIC_UUID = new UUID(0x955A15260FE2F5AAl, 0xA09484B8D4F3E8ADl);
     private static final UUID CONFIG_MANUFACTURER_ID_CHARACTERISTIC_UUID = new UUID(0x955A15270FE2F5AAl, 0xA09484B8D4F3E8ADl);
+    //#define BLE_GAP_AD_TYPE_ADVERTISING_INTERVAL                0x1A //< Advertising Interval.
     private static final UUID CONFIG_ADV_INTERVAL_CHARACTERISTIC_UUID = new UUID(0x955A15280FE2F5AAl, 0xA09484B8D4F3E8ADl);
     private static final UUID CONFIG_LED_SETTINGS_CHARACTERISTIC_UUID = new UUID(0x955A15290FE2F5AAl, 0xA09484B8D4F3E8ADl);
 
@@ -141,7 +144,6 @@ public class BleController{
                 characteristic, int status) {
             super.onCharacteristicRead(gatt, characteristic, status);
 
-            Log.d(TAG, "BluetoothGattCallback onCharacteristicRead " + "characteristic.getUuid()");
             if (status != BluetoothGatt.GATT_SUCCESS) {
                 Log.w(TAG, "Characteristic read error: " + status);
 //                broadcastError(status);
@@ -190,6 +192,27 @@ public class BleController{
         @Override
         public void onCharacteristicWrite(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
             super.onCharacteristicWrite(gatt, characteristic, status);
+
+            if (CONFIG_UUID_CHARACTERISTIC_UUID.equals(characteristic.getUuid())) {
+                final UUID uuid = decodeBeaconUUID(characteristic);
+//                broadcastUuid(uuid);
+            } else if (CONFIG_MAJOR_MINOR_CHARACTERISTIC_UUID.equals(characteristic.getUuid())) {
+                final int major = decodeUInt16(characteristic, 0);
+                final int minor = decodeUInt16(characteristic, 2);
+//                broadcastMajorAndMinor(major, minor);
+            } else if (CONFIG_RSSI_CHARACTERISTIC_UUID.equals(characteristic.getUuid())) {
+                final int rssi = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_SINT8, 0);
+//                broadcastRssi(rssi);
+            } else if (CONFIG_MANUFACTURER_ID_CHARACTERISTIC_UUID.equals(characteristic.getUuid())) {
+                final int id = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, 0);
+//                broadcastManufacturerId(id);
+            } else if (CONFIG_ADV_INTERVAL_CHARACTERISTIC_UUID.equals(characteristic.getUuid())) {
+                final int interval = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, 0);
+//                broadcastAdvInterval(interval);
+            } else if (CONFIG_LED_SETTINGS_CHARACTERISTIC_UUID.equals(characteristic.getUuid())) {
+                final boolean on = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8, 0) == 1;
+//                broadcastLedStatus(on);
+            }
         }
 
         @Override
@@ -271,9 +294,28 @@ public class BleController{
         } else if (mRssiCharacteristic != null) {
             bluetoothGatt.readCharacteristic(mRssiCharacteristic);
             return true;
+        } else if (mLedSettingsCharacteristic != null) {
+            bluetoothGatt.readCharacteristic(mLedSettingsCharacteristic);
+            return true;
         }
         return false;
     }
+
+    public boolean writeDisplayData() {
+        if (bluetoothGatt == null)
+            return false;
+
+        if (mLedSettingsCharacteristic != null) {
+            final byte[] sendData = new byte[20];
+            for (int i=0; i<sendData.length; i++) {
+                sendData[i] = (byte) i;
+            }
+            mLedSettingsCharacteristic.setValue(sendData);
+            bluetoothGatt.writeCharacteristic(mLedSettingsCharacteristic);
+            return true;
+        }
+            return false;
+
 
     public void connectBle(Activity activity) {
         int position = 0;

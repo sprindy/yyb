@@ -47,9 +47,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Button btn_ble_support = (Button)findViewById(R.id.btn_ble_enable);
         Button btn_ble_scan = (Button)findViewById(R.id.btn_ble_scan);
         Button btn_ble_read = (Button)findViewById(R.id.btn_ble_read);
+        Button btn_ble_send = (Button)findViewById(R.id.btn_ble_send);
         btn_ble_support.setOnClickListener(this);
         btn_ble_scan.setOnClickListener(this);
         btn_ble_read.setOnClickListener(this);
+        btn_ble_send.setOnClickListener(this);
 
         mBleController.bleListInit(this);
 
@@ -67,6 +69,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btn_ble_read:
                 mBleController.read();
+                break;
+            case R.id.btn_ble_send:
+                mBleController.writeDisplayData();
                 break;
             default:break;
         }
