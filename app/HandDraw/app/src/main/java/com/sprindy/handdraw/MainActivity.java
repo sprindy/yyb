@@ -93,6 +93,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         //stop scan ble.
         mBleController.startScanBle(this, false);
+        mBleController.disconnectedBle(this);
 
         // Don't forget to unregister the ACTION_FOUND receiver.
         //call it when use bt not ble.

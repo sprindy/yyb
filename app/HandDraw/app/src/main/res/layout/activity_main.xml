@@ -21,7 +21,7 @@
 
     <Button
         android:id="@+id/btn_ble_read"
-        android:text="CONNECT"
+        android:text="READ"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 

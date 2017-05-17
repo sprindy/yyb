@@ -344,6 +344,12 @@ public class BleController{
         return false;
     }
 
+    public void disconnectedBle(Activity activity) {
+        if (bluetoothGatt != null) {
+            bluetoothGatt.disconnect();
+        }
+    }
+
     public void connectBle(Activity activity) {
         int position = 0;
         Ble ble = bleListData.get(position);
