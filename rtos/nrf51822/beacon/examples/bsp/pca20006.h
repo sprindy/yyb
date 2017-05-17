@@ -13,12 +13,7 @@
 #define PCA20006_H
 
 // LEDs and buttons definition for PCA20006 board (beacon) 
-#define LEDS_NUMBER    3
-
-#define LED_RGB_RED    5
-#define LED_RGB_GREEN  6
-#define LED_RGB_BLUE   7
-
+#define DISPLAY_LED_NUM 32
 #define DISPLAY_GPIO_0	 0
 #define DISPLAY_GPIO_1	 1
 #define DISPLAY_GPIO_2	 2
@@ -26,7 +21,13 @@
 #define DISPLAY_GPIO_4	 4
 #define DISPLAY_GPIO_5	 5
 #define DISPLAY_GPIO_6	 6
-#define DISPLAY_GPIO_7	 7
+#define DISPLAY_GPIO_7	15
+
+#define LEDS_NUMBER    3
+
+#define LED_RGB_RED    7
+#define LED_RGB_GREEN  24
+#define LED_RGB_BLUE   25
 
 #define BSP_LED_0 LED_RGB_RED
 #define BSP_LED_1 LED_RGB_GREEN
@@ -38,8 +39,9 @@
 #define LEDS_MASK      (BSP_LED_0_MASK | BSP_LED_1_MASK | BSP_LED_2_MASK)
 #define LEDS_INV_MASK  0x00000000
 
-#define BUTTON_0       0
-#define BUTTON_1       1
+#define BUTTON_0       16
+#define BUTTON_1       17
+/* #define BUTTON_1       15 */
 #define BUTTON_PULL    NRF_GPIO_PIN_PULLUP
 
 #define BSP_BUTTON_0   BUTTON_0
@@ -56,7 +58,7 @@
 #define RX_PIN_NUMBER  21
 #define TX_PIN_NUMBER  30
 #define CTS_PIN_NUMBER 20
-#define RTS_PIN_NUMBER 21
+#define RTS_PIN_NUMBER 22
 #define HWFC           false
 #define UART_BAUDRATE  38400
 
