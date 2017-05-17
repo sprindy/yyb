@@ -56,11 +56,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         blur = new BlurMaskFilter(8,BlurMaskFilter.Blur.NORMAL);
 
         // Register buttons on the same ClickListener.
-        Button btn_ble_support = (Button)findViewById(R.id.btn_ble_enable);
         Button btn_ble_scan = (Button)findViewById(R.id.btn_ble_scan);
         Button btn_ble_read = (Button)findViewById(R.id.btn_ble_read);
         Button btn_ble_send = (Button)findViewById(R.id.btn_ble_send);
-        btn_ble_support.setOnClickListener(this);
         btn_ble_scan.setOnClickListener(this);
         btn_ble_read.setOnClickListener(this);
         btn_ble_send.setOnClickListener(this);
@@ -73,10 +71,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.btn_ble_enable:
-                mBleController.turnOnBluetooth(this, REQUEST_ENABLE_BT);
-                break;
             case R.id.btn_ble_scan:
+                mBleController.turnOnBluetooth(this, REQUEST_ENABLE_BT);
                 mBleController.startScanBle(this, true);
                 break;
             case R.id.btn_ble_read:

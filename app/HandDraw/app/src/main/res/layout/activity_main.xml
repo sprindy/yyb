@@ -14,20 +14,14 @@
         android:layout_height="186dp" />
 
     <Button
-        android:id="@+id/btn_ble_enable"
-        android:text="Open BLE"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <Button
         android:id="@+id/btn_ble_scan"
-        android:text="scan BLE"
+        android:text="SCAN"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
     <Button
         android:id="@+id/btn_ble_read"
-        android:text="read BLE"
+        android:text="CONNECT"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
