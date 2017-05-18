@@ -12,6 +12,23 @@
         android:id="@+id/my_draw"
         android:layout_width="241dp"
         android:layout_height="186dp" />
+    <ImageView
+        android:id="@+id/iv_sign"
+        android:layout_marginTop="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        />
+
+    <TextView
+        android:id="@+id/tv_sign"
+        android:layout_marginTop="50dp"
+        android:layout_below="@id/iv_sign"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="点此签名"
+        />
 
     <Button
         android:id="@+id/btn_ble_scan"

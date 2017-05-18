@@ -67,10 +67,20 @@ public class BleController{
 
     // Stops scanning after 10 seconds.
     private static final long SCAN_PERIOD = 10000;
+    private int[] fontArray ;
+
+    public int[] getFontArray() {
+        return fontArray;
+    }
+
+    public void setFontArray(int[] fontArray) {
+        this.fontArray = fontArray;
+    }
 
     public BleController(){
         mBleAdapter = BluetoothAdapter.getDefaultAdapter();
     }
+
 
     public void bleListInit(final Activity activity){
         // the sample offer by AndroidDevelop: "android.R.layout.simple_list_item_1"

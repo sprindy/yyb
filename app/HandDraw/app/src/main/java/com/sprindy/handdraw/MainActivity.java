@@ -6,6 +6,7 @@ import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
 import android.graphics.BlurMaskFilter;
 import android.graphics.Color;
 import android.graphics.EmbossMaskFilter;
@@ -19,8 +20,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -32,6 +35,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static final int REQUEST_ENABLE_BT = 1;
     public String TAG = "sprindy_yyb";
     private BleController mBleController = new BleController();
+    private ImageView mIVSign;
+    private TextView mTVSign;
+    private Bitmap mSignBitmap;
     //use real data to replace
     public int[] wangDataArray = {
             0x00,0x00,0x00,0x00,0x01,0xff,0xFF,0xC0,0x0E,0x00,0x80,0x00,0x00,0x00,0x80,0x00,
@@ -63,10 +69,36 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btn_ble_read.setOnClickListener(this);
         btn_ble_send.setOnClickListener(this);
 
+
+        mIVSign = (ImageView) findViewById(R.id.iv_sign);
+        mTVSign = (TextView) findViewById(R.id.tv_sign);
+
+        mTVSign.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                WritePadDialog mWritePadDialog = new WritePadDialog(
+                        MainActivity.this, new WriteDilogListener() {
+
+                    @Override
+                    public void onPaintDone(Object object) {
+                        mSignBitmap = (Bitmap) object;
+                        mIVSign.setImageBitmap(mSignBitmap);
+                        //mTVSign.setVisibility(View.GONE);
+                    }
+                });
+
+                mWritePadDialog.show();
+            }
+        });
+
         mBleController.bleListInit(this);
 
     }
 
+    public BleController getmBleController() {
+        return mBleController;
+    }
 
     @Override
     public void onClick(View v) {
@@ -80,11 +112,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btn_ble_send:
                 //one word = 4*32, send one words need about 0.46s.
-                mBleController.writeDisplayData(wangDataArray);
+                mBleController.writeDisplayData(mBleController.getFontArray());
                 break;
             default:break;
         }
-
     }
 
     @Override
