@@ -71,4 +71,7 @@
 #define ACC_PIN_INT1     13
 #define ACC_PIN_INT2     14
 /* #define ACC_FREQUENCY  LIS2DH12_FREQUENCY */
+
+#define ENABLE_DISPLAY_TIMER 1
+#define ENABLE_ACC_TIMER     0
 #endif

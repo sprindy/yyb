@@ -415,7 +415,7 @@ static void beacon_write_handler(ble_bcs_t * p_lbs, beacon_data_type_t type, uin
                 tmp.data.adv_interval = APP_BEACON_ADV_INTERVAL_MAX_MS;
             }
             break;
-        
+
         case beacon_led_data:
             /* tmp.data.led_state = data[0]; */
 			printf("receiver led data:");
@@ -424,8 +424,10 @@ static void beacon_write_handler(ble_bcs_t * p_lbs, beacon_data_type_t type, uin
 				printf("0x%x ", data[i]);
 			}
 			printf("\n");
+			/* send new data to display */
+			display_receive_data(data, BCS_DATA_LED_LEN);
             break;
-        
+
         default:
             break;
     }
@@ -884,12 +886,12 @@ int main(void)
 	uart_init();
     /* buttons_init(); */
     leds_init();
-	acc_init();
 	display_init();
     ble_stack_init();
 	printf("ble inited\n");
     flash_access_init();
 	printf("flash inited\n");
+	acc_init();
 
     // Read beacon mode
     /* m_beacon_mode = beacon_mode_button_read(); */

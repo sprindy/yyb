@@ -380,6 +380,22 @@ static void display_turn_led_on(uint8_t index, bool on)
 	}
 }
 
+/* length is 20, the last 16 are for display */
+void display_receive_data(uint8_t *p_buf, uint8_t length)
+{
+	if(p_buf == NULL) {
+		printf("no data!\n");
+		return;
+	}
+
+	uint8_t index = p_buf[1];
+	uint8_t len = length - 4;
+	printf("%s index=%d, len=%d\n", __func__, index, len);
+	for(int i=0; i<len; i++ ) {
+		wData[index * len + i] = p_buf[4+i];
+	}
+}
+
 void display_one_line(uint32_t line_data)
 {
 	static uint32_t tmp = 0;
@@ -395,7 +411,7 @@ void display_one_line(uint32_t line_data)
 
 uint32_t display_timer_start(void)
 {
-#if 1
+#if ENABLE_DISPLAY_TIMER
     if (!m_display_ct.timer_running) {
         uint32_t err_code;
 
@@ -445,7 +461,8 @@ static void display_work_timerout(void *p_context)
 uint32_t display_work_init(void)
 {
 	uint32_t err_code;
-#if 1
+
+#if ENABLE_DISPLAY_TIMER
 	m_display_ct.timer_running = false;
 	err_code = app_timer_create(&m_display_ct.timer_id, APP_TIMER_MODE_REPEATED, display_work_timerout);
 	if(err_code != NRF_SUCCESS) {
@@ -453,14 +470,6 @@ uint32_t display_work_init(void)
 	}
 #endif
 
-#if 0
-	if(err_code == NRF_SUCCESS) {
-		err_code = display_timer_start();
-			if(err_code == NRF_SUCCESS) {
-				printf("display timer start sucess\n");
-			}
-	}
-#endif
 	return err_code;
 }
 

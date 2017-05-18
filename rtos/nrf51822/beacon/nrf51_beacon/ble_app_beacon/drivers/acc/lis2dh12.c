@@ -1,3 +1,4 @@
+#include "stdio.h"
 #include "lis2dh12.h"
 #include "nrf51.h"
 #include "nrf_gpio.h"
@@ -76,6 +77,7 @@ uint32_t LIS2DH12_Init(void)
 
 	//set the full-scale value equals 16g.
 	uint8_t reg;
+	printf("%s who am i:0x%x\n", __func__, LIS2DH12_Read_Reg(LIS2DH12_REG_WHO_AM_I));
 	reg = LIS2DH12_Read_Reg(LIS2DH12_REG_CTRL_REG4);
 	reg |= 0x30;
 	LIS2DH12_Write_Reg(LIS2DH12_REG_CTRL_REG4, reg);

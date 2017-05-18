@@ -16,6 +16,7 @@ static acc_context_t m_acc_ct = {0};
 
 uint32_t acc_timer_start(void)
 {
+#if ENABLE_ACC_TIMER
     if (!m_acc_ct.timer_running) {
         uint32_t err_code;
 
@@ -29,6 +30,7 @@ uint32_t acc_timer_start(void)
 
         m_acc_ct.timer_running = true;
     }
+#endif
 
     return NRF_SUCCESS;
 }
@@ -42,6 +44,7 @@ uint32_t acc_get_chan_data(uint16_t *p_buf)
 
 static void acc_work_timerout(void *p_context)
 {
+#if ENABLE_ACC_TIMER
     /* uint8_t data[6]; */
     int16_t acc_value[3];
     /* char buff[20]; */
@@ -60,19 +63,23 @@ static void acc_work_timerout(void *p_context)
     /* data[4] = (acc_value >> 8) & 0xFF; */
     /* data[5] = acc_value & 0xFF; */
 
-	printf("acc value: X:0x%x, Y:0x%x, Z:0x%x\n", acc_value[0], acc_value[1], acc_value[2]);
+	printf("acc value: X:%s%d, Y:%s%d, Z:%s%d\n", acc_value[0]>0 ? " ":"-", acc_value[0], acc_value[2]>0 ? " ":"-", acc_value[1], acc_value[2]>0 ? " ":"-", acc_value[2]);
+
+#endif
 }
 
 static uint32_t acc_work_init(void)
 {
 	uint32_t err_code;
 
+#if ENABLE_ACC_TIMER
 	m_acc_ct.timer_running = false;
 	err_code = app_timer_create(&m_acc_ct.timer_id, APP_TIMER_MODE_REPEATED, acc_work_timerout);
 	if(err_code != NRF_SUCCESS) {
 		printf("create acc timer fail");
 	}
 
+#endif
 	return err_code;
 }
 
@@ -90,6 +97,10 @@ uint32_t acc_init(void)
 		 .INT2 = ACC_PIN_INT2,
 		 .FREQUENCY = LIS2DH12_FREQUENCY,
 	  };
+
+	nrf_gpio_cfg_output(ACC_PIN_SCK);
+	nrf_gpio_cfg_output(ACC_PIN_MOSI);
+	nrf_gpio_cfg_input(ACC_PIN_MISO, NRF_GPIO_PIN_NOPULL);
 
 	LIS2DH12_Config(&lis);
 	LIS2DH12_Set_Data_Rate(LIS2DH12_DATA_RAT_25HZ);
