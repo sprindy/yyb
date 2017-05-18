@@ -42,6 +42,7 @@
 #include "app_uart.h"
 #include "display.h"
 #include "uart_drv.h"
+#include "acc_drv.h"
 
 /* Button definitions */
 #define BOOTLOADER_BUTTON_PIN           BUTTON_0                                    /**< Button used to enter DFU mode. */
@@ -793,9 +794,8 @@ static void beacon_setup(beacon_mode_t mode)
         sec_params_init();
         led_softblink_off_time_set(2000);
         led_softblink_start(APP_CONFIG_MODE_LED_MSK);
-		printf("led timer started\n");
+		acc_timer_start();
 		display_timer_start();
-		printf("display timer started\n");
     }
     else
     {
@@ -808,11 +808,9 @@ static void beacon_setup(beacon_mode_t mode)
         if (p_beacon->data.led_state[2])
         {
             led_softblink_start(APP_BEACON_MODE_LED_MSK);
-			printf("led timer started\n");
         }
 		display_timer_start();
-		printf("display timer started\n");
-    }    
+    }
 }
 
 /** @brief Function for reseting the beacon.
@@ -886,6 +884,7 @@ int main(void)
 	uart_init();
     /* buttons_init(); */
     leds_init();
+	acc_init();
 	display_init();
     ble_stack_init();
 	printf("ble inited\n");

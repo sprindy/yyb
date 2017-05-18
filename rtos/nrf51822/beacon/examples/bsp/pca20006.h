@@ -62,4 +62,13 @@
 #define HWFC           false
 #define UART_BAUDRATE  38400
 
+/* config acc LIS2DH */
+#define ACC_TIMER_PERIOD 0x800
+#define ACC_PIN_MISO     10
+#define ACC_PIN_MOSI      9
+#define ACC_PIN_CSN      11
+#define ACC_PIN_SCK      12
+#define ACC_PIN_INT1     13
+#define ACC_PIN_INT2     14
+/* #define ACC_FREQUENCY  LIS2DH12_FREQUENCY */
 #endif

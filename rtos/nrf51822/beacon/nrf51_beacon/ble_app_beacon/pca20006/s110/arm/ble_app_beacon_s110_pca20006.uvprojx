@@ -404,6 +404,16 @@
               <FileType>5</FileType>
               <FilePath>..\..\..\config\sdk_config.h</FilePath>
             </File>
+            <File>
+              <FileName>acc_drv.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\drivers\acc\acc_drv.c</FilePath>
+            </File>
+            <File>
+              <FileName>lis2dh12.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\drivers\acc\lis2dh12.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
