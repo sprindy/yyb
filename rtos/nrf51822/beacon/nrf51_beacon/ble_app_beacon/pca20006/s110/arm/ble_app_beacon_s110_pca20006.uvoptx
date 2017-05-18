@@ -253,8 +253,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\..\drivers\acc\lis2dh12.c</PathWithFileName>
-      <FilenameWithoutPath>lis2dh12.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\..\drivers\acc\lis3dh.c</PathWithFileName>
+      <FilenameWithoutPath>lis3dh.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>

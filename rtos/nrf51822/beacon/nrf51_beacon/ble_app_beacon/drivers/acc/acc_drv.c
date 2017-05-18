@@ -2,7 +2,7 @@
 #include "pca20006.h"
 #include "nrf_gpio.h"
 #include "app_timer.h"
-#include "lis2dh12.h"
+#include "lis3dh.h"
 
 typedef struct
 {
@@ -45,23 +45,18 @@ uint32_t acc_get_chan_data(uint16_t *p_buf)
 static void acc_work_timerout(void *p_context)
 {
 #if ENABLE_ACC_TIMER
-    /* uint8_t data[6]; */
     int16_t acc_value[3];
-    /* char buff[20]; */
+	AxesRaw_t buff;
+	LIS3DH_GetAccAxesRaw(&buff);
+
     //x
-    acc_value[0] = LIS2DH12_Get_Chan_Data(LIS2DH12_ACC_CHAN_X);
-    /* data[0] = (acc_value >> 8) & 0xFF; */
-    /* data[1] = acc_value & 0xFF; */
+    acc_value[0] = buff.AXIS_X;
 
     //y
-    acc_value[1] = LIS2DH12_Get_Chan_Data(LIS2DH12_ACC_CHAN_Y);
-    /* data[2] = (acc_value >> 8) & 0xFF; */
-    /* data[3] = acc_value & 0xFF; */
+    acc_value[1] = buff.AXIS_Y;
 
     //z
-    acc_value[2] = LIS2DH12_Get_Chan_Data(LIS2DH12_ACC_CHAN_Z);
-    /* data[4] = (acc_value >> 8) & 0xFF; */
-    /* data[5] = acc_value & 0xFF; */
+    acc_value[2] = buff.AXIS_Z;
 
 	printf("acc value: X:%s%d, Y:%s%d, Z:%s%d\n", acc_value[0]>0 ? " ":"-", acc_value[0], acc_value[2]>0 ? " ":"-", acc_value[1], acc_value[2]>0 ? " ":"-", acc_value[2]);
 
@@ -86,26 +81,29 @@ static uint32_t acc_work_init(void)
 uint32_t acc_init(void)
 {
 	uint32_t err_code;
+	m_acc_ct.acc_en = false;
 
-	LIS2DH12_InitStruct lis =
-	  {
-		 .MISO = ACC_PIN_MISO,
-		 .MOSI = ACC_PIN_MOSI,
-		 .CSN = ACC_PIN_CSN,
-		 .SCK = ACC_PIN_SCK,
-		 .INT1 = ACC_PIN_INT1,
-		 .INT2 = ACC_PIN_INT2,
-		 .FREQUENCY = LIS2DH12_FREQUENCY,
-	  };
-
+	//config nrf51822 spi interface
+	nrf_gpio_cfg_output(ACC_PIN_CSN);
 	nrf_gpio_cfg_output(ACC_PIN_SCK);
 	nrf_gpio_cfg_output(ACC_PIN_MOSI);
+	nrf_gpio_cfg_output(ACC_PIN_INT1);
+	nrf_gpio_cfg_output(ACC_PIN_INT2);
 	nrf_gpio_cfg_input(ACC_PIN_MISO, NRF_GPIO_PIN_NOPULL);
 
-	LIS2DH12_Config(&lis);
-	LIS2DH12_Set_Data_Rate(LIS2DH12_DATA_RAT_25HZ);
+	/* init spi memory */
+	SPI_Mems_Init();
 
-	m_acc_ct.acc_en = false;
+	LIS3DH_SetFullScale(LIS3DH_FULLSCALE_2);
+	LIS3DH_SetODR(LIS3DH_ODR_50Hz);
+	//set PowerMode
+	LIS3DH_SetMode(LIS3DH_NORMAL);
+	uint8_t val = 0;
+	LIS3DH_GetWHO_AM_I(&val);
+	printf("%s who am i:0x%x\n", __func__, val);
+	if(val == 0x33) {
+		m_acc_ct.acc_en = true;
+	}
 
 	err_code = acc_work_init();
 
