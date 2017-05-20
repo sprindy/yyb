@@ -1,6 +1,8 @@
 #include "stdio.h"
+#include "nrf51.h"
 #include "pca20006.h"
 #include "nrf_gpio.h"
+#include "app_gpiote.h"
 #include "app_timer.h"
 #include "lis3dh.h"
 
@@ -13,6 +15,8 @@ typedef struct
 }acc_context_t;
 
 static acc_context_t m_acc_ct = {0};
+static app_gpiote_user_id_t           m_gpiote_user_id;            /**< GPIOTE user id for buttons module. */
+//static pin_transition_t               m_pin_transition;            /**< pin transaction direction. */
 
 uint32_t acc_timer_start(void)
 {
@@ -48,6 +52,10 @@ static void acc_work_timerout(void *p_context)
     int16_t acc_value[3];
 	AxesRaw_t buff;
 	LIS3DH_GetAccAxesRaw(&buff);
+	uint8_t pin = nrf_gpio_pin_read(ACC_PIN_INT1);
+	uint8_t val = 0;
+	/* LIS3DH_GetInt1Src(&val); */
+	/* printf("INT1 src:0x%x\n", val); */
 
     //x
     acc_value[0] = buff.AXIS_X;
@@ -58,7 +66,10 @@ static void acc_work_timerout(void *p_context)
     //z
     acc_value[2] = buff.AXIS_Z;
 
-	printf("acc value: X:%s%d, Y:%s%d, Z:%s%d\n", acc_value[0]>0 ? " ":"-", acc_value[0], acc_value[2]>0 ? " ":"-", acc_value[1], acc_value[2]>0 ? " ":"-", acc_value[2]);
+	/* printf("acc value: X:%s%6d, Y:%s%6d, Z:%s%6d\n", acc_value[0]>0 ? " ":"-", acc_value[0], acc_value[1]>0 ? " ":"-", acc_value[1], acc_value[2]>0 ? " ":"-", acc_value[2]); */
+	/* printf("X:%6d, Y:%6d, Z:%6d\n", acc_value[0], acc_value[1], acc_value[2]); */
+	/* printf("X:%6d, Y:%6d, Z:%6d  0x%x\n", acc_value[0], acc_value[1], acc_value[2], val); */
+	printf("X:%6d, Y:%6d, Z:%6d  0x%2x %s\n", acc_value[0], acc_value[1], acc_value[2], val, pin ? "H":"L");
 
 #endif
 }
@@ -78,6 +89,62 @@ static uint32_t acc_work_init(void)
 	return err_code;
 }
 
+/* failing edge will work */
+/**@brief Function for handling the GPIOTE event.
+ *
+ * @details Saves the current status of the button pins, and starts a timer. If the timer is already
+ *          running, it will be restarted.
+ *
+ * @param[in]  event_pins_low_to_high   Mask telling which pin(s) had a low to high transition.
+ * @param[in]  event_pins_high_to_low   Mask telling which pin(s) had a high to low transition.
+ */
+static void acc_gpiote_event_handler(uint32_t event_pins_low_to_high, uint32_t event_pins_high_to_low)
+{
+    uint32_t err_code;
+    STATIC_ASSERT(sizeof(void *) == sizeof(uint32_t));
+
+    /* m_pin_transition.low_to_high = event_pins_low_to_high; */
+    /* m_pin_transition.high_to_low = event_pins_high_to_low; */
+
+		uint8_t val = 0;
+	/* if ((event_pins_high_to_low & (1 << ACC_PIN_INT1)) != 0)  */
+	{
+		LIS3DH_GetInt1Src(&val);
+		if(val & 0x20)
+			printf("0x%x Z++++++++++++++++++++++++++++++++++++++++\n", val);
+		if(val & 0x10)
+			printf("0x%x Z----------------------------------------\n", val);
+		if(val & 0x08)
+			printf("0x%x Y++++++++++++++++++++++++++++++++++++++++\n", val);
+		if(val & 0x04)
+			printf("0x%x Y----------------------------------------\n", val);
+		if(val & 0x02)
+			printf("0x%x X++++++++++++++++++++++++++++++++++++++++\n", val);
+		if(val & 0x01)
+			printf("0x%x X----------------------------------------\n", val);
+	}
+}
+
+static uint32_t acc_gpiote_init(void)
+{
+	uint32_t err_code;
+	// Configure pins.
+	uint32_t pins_transition_mask = 0;
+	// Build GPIOTE user registration masks.
+	pins_transition_mask |= (1 << ACC_PIN_INT1);
+	pins_transition_mask |= (1 << ACC_PIN_INT2);
+	// Register module as a GPIOTE user.
+	err_code = app_gpiote_user_register(&m_gpiote_user_id,
+										pins_transition_mask,
+										pins_transition_mask,
+										acc_gpiote_event_handler);
+	if (err_code != NRF_SUCCESS) {
+		return err_code;
+	}
+
+	return app_gpiote_user_enable(m_gpiote_user_id);
+}
+
 uint32_t acc_init(void)
 {
 	uint32_t err_code;
@@ -87,23 +154,71 @@ uint32_t acc_init(void)
 	nrf_gpio_cfg_output(ACC_PIN_CSN);
 	nrf_gpio_cfg_output(ACC_PIN_SCK);
 	nrf_gpio_cfg_output(ACC_PIN_MOSI);
-	nrf_gpio_cfg_output(ACC_PIN_INT1);
-	nrf_gpio_cfg_output(ACC_PIN_INT2);
+	nrf_gpio_cfg_input(ACC_PIN_INT1, NRF_GPIO_PIN_NOPULL);
+	/* nrf_gpio_cfg_input(ACC_PIN_INT1, NRF_GPIO_PIN_PULLUP); */
+	nrf_gpio_cfg_input(ACC_PIN_INT2, NRF_GPIO_PIN_NOPULL);
 	nrf_gpio_cfg_input(ACC_PIN_MISO, NRF_GPIO_PIN_NOPULL);
+
+	err_code = acc_gpiote_init();
+	if(err_code == NRF_SUCCESS) {
+		printf("acc gpiote init sucess\n");
+	}
 
 	/* init spi memory */
 	SPI_Mems_Init();
 
-	LIS3DH_SetFullScale(LIS3DH_FULLSCALE_2);
-	LIS3DH_SetODR(LIS3DH_ODR_50Hz);
-	//set PowerMode
-	LIS3DH_SetMode(LIS3DH_NORMAL);
 	uint8_t val = 0;
 	LIS3DH_GetWHO_AM_I(&val);
 	printf("%s who am i:0x%x\n", __func__, val);
 	if(val == 0x33) {
 		m_acc_ct.acc_en = true;
 	}
+#if 1
+	/* LIS3DH_WriteReg(LIS3DH_CTRL_REG1, 0x27); //10Hz */
+	LIS3DH_WriteReg(LIS3DH_CTRL_REG1, 0x47); //50Hz
+	LIS3DH_WriteReg(LIS3DH_CTRL_REG2, 0x01);
+	LIS3DH_WriteReg(LIS3DH_CTRL_REG3, 0x40);
+	LIS3DH_WriteReg(LIS3DH_CTRL_REG4, 0x88);
+	LIS3DH_WriteReg(LIS3DH_CTRL_REG5, 0x00);
+
+	/* LIS3DH_WriteReg(LIS3DH_INT1_THS, 0x08); */
+	LIS3DH_WriteReg(LIS3DH_INT1_THS, 0x30);
+	LIS3DH_WriteReg(LIS3DH_INT1_DURATION, 0x4);
+	LIS3DH_WriteReg(LIS3DH_INT1_CFG, 0x95);
+#else
+	LIS3DH_HPFAOI1Enable(MEMS_ENABLE);
+	LIS3DH_SetInt1Pin(LIS3DH_I1_INT1_ON_PIN_INT1_ENABLE);
+	/* LIS3DH_FULLSCALE_2  2g, 16mg/LSb */
+	/* LIS3DH_FULLSCALE_4  4g, 32mg/LSb */
+	/* LIS3DH_FULLSCALE_8  8g, 62mg/LSb */
+	/* LIS3DH_FULLSCALE_16 16g 186mg/LSb */
+	LIS3DH_SetFullScale(LIS3DH_FULLSCALE_4);
+	LIS3DH_SetODR(LIS3DH_ODR_100Hz);
+	//set PowerMode
+	LIS3DH_SetMode(LIS3DH_NORMAL);
+	LIS3DH_Int1LatchEnable(1 << LIS3DH_LIR_INT1);
+	status_t response = MEMS_SUCCESS;
+	//set Interrupt Threshold = xxmg/LSb * num 32*8=256mg
+	response = LIS3DH_SetInt1Threshold(32);
+	/* Sets Interrupt 1 Duration t = num*(1/100Hz) */
+	response &= LIS3DH_SetInt1Duration(4);
+
+	//set Interrupt configuration (all enabled)
+	response &= LIS3DH_SetIntConfiguration(
+		LIS3DH_INT1_YHIE_ENABLE | LIS3DH_INT1_YLIE_ENABLE |
+		LIS3DH_INT1_ZHIE_ENABLE | LIS3DH_INT1_ZLIE_ENABLE |
+		LIS3DH_INT1_XHIE_ENABLE | LIS3DH_INT1_XLIE_ENABLE
+									   );
+	if(response==MEMS_SUCCESS){
+		printf("SET_INT_CONF_OK \n");
+	}
+	//set Interrupt Mode
+	/* response = LIS3DH_SetIntMode(LIS3DH_INT_MODE_6D_POSITION); */
+	response = LIS3DH_SetIntMode(LIS3DH_INT_MODE_6D_MOVEMENT);
+	if(response==MEMS_SUCCESS){
+		printf("SET_INT_MODE  \n");
+	}
+#endif
 
 	err_code = acc_work_init();
 
