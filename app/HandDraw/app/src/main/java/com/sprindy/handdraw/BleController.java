@@ -311,9 +311,10 @@ public class BleController{
         return false;
     }
 
+    // the device will reboot when receive too fast
     public void delay() {
         for (int j = 0; j < 0xffff; j++) {
-            for (int k = 0; k < 600; k++) {
+            for (int k = 0; k < 2000; k++) {
                 ;
             }
         }
