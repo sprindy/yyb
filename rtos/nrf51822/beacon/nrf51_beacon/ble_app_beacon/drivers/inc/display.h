@@ -7,6 +7,8 @@
 
 void display_receive_data(uint8_t *p_buf, uint8_t length);
 
+uint32_t display_change_direction(bool dir);
+
 uint32_t display_timer_start(void);
 
 /**@brief display task initialization.

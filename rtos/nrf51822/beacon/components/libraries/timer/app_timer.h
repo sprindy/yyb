@@ -51,7 +51,7 @@
 
 #define APP_TIMER_SCHED_EVT_SIZE     sizeof(app_timer_event_t)  /**< Size of button events being passed through the scheduler (is to be used for computing the maximum size of scheduler events). */
 #define APP_TIMER_CLOCK_FREQ         32768                      /**< Clock frequency of the RTC timer used to implement the app timer module. */
-#define APP_TIMER_MIN_TIMEOUT_TICKS  5                          /**< Minimum value of the timeout_ticks parameter of app_timer_start(). */
+#define APP_TIMER_MIN_TIMEOUT_TICKS  1                          /**< Minimum value of the timeout_ticks parameter of app_timer_start(). */
 
 #define APP_TIMER_NODE_SIZE          40                         /**< Size of app_timer.timer_node_t (only for use inside APP_TIMER_BUF_SIZE()). */
 #define APP_TIMER_USER_OP_SIZE       24                         /**< Size of app_timer.timer_user_op_t (only for use inside APP_TIMER_BUF_SIZE()). */

@@ -884,8 +884,9 @@ int main(void)
     APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_MAX_TIMERS, APP_TIMER_OP_QUEUE_SIZE, false);
     APP_GPIOTE_INIT(APP_GPIOTE_MAX_USERS);
 	uart_init();
+	printf("uart inited\n");
     /* buttons_init(); */
-    leds_init();
+    /* leds_init(); */
 	display_init();
     ble_stack_init();
 	printf("ble inited\n");

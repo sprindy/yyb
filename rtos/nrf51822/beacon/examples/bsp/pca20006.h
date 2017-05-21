@@ -12,7 +12,22 @@
 #ifndef PCA20006_H
 #define PCA20006_H
 
-// LEDs and buttons definition for PCA20006 board (beacon) 
+// LEDs and buttons definition for PCA20006 board (beacon)
+#define DISPLAY_LED_TEST 0
+#define DISPLAY_ONE_WORD 1
+#if DISPLAY_LED_TEST
+#define DISPLAY_TIMER_PERIOD 0x2000
+#else
+#if DISPLAY_ONE_WORD
+/* display one word in one screen*/
+#define DISPLAY_TIMER_PERIOD 4
+#else
+/* display four words in one screen*/
+#define DISPLAY_TIMER_PERIOD 1
+#endif /* DISPLAY_ONE_WORD */
+#endif /* DISPLAY_LED_TEST */
+
+#define DISPLAY_LINE_DELAY  1
 #define DISPLAY_LED_NUM 32
 #define DISPLAY_GPIO_0	 0
 #define DISPLAY_GPIO_1	 1
@@ -72,6 +87,6 @@
 #define ACC_PIN_INT2     14
 /* #define ACC_FREQUENCY  LIS2DH12_FREQUENCY */
 
-#define ENABLE_DISPLAY_TIMER 0
-#define ENABLE_ACC_TIMER     1
+#define ENABLE_DISPLAY_TIMER 1
+#define ENABLE_ACC_TIMER     0
 #endif

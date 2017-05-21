@@ -5,6 +5,7 @@
 #include "app_gpiote.h"
 #include "app_timer.h"
 #include "lis3dh.h"
+#include "display.h"
 
 typedef struct
 {
@@ -37,13 +38,6 @@ uint32_t acc_timer_start(void)
 #endif
 
     return NRF_SUCCESS;
-}
-
-uint32_t acc_get_chan_data(uint16_t *p_buf)
-{
-	uint32_t err_code = NRF_SUCCESS;
-
-	return err_code;
 }
 
 static void acc_work_timerout(void *p_context)
@@ -103,25 +97,49 @@ static void acc_gpiote_event_handler(uint32_t event_pins_low_to_high, uint32_t e
     uint32_t err_code;
     STATIC_ASSERT(sizeof(void *) == sizeof(uint32_t));
 
-    /* m_pin_transition.low_to_high = event_pins_low_to_high; */
-    /* m_pin_transition.high_to_low = event_pins_high_to_low; */
-
-		uint8_t val = 0;
-	/* if ((event_pins_high_to_low & (1 << ACC_PIN_INT1)) != 0)  */
+/* sleep: low to high */
+/* wakeup: high to low */
+/* https://www.ecnmag.com/article/2013/04/one-accelerometer-interrupt-pin-both-wakeup-and-non-motion-detection */
+	/* if ((event_pins_high_to_low & (1 << ACC_PIN_INT1)) != 0) */
+	if ((event_pins_low_to_high & (1 << ACC_PIN_INT1)) != 0)
 	{
+		uint8_t val = 0;
 		LIS3DH_GetInt1Src(&val);
+#if 0
 		if(val & 0x20)
-			printf("0x%x Z++++++++++++++++++++++++++++++++++++++++\n", val);
+			printf("0x%2x Z++++\n", val);
 		if(val & 0x10)
-			printf("0x%x Z----------------------------------------\n", val);
-		if(val & 0x08)
-			printf("0x%x Y++++++++++++++++++++++++++++++++++++++++\n", val);
-		if(val & 0x04)
-			printf("0x%x Y----------------------------------------\n", val);
+			printf("0x%2x Z----\n", val);
+#endif
+		if(val & 0x08) {
+#if 0
+			int16_t acc_value[3];
+			AxesRaw_t buff;
+			LIS3DH_GetAccAxesRaw(&buff);
+			acc_value[1] = buff.AXIS_Y;
+			if(acc_value[1] > 0) {
+				display_change_direction(true);
+				printf("0x%2x %6d Y++++\n", val, acc_value[1]);
+			}
+			else {
+				display_change_direction(false);
+				printf("0x%2x %6d Y----\n", val, acc_value[1]);
+			}
+#else
+			display_change_direction(true);
+			printf("0x%2x Y++++\n", val);
+#endif
+		}
+		if(val & 0x04) {
+			display_change_direction(false);
+			printf("0x%2x Y----\n", val);
+		}
+#if 0
 		if(val & 0x02)
-			printf("0x%x X++++++++++++++++++++++++++++++++++++++++\n", val);
+			printf("0x%2x X++++\n", val);
 		if(val & 0x01)
-			printf("0x%x X----------------------------------------\n", val);
+			printf("0x%2x X----\n", val);
+#endif
 	}
 }
 
@@ -178,13 +196,19 @@ uint32_t acc_init(void)
 	LIS3DH_WriteReg(LIS3DH_CTRL_REG1, 0x47); //50Hz
 	LIS3DH_WriteReg(LIS3DH_CTRL_REG2, 0x01);
 	LIS3DH_WriteReg(LIS3DH_CTRL_REG3, 0x40);
-	LIS3DH_WriteReg(LIS3DH_CTRL_REG4, 0x88);
+	/* LIS3DH_WriteReg(LIS3DH_CTRL_REG4, 0x88); //2g */
+	LIS3DH_WriteReg(LIS3DH_CTRL_REG4, 0x98); //4g
 	LIS3DH_WriteReg(LIS3DH_CTRL_REG5, 0x00);
 
 	/* LIS3DH_WriteReg(LIS3DH_INT1_THS, 0x08); */
-	LIS3DH_WriteReg(LIS3DH_INT1_THS, 0x30);
-	LIS3DH_WriteReg(LIS3DH_INT1_DURATION, 0x4);
-	LIS3DH_WriteReg(LIS3DH_INT1_CFG, 0x95);
+	/* LIS3DH_WriteReg(LIS3DH_INT1_THS, 0x18); */
+	LIS3DH_WriteReg(LIS3DH_INT1_THS, 400);
+	LIS3DH_WriteReg(LIS3DH_INT1_DURATION, 0x2);
+	/* LIS3DH_WriteReg(LIS3DH_INT1_CFG, 0x95); //all /and interrupt */
+	/* LIS3DH_WriteReg(LIS3DH_INT1_CFG, 0x85); //no Z /and interrupt */
+	/* LIS3DH_WriteReg(LIS3DH_INT1_CFG, 0x84); //Y only /and interrupt */
+	/* LIS3DH_WriteReg(LIS3DH_INT1_CFG, 0x4c); //Y only /move ment interrupt */
+	LIS3DH_WriteReg(LIS3DH_INT1_CFG, 0x7f); //all /move ment interrupt
 #else
 	LIS3DH_HPFAOI1Enable(MEMS_ENABLE);
 	LIS3DH_SetInt1Pin(LIS3DH_I1_INT1_ON_PIN_INT1_ENABLE);
