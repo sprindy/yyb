@@ -40,7 +40,7 @@ public class WritePadDialog extends Dialog {
         getWindow().getWindowManager().getDefaultDisplay().getMetrics(mDisplayMetrics);
         int screenWidth = mDisplayMetrics.widthPixels;
         int screenHeight = mDisplayMetrics.heightPixels;
-        mPaintView = new PaintView(mContext, screenWidth, screenHeight);
+        mPaintView = new PaintView(mContext, screenWidth, 320);
         if(this.mContext instanceof MainActivity){
             MainActivity mainActivity = (MainActivity) mContext;
             mPaintView.setBleController(mainActivity.getmBleController());

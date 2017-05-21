@@ -99,6 +99,7 @@ public class PaintView extends View {
     {
         int x = pointX/xspace;
         int y = pointY/yspace;
+        Log.e("wangrui", "xspace = " + xspace +"yspace = " + yspace + "x = " + x  + "   y = " + y + "pointX = " + pointX + "pointY = " + pointY);
         if(x<32&&x>=0&&y>=0&&y<32){
 
             paintArray[y][x] = 1;
@@ -107,7 +108,7 @@ public class PaintView extends View {
     }
 
     public Bitmap getPaintBitmap() {
-        return resizeImage(mBitmap, 32, 32);
+        return resizeImage(mBitmap, 100, 100);
     }
 
     public Path getPath() {

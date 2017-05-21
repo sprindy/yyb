@@ -335,7 +335,7 @@ public class BleController{
             final byte[] packageData = new byte[20];
             //TODO 0xff will regards as -1
             for (int i=0; i<data.length/16; i++) {
-                packageData[0] = (byte) data.length;
+                packageData[0] = (byte) (data.length/16);
                 packageData[1] = (byte) i;
                 packageData[2] = (byte) 1; //led enable
                 packageData[3] = (byte) 0; //reserved

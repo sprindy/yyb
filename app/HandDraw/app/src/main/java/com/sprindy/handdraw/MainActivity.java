@@ -13,6 +13,7 @@ import android.graphics.EmbossMaskFilter;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -20,7 +21,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -54,6 +57,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     EmbossMaskFilter emboss;
     BlurMaskFilter blur;
 
+    private PaintView mPaintView;
+    private FrameLayout mFrameLayout;
+    private Button mBtnOK, mBtnClear, mBtnCancel;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,25 +77,69 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btn_ble_send.setOnClickListener(this);
 
 
-        mIVSign = (ImageView) findViewById(R.id.iv_sign);
-        mTVSign = (TextView) findViewById(R.id.tv_sign);
+//        mIVSign = (ImageView) findViewById(R.id.iv_sign);
+//        mTVSign = (TextView) findViewById(R.id.tv_sign);
+//
+//        mTVSign.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View view) {
+//                WritePadDialog mWritePadDialog = new WritePadDialog(
+//                        MainActivity.this, new WriteDilogListener() {
+//
+//                    @Override
+//                    public void onPaintDone(Object object) {
+//                        mSignBitmap = (Bitmap) object;
+//                        mIVSign.setImageBitmap(mSignBitmap);
+//                        //mTVSign.setVisibility(View.GONE);
+//                    }
+//                });
+//
+//                mWritePadDialog.show();
+//            }
+//        });
+        DisplayMetrics mDisplayMetrics = new DisplayMetrics();
+        getWindow().getWindowManager().getDefaultDisplay().getMetrics(mDisplayMetrics);
+        int screenWidth = mDisplayMetrics.widthPixels;
+        int screenHeight = mDisplayMetrics.heightPixels;
+        final float scale = this.getResources().getDisplayMetrics().density;
 
-        mTVSign.setOnClickListener(new View.OnClickListener() {
+        mIVSign = (ImageView) findViewById(R.id.iv_sign);
+        mFrameLayout = (FrameLayout) findViewById(R.id.tablet_view);
+
+        LinearLayout.LayoutParams ff=new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, screenWidth);
+//        FrameLayout.LayoutParams frameLayoutParams =(FrameLayout.LayoutParams) mFrameLayout.getLayoutParams();
+//        frameLayoutParams.height = screenWidth;
+        mFrameLayout.setLayoutParams(ff);
+
+        mPaintView = new PaintView(MainActivity.this, screenWidth, screenWidth);
+        if(MainActivity.this instanceof MainActivity){
+            MainActivity mainActivity = (MainActivity) MainActivity.this;
+            mPaintView.setBleController(mainActivity.getmBleController());
+        }
+        mFrameLayout.addView(mPaintView);
+        mPaintView.requestFocus();
+
+        mBtnOK = (Button) findViewById(R.id.write_pad_ok);
+        mBtnOK.setOnClickListener(new View.OnClickListener() {
 
             @Override
-            public void onClick(View view) {
-                WritePadDialog mWritePadDialog = new WritePadDialog(
-                        MainActivity.this, new WriteDilogListener() {
+            public void onClick(View v) {
+                if (mPaintView.getPath().isEmpty()) {
+                    Toast.makeText(MainActivity.this, "请写下你的大名", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                mIVSign.setImageBitmap(mPaintView.getPaintBitmap());
 
-                    @Override
-                    public void onPaintDone(Object object) {
-                        mSignBitmap = (Bitmap) object;
-                        mIVSign.setImageBitmap(mSignBitmap);
-                        //mTVSign.setVisibility(View.GONE);
-                    }
-                });
+            }
+        });
 
-                mWritePadDialog.show();
+        mBtnClear = (Button) findViewById(R.id.write_pad_clear);
+        mBtnClear.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                mPaintView.clear();
             }
         });
 
@@ -140,47 +191,47 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         inflator.inflate(R.menu.my_menu,menu);
         return super.onCreateOptionsMenu(menu);
     }
-    //菜单项被单击后的回调方法
-    @Override
-    public boolean onOptionsItemSelected(MenuItem mi)
-    {
-        DrawView dv = (DrawView)findViewById(R.id.my_draw);
-        //判断单击的是哪个菜单项,并有针对性地做出响应
-        switch(mi.getItemId())
-        {
-            case R.id.red:
-                dv.paint.setColor(Color.RED);
-                mi.setChecked(true);
-                break;
-            case R.id.green:
-                dv.paint.setColor(Color.GREEN);
-                mi.setChecked(true);
-                break;
-            case R.id.blue:
-                dv.paint.setColor(Color.BLUE);
-                mi.setChecked(true);
-                break;
-            case R.id.width_1:
-                dv.paint.setStrokeWidth(1);
-                mi.setChecked(true);
-                break;
-            case R.id.width_3:
-                dv.paint.setStrokeWidth(3);
-                mi.setChecked(true);
-                break;
-            case R.id.width_5:
-                dv.paint.setStrokeWidth(5);
-                mi.setChecked(true);
-                break;
-            case R.id.blur:
-                dv.paint.setMaskFilter(blur);
-                mi.setChecked(true);
-                break;
-            case R.id.emboss:
-                dv.paint.setMaskFilter(emboss);
-                mi.setChecked(true);
-                break;
-        }
-        return true;
-    }
+//    //菜单项被单击后的回调方法
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem mi)
+//    {
+//        DrawView dv = (DrawView)findViewById(R.id.my_draw);
+//        //判断单击的是哪个菜单项,并有针对性地做出响应
+//        switch(mi.getItemId())
+//        {
+//            case R.id.red:
+//                dv.paint.setColor(Color.RED);
+//                mi.setChecked(true);
+//                break;
+//            case R.id.green:
+//                dv.paint.setColor(Color.GREEN);
+//                mi.setChecked(true);
+//                break;
+//            case R.id.blue:
+//                dv.paint.setColor(Color.BLUE);
+//                mi.setChecked(true);
+//                break;
+//            case R.id.width_1:
+//                dv.paint.setStrokeWidth(1);
+//                mi.setChecked(true);
+//                break;
+//            case R.id.width_3:
+//                dv.paint.setStrokeWidth(3);
+//                mi.setChecked(true);
+//                break;
+//            case R.id.width_5:
+//                dv.paint.setStrokeWidth(5);
+//                mi.setChecked(true);
+//                break;
+//            case R.id.blur:
+//                dv.paint.setMaskFilter(blur);
+//                mi.setChecked(true);
+//                break;
+//            case R.id.emboss:
+//                dv.paint.setMaskFilter(emboss);
+//                mi.setChecked(true);
+//                break;
+//        }
+//        return true;
+//    }
 }
