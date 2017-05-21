@@ -102,7 +102,7 @@ public class PaintView extends View {
         Log.e("wangrui", "xspace = " + xspace +"yspace = " + yspace + "x = " + x  + "   y = " + y + "pointX = " + pointX + "pointY = " + pointY);
         if(x<32&&x>=0&&y>=0&&y<32){
 
-            paintArray[y][x] = 1;
+            paintArray[x][y] = 1;
         }
 
     }

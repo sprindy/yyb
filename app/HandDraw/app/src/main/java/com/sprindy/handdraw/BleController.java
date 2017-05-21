@@ -313,7 +313,7 @@ public class BleController{
 
     public void delay() {
         for (int j = 0; j < 0xffff; j++) {
-            for (int k = 0; k < 400; k++) {
+            for (int k = 0; k < 600; k++) {
                 ;
             }
         }
