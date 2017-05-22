@@ -380,6 +380,7 @@ static void beacon_write_handler(ble_bcs_t * p_lbs, beacon_data_type_t type, uin
     static beacon_flash_db_t tmp;
     
     memcpy(&tmp, p_beacon, sizeof(beacon_flash_db_t));
+	/* printf("sizeof(beacon_flash_db_t)=%d\n", sizeof(beacon_flash_db_t)); */
     
     tmp.data.magic_byte = MAGIC_FLASH_BYTE;
     
@@ -418,10 +419,11 @@ static void beacon_write_handler(ble_bcs_t * p_lbs, beacon_data_type_t type, uin
 
         case beacon_led_data:
             /* tmp.data.led_state = data[0]; */
-			printf("receiver led data:");
+			/* remove log to reduce cpu loading */
+			/* printf("receiver led data:"); */
 			for(int i=0; i<BCS_DATA_LED_LEN; i++ ) {
 				tmp.data.led_state[i] = data[i];
-				printf("0x%x ", data[i]);
+				printf("0x%02x ", data[i]);
 			}
 			printf("\n");
 			/* send new data to display */
@@ -431,11 +433,14 @@ static void beacon_write_handler(ble_bcs_t * p_lbs, beacon_data_type_t type, uin
         default:
             break;
     }
-    
+#if 1
     err_code = pstorage_clear(&m_pstorage_block_id, sizeof(beacon_flash_db_t));
-    APP_ERROR_CHECK(err_code);    
-    
+    APP_ERROR_CHECK(err_code);
+
     err_code = pstorage_store(&m_pstorage_block_id, (uint8_t *)&tmp, sizeof(beacon_flash_db_t), 0);
+#else
+    err_code = pstorage_update(&m_pstorage_block_id, (uint8_t *)&tmp, sizeof(beacon_flash_db_t), 0);
+#endif
     APP_ERROR_CHECK(err_code);
 }
 
@@ -733,8 +738,11 @@ static beacon_flash_db_t * beacon_params_get(void)
     
     pstorage_param.cb = pstorage_ntf_cb;
     pstorage_param.block_size = sizeof(beacon_flash_db_t);
+#if 1
     pstorage_param.block_count = 1;
-    
+#else
+	pstorage_param.block_count = 64; //8 words //boot fail
+#endif
     err_code = pstorage_register(&pstorage_param, &m_pstorage_block_id);
     APP_ERROR_CHECK(err_code);
     
@@ -887,12 +895,13 @@ int main(void)
 	printf("uart inited\n");
     /* buttons_init(); */
     /* leds_init(); */
-	display_init();
     ble_stack_init();
+	ble_nus_uart_init();
 	printf("ble inited\n");
     flash_access_init();
 	printf("flash inited\n");
 	acc_init();
+	display_init();
 
     // Read beacon mode
     /* m_beacon_mode = beacon_mode_button_read(); */

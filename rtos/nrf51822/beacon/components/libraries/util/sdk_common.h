@@ -31,6 +31,7 @@
 #include "sdk_os.h"
 #include "sdk_errors.h"
 #include "app_util.h"
+#include "sdk_macros.h"
 
 /** @} */
 /** @endcond */
