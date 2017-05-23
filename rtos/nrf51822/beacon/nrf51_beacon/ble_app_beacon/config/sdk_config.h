@@ -294,6 +294,10 @@
 #define BUTTON_ENABLED 1
 #endif
 
+// <q> BLE_NUS_ENABLED  - ble_nus - Nordic UART Service
+#ifndef BLE_NUS_ENABLED
+#define BLE_NUS_ENABLED 1
+#endif
 
 // </h> 
 //==========================================================

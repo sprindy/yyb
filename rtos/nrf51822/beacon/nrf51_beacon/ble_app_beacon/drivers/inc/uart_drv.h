@@ -5,7 +5,4 @@
 
 uint32_t uart_init(void);
 
-void ble_nus_uart_init(void);
-uint32_t ble_printf(void);
-
 #endif

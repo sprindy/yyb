@@ -9,6 +9,7 @@
  * the file.
  *
  */
+#include "stdio.h"
 #include "sdk_common.h"
 #if NRF_MODULE_ENABLED(BLE_NUS)
 #include "ble_nus.h"
@@ -207,15 +208,18 @@ void ble_nus_on_ble_evt(ble_nus_t * p_nus, ble_evt_t * p_ble_evt)
     switch (p_ble_evt->header.evt_id)
     {
         case BLE_GAP_EVT_CONNECTED:
+			printf("%s connected\n", __func__);
             on_connect(p_nus, p_ble_evt);
             break;
 
         case BLE_GAP_EVT_DISCONNECTED:
+			printf("%s disconnected\n", __func__);
             on_disconnect(p_nus, p_ble_evt);
             break;
 
         case BLE_GATTS_EVT_WRITE:
             on_write(p_nus, p_ble_evt);
+			printf("%s write\n", __func__);
             break;
 
         default:

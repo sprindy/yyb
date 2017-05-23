@@ -35,6 +35,7 @@
 #include "app_button.h"
 #include "pca20006.h"
 #include "ble_bcs.h"
+#include "ble_nus.h"
 #include "ble_dfu.h"
 #include "dfu_app_handler_mod.h"
 #include "led_softblink.h"
@@ -106,14 +107,15 @@
 static beacon_mode_t        m_beacon_mode;                                          /**< Current beacon mode */
 static beacon_flash_db_t    *p_beacon;                                              /**< Pointer to beacon params */
 static pstorage_handle_t    m_pstorage_block_id;                                    /**< Pstorage handle for beacon params */
-                                                                                    
+
 static ble_gap_sec_params_t m_sec_params;                                           /**< Security requirements for this application. */
 static uint16_t             m_conn_handle = BLE_CONN_HANDLE_INVALID;                /**< Handle of the current connection. */
 static ble_bcs_t            m_bcs;                                                  /**< Beacon Configuration Service structure.*/
 static ble_dfu_t            m_dfus;                                                 /**< Structure used to identify the DFU service. */
-                                                                                    
+static ble_nus_t m_nus;                              /**< Structure to identify the Nordic UART Service. */
+
 static ble_gap_adv_params_t m_adv_params;                                           /**< Parameters to be passed to the stack when starting advertising. */
-                                                                                    
+
 static bool                 m_beacon_reset = false;                                 /**< Flag to reset system after flash access has finished. */
 static bool                 m_beacon_start = false;                                 /**< Flag to setup and start beacon after flash access has finished. */
 
@@ -508,6 +510,65 @@ static void dfu_reset_prepare(void)
     APP_ERROR_CHECK(err_code);
 }
 
+void ble_printf(uint8_t *pdata, uint16_t length)
+{
+	uint32_t err_code;
+	err_code = ble_nus_string_send(&m_nus, pdata, length);
+	if (err_code != NRF_ERROR_INVALID_STATE) {
+		APP_ERROR_CHECK(err_code);
+	}
+}
+
+/**@brief Function for handling the data from the Nordic UART Service.
+ *
+ * @details This function will process the data received from the Nordic UART BLE Service and send
+ *          it to the UART module.
+ *
+ * @param[in] p_nus    Nordic UART Service structure.
+ * @param[in] p_data   Data to be send to UART module.
+ * @param[in] length   Length of the data.
+ */
+/**@snippet [Handling the data received over BLE] */
+static void ble_nus_evt_handler(ble_nus_t * p_nus, uint8_t * p_data, uint16_t length)
+{
+	uint8_t tmp[] = "turn led off\n";
+
+	nrf_gpio_cfg_output(LED_RGB_RED);
+	if(nrf_gpio_pin_read(LED_RGB_RED)) {
+		nrf_gpio_pin_clear(LED_RGB_RED);
+		memcpy(tmp, "turn led on \n", sizeof(tmp));
+	}
+	else {
+		nrf_gpio_pin_set(LED_RGB_RED);
+		memcpy(tmp, "turn led off\n", sizeof(tmp));
+	}
+	ble_printf(tmp, sizeof(tmp));
+
+    for (uint32_t i = 0; i < length; i++)
+    {
+        while (app_uart_put(p_data[i]) != NRF_SUCCESS);
+    }
+    while (app_uart_put('\r') != NRF_SUCCESS);
+    while (app_uart_put('\n') != NRF_SUCCESS);
+}
+/**@snippet [Handling the data received over BLE] */
+
+
+/**@brief Function for initializing ble nus.
+ */
+void ble_nus_service_init(void)
+{
+    uint32_t       err_code;
+    ble_nus_init_t nus_init;
+
+    memset(&nus_init, 0, sizeof(nus_init));
+
+    nus_init.data_handler = ble_nus_evt_handler;
+
+    err_code = ble_nus_init(&m_nus, &nus_init);
+    APP_ERROR_CHECK(err_code);
+}
+
 /**@brief Function for initializing services that will be used by the application.
  */
 static void services_init(void)
@@ -677,6 +738,7 @@ static void ble_evt_dispatch(ble_evt_t * p_ble_evt)
 {
     ble_conn_params_on_ble_evt(p_ble_evt);
     ble_bcs_on_ble_evt(&m_bcs, p_ble_evt);
+    ble_nus_on_ble_evt(&m_nus, p_ble_evt);
     ble_dfu_on_ble_evt(&m_dfus, p_ble_evt);
     on_ble_evt(p_ble_evt);
 }
@@ -896,12 +958,11 @@ int main(void)
     /* buttons_init(); */
     /* leds_init(); */
     ble_stack_init();
-	ble_nus_uart_init();
+	ble_nus_service_init();
 	printf("ble inited\n");
     flash_access_init();
 	printf("flash inited\n");
 	acc_init();
-	display_init();
 
     // Read beacon mode
     /* m_beacon_mode = beacon_mode_button_read(); */
@@ -920,6 +981,7 @@ int main(void)
 
     beacon_start(m_beacon_mode);
 	printf("beacon started\n");
+	display_init();
 
     // Enter main loop.
     for (;;)
