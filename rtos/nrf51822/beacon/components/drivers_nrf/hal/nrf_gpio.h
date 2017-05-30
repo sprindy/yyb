@@ -139,6 +139,16 @@ static __INLINE void nrf_gpio_cfg_output(uint32_t pin_number)
                                             | (GPIO_PIN_CNF_DIR_Output << GPIO_PIN_CNF_DIR_Pos);
 }
 
+static __INLINE void nrf_gpio_cfg_output_high_drive(uint32_t pin_number)
+{
+    /*lint -e{845} // A zero has been given as right argument to operator '|'" */
+    NRF_GPIO->PIN_CNF[pin_number] = (GPIO_PIN_CNF_SENSE_Disabled << GPIO_PIN_CNF_SENSE_Pos)
+                                            | (GPIO_PIN_CNF_DRIVE_H0H1 << GPIO_PIN_CNF_DRIVE_Pos)
+                                            | (GPIO_PIN_CNF_PULL_Disabled << GPIO_PIN_CNF_PULL_Pos)
+                                            | (GPIO_PIN_CNF_INPUT_Disconnect << GPIO_PIN_CNF_INPUT_Pos)
+                                            | (GPIO_PIN_CNF_DIR_Output << GPIO_PIN_CNF_DIR_Pos);
+}
+
 /**
  * @brief Function for configuring the given GPIO pin number as input with given initial value set, hiding inner details.
  *        This function can be used to configure pin range as simple input with gate driving GPIO_PIN_CNF_DRIVE_S0S1 (normal cases).

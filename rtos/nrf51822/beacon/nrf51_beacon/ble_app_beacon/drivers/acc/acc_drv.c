@@ -6,6 +6,7 @@
 #include "app_timer.h"
 #include "lis3dh.h"
 #include "display.h"
+#include "log.h"
 
 typedef struct
 {
@@ -27,11 +28,16 @@ uint32_t acc_timer_start(void)
 
         err_code = app_timer_start(m_acc_ct.timer_id, ACC_TIMER_PERIOD, NULL);
         if (err_code != NRF_SUCCESS) {
+#if ENABLE_UART_DEBUG
 			printf("acc timer start fail\n");
+#endif
             return err_code;
         }
-		else
+		else {
+#if ENABLE_UART_DEBUG
 			printf("acc timer start sucess\n");
+#endif
+		}
 
         m_acc_ct.timer_running = true;
     }
@@ -63,12 +69,14 @@ static void acc_work_timerout(void *p_context)
 	/* printf("acc value: X:%s%6d, Y:%s%6d, Z:%s%6d\n", acc_value[0]>0 ? " ":"-", acc_value[0], acc_value[1]>0 ? " ":"-", acc_value[1], acc_value[2]>0 ? " ":"-", acc_value[2]); */
 	/* printf("X:%6d, Y:%6d, Z:%6d\n", acc_value[0], acc_value[1], acc_value[2]); */
 	/* printf("X:%6d, Y:%6d, Z:%6d  0x%x\n", acc_value[0], acc_value[1], acc_value[2], val); */
+#if ENABLE_UART_DEBUG
 	printf("X:%6d, Y:%6d, Z:%6d  0x%2x %s\n", acc_value[0], acc_value[1], acc_value[2], val, pin ? "H":"L");
+#endif
 
 #endif
 }
 
-static uint32_t acc_work_init(void)
+static uint32_t acc_timer_init(void)
 {
 	uint32_t err_code;
 
@@ -76,7 +84,9 @@ static uint32_t acc_work_init(void)
 	m_acc_ct.timer_running = false;
 	err_code = app_timer_create(&m_acc_ct.timer_id, APP_TIMER_MODE_REPEATED, acc_work_timerout);
 	if(err_code != NRF_SUCCESS) {
+#if ENABLE_UART_DEBUG
 		printf("create acc timer fail");
+#endif
 	}
 
 #endif
@@ -100,9 +110,13 @@ static void acc_gpiote_event_handler(uint32_t event_pins_low_to_high, uint32_t e
 /* sleep: low to high */
 /* wakeup: high to low */
 /* https://www.ecnmag.com/article/2013/04/one-accelerometer-interrupt-pin-both-wakeup-and-non-motion-detection */
-	/* if ((event_pins_high_to_low & (1 << ACC_PIN_INT1)) != 0) */
+	if ((event_pins_high_to_low & (1 << ACC_PIN_INT1)) != 0) {
+		/* display_timer_stop(); */
+	}
 	if ((event_pins_low_to_high & (1 << ACC_PIN_INT1)) != 0)
 	{
+		/* display_timer_start(); */
+
 		uint8_t val = 0;
 		LIS3DH_GetInt1Src(&val);
 #if 0
@@ -127,12 +141,12 @@ static void acc_gpiote_event_handler(uint32_t event_pins_low_to_high, uint32_t e
 			}
 #else
 			display_change_direction(true);
-			printf("0x%2x Y++++\n", val);
+			/* acc_log_d("0x%2x Y++++\n", val); */
 #endif
 		}
 		if(val & 0x04) {
 			display_change_direction(false);
-			printf("0x%2x Y----\n", val);
+			/* acc_log_d("0x%2x Y----\n", val); */
 		}
 #if 0
 		if(val & 0x02)
@@ -179,7 +193,7 @@ uint32_t acc_init(void)
 
 	err_code = acc_gpiote_init();
 	if(err_code == NRF_SUCCESS) {
-		printf("acc gpiote init sucess\n");
+		/* acc_log_d("acc gpiote init sucess\n"); */
 	}
 
 	/* init spi memory */
@@ -187,7 +201,7 @@ uint32_t acc_init(void)
 
 	uint8_t val = 0;
 	LIS3DH_GetWHO_AM_I(&val);
-	printf("%s who am i:0x%x\n", __func__, val);
+	/* acc_log_d("%s who am i:0x%x\n", __func__, val); */
 	if(val == 0x33) {
 		m_acc_ct.acc_en = true;
 	}
@@ -244,7 +258,10 @@ uint32_t acc_init(void)
 	}
 #endif
 
-	err_code = acc_work_init();
+	err_code = acc_timer_init();
+	if(err_code == NRF_SUCCESS) {
+		 err_code = acc_timer_start();
+	}
 
 	return err_code;
 }

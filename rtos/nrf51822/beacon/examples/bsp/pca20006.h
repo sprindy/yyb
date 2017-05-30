@@ -27,6 +27,10 @@
 #endif /* DISPLAY_ONE_WORD */
 #endif /* DISPLAY_LED_TEST */
 
+#define ENABLE_UART_DEBUG    1
+#define ENABLE_BLE_NUS_DEBUG 1
+#define FORCE_CONFIG_MODE	 0
+
 #define DISPLAY_LINE_DELAY  1
 #define DISPLAY_LED_NUM 32
 #define DISPLAY_GPIO_0	 0
@@ -54,10 +58,10 @@
 #define LEDS_MASK      (BSP_LED_0_MASK | BSP_LED_1_MASK | BSP_LED_2_MASK)
 #define LEDS_INV_MASK  0x00000000
 
-#define BUTTON_0       16
-#define BUTTON_1       17
-/* #define BUTTON_1       15 */
-#define BUTTON_PULL    NRF_GPIO_PIN_PULLUP
+#define BUTTON_0       15
+#define BUTTON_1       6
+/* #define BUTTON_PULL    NRF_GPIO_PIN_PULLUP */
+#define BUTTON_PULL    NRF_GPIO_PIN_NOPULL
 
 #define BSP_BUTTON_0   BUTTON_0
 #define BSP_BUTTON_1   BUTTON_1
@@ -70,12 +74,16 @@
 
 #define BUTTONS_LIST { BUTTON_0, BUTTON_1 }
 
+#if ENABLE_UART_DEBUG
+#if 1
 #define RX_PIN_NUMBER  21
 #define TX_PIN_NUMBER  30
+#endif
 #define CTS_PIN_NUMBER 20
 #define RTS_PIN_NUMBER 22
 #define HWFC           false
 #define UART_BAUDRATE  38400
+#endif /* ENABLE_UART_DEBUG */
 
 /* config acc LIS2DH */
 #define ACC_TIMER_PERIOD 0x200

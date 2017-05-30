@@ -22,6 +22,7 @@
 
 #include <stdbool.h>
 #include <stdint.h>
+#include <stdarg.h>
 #include "ble_conn_params.h"
 #include "ble.h"
 #include "ble_hci.h"
@@ -435,14 +436,12 @@ static void beacon_write_handler(ble_bcs_t * p_lbs, beacon_data_type_t type, uin
         default:
             break;
     }
-#if 1
+
     err_code = pstorage_clear(&m_pstorage_block_id, sizeof(beacon_flash_db_t));
     APP_ERROR_CHECK(err_code);
 
     err_code = pstorage_store(&m_pstorage_block_id, (uint8_t *)&tmp, sizeof(beacon_flash_db_t), 0);
-#else
-    err_code = pstorage_update(&m_pstorage_block_id, (uint8_t *)&tmp, sizeof(beacon_flash_db_t), 0);
-#endif
+
     APP_ERROR_CHECK(err_code);
 }
 
@@ -510,10 +509,18 @@ static void dfu_reset_prepare(void)
     APP_ERROR_CHECK(err_code);
 }
 
-void ble_printf(uint8_t *pdata, uint16_t length)
+void ble_printf(char *fmt, ...)
 {
+	char log_buf[BLE_NUS_MAX_DATA_LEN] = {0};
+	uint16_t length;
+	va_list vp;
+	va_start(vp, fmt);
+	vsnprintf(log_buf, strlen(log_buf), fmt, vp);
+	va_end(vp);
+	length = strlen(log_buf);
+
 	uint32_t err_code;
-	err_code = ble_nus_string_send(&m_nus, pdata, length);
+	err_code = ble_nus_string_send(&m_nus, log_buf, length);
 	if (err_code != NRF_ERROR_INVALID_STATE) {
 		APP_ERROR_CHECK(err_code);
 	}
@@ -531,18 +538,15 @@ void ble_printf(uint8_t *pdata, uint16_t length)
 /**@snippet [Handling the data received over BLE] */
 static void ble_nus_evt_handler(ble_nus_t * p_nus, uint8_t * p_data, uint16_t length)
 {
-	uint8_t tmp[] = "turn led off\n";
-
 	nrf_gpio_cfg_output(LED_RGB_RED);
 	if(nrf_gpio_pin_read(LED_RGB_RED)) {
 		nrf_gpio_pin_clear(LED_RGB_RED);
-		memcpy(tmp, "turn led on \n", sizeof(tmp));
+		/* ble_log_d("turn led on\n"); */
 	}
 	else {
 		nrf_gpio_pin_set(LED_RGB_RED);
-		memcpy(tmp, "turn led off\n", sizeof(tmp));
+		/* ble_log_d("turn led off\n"); */
 	}
-	ble_printf(tmp, sizeof(tmp));
 
     for (uint32_t i = 0; i < length; i++)
     {
@@ -854,8 +858,6 @@ static void beacon_params_default_set(void)
 */
 static void beacon_setup(beacon_mode_t mode)
 {
-	/* mode = beacon_mode_normal; */
-	/* mode = beacon_mode_config; */
     if(mode == beacon_mode_config)
     {
 		printf("config mode\n");
@@ -866,22 +868,15 @@ static void beacon_setup(beacon_mode_t mode)
         sec_params_init();
         led_softblink_off_time_set(2000);
         led_softblink_start(APP_CONFIG_MODE_LED_MSK);
-		acc_timer_start();
-		display_timer_start();
     }
     else
     {
 		printf("normal mode\n");
-        ///**/gap_params_init();
-        ///**/services_init();
         advertising_init(mode);
-        ///**/conn_params_init();
-        ///**/sec_params_init();
-        if (p_beacon->data.led_state[2])
+        /* if (p_beacon->data.led_state[2]) */
         {
             led_softblink_start(APP_BEACON_MODE_LED_MSK);
         }
-		display_timer_start();
     }
 }
 
@@ -954,33 +949,37 @@ int main(void)
     APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_MAX_TIMERS, APP_TIMER_OP_QUEUE_SIZE, false);
     APP_GPIOTE_INIT(APP_GPIOTE_MAX_USERS);
 	uart_init();
+#if ENABLE_UART_DEBUG
 	printf("uart inited\n");
+#endif
     /* buttons_init(); */
+	/* printf("buttons inited\n"); */
     /* leds_init(); */
     ble_stack_init();
+	printf("ble stack inited\n");
 	ble_nus_service_init();
-	printf("ble inited\n");
     flash_access_init();
-	printf("flash inited\n");
-	acc_init();
 
     // Read beacon mode
     /* m_beacon_mode = beacon_mode_button_read(); */
-	printf("read beacon mode:%s\n", m_beacon_mode ? "normal" : "config");
+#if FORCE_CONFIG_MODE
 	/* force config mode for ble debug */
+	/* m_beacon_mode = beacon_mode_config; */
+	m_beacon_mode = beacon_mode_normal;
+#endif
 	m_beacon_mode = beacon_mode_config;
     // Read beacon params from flash
     p_beacon = beacon_params_get();
 	/* printf("mode get\n"); */
     if (p_beacon->data.magic_byte != MAGIC_FLASH_BYTE)
     {
+		printf("No valid params found, write default params\n");
         // No valid params found, write default params.
         beacon_params_default_set();
     }
-	/* printf("beacon gong to start\n"); */
 
     beacon_start(m_beacon_mode);
-	printf("beacon started\n");
+	/* acc_init(); */
 	display_init();
 
     // Enter main loop.

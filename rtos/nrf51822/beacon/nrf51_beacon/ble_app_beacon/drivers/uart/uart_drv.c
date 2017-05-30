@@ -70,6 +70,7 @@ uint32_t uart_init(void)
 {
 	uint32_t err_code;
 
+#if ENABLE_UART_DEBUG
 	app_uart_comm_params_t common_params = {
 		RX_PIN_NUMBER,
 		TX_PIN_NUMBER,
@@ -89,6 +90,7 @@ uint32_t uart_init(void)
 			err_code);
 	APP_ERROR_CHECK(err_code);
 
+#endif
 	return err_code;
 }
 /**@snippet [UART Initialization] */
