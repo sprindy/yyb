@@ -1,0 +1,27 @@
+Designator Footprint               Mid X         Mid Y         Ref X         Ref Y         Pad X         Pad Y TB      Rotation Comment        
+
+L1         INDC1005X04L         -4.318mm      -5.842mm      -4.318mm      -5.842mm      -3.843mm      -5.842mm  T        180.00 2.2nH          
+SW2        SW_TACTILE_2.6x3.0MM_4-LEAD      3.0226mm     -7.7216mm      3.0226mm     -7.7216mm      4.0837mm     -6.3244mm  T         20.00 PB SW          
+SW1        SW_TACTILE_2.6x3.0MM_4-LEAD      5.5118mm      2.5146mm      5.5118mm      2.5146mm      4.1146mm      3.5757mm  T        110.00 PB SW          
+C4         CAPC1005X04L        -2.4638mm     -6.2484mm     -2.4638mm     -6.2484mm     -2.1103mm      -6.602mm  T        135.00 1.2pF          
+R4         RESC1005X04L         7.2898mm     -2.2098mm      7.2898mm     -2.2098mm      6.9363mm     -2.5633mm  T         45.00 820R           
+R3         RESC1005X04L         6.7818mm     -1.4224mm      6.7818mm     -1.4224mm      6.4283mm     -1.7759mm  T         45.00 680R           
+R2         RESC1005X04L         7.7724mm     -2.9972mm      7.7724mm     -2.9972mm      7.4188mm     -3.3508mm  T         45.00 2k2            
+LD1        SML-LX0404SIUPGUSB       8.255mm     -0.5334mm       8.255mm     -0.5334mm      8.7997mm     -0.7874mm  T         20.00 LED RGB        
+C3         CAPC1005X04L         -1.409mm     -6.2999mm      -1.409mm     -6.2999mm     -1.0554mm     -6.6535mm  T        135.00 2.2nF          
+B1         BAL-ST-WLCSP         -2.116mm     -4.4765mm      -2.116mm     -4.4765mm     -2.3281mm     -4.9715mm  T        225.00 BAL-NRF02D3    
+U1         BGA62C40P9X9_383X350X55      0.1108mm     -2.9577mm      0.2523mm     -2.9577mm     -2.0105mm     -2.9577mm  T         45.00 nRF51822-CEAA  
+C10        CAPC1005X04L        -0.0762mm     -6.4008mm     -0.0762mm     -6.4008mm      0.2773mm     -6.7543mm  T        135.00 47nF           
+C1         CAPC1005X04L        -4.2915mm      0.0776mm     -4.2915mm      0.0776mm      -4.645mm      0.4312mm  T        315.00 12pF           
+C2         CAPC1005X04L        -1.5435mm      2.7538mm     -1.5435mm      2.7538mm       -1.19mm      2.4002mm  T        135.00 12pF           
+C9         CAPC1005X04L        -3.3575mm     -2.0058mm     -3.3575mm     -2.0058mm     -3.7111mm     -1.6522mm  T        315.00 1.0nF          
+C8         CAPC1005X04L        -1.8176mm     -0.3221mm     -1.8176mm     -0.3221mm     -2.1711mm     -0.6757mm  T         45.00 100nF          
+C11        CAPC1005X04L          3.937mm      -2.794mm       3.937mm      -2.794mm       4.437mm      -2.794mm  T        180.00 100nF          
+C7         CAPC1005X04L         1.4069mm      0.2696mm      1.4069mm      0.2696mm      1.7605mm      0.6231mm  T        225.00 100nF          
+X1         BT-XTAL_2520        -2.9085mm      1.4247mm     -2.9085mm      1.4247mm     -3.0146mm      0.3287mm  T         45.00 16MHz          
+C13        CAPC1005X04L        -0.9398mm       4.826mm     -0.9398mm       4.826mm     -0.5863mm      5.1795mm  T        225.00 12pF           
+C14        CAPC1005X04L         2.2098mm      6.1214mm      2.2098mm      6.1214mm      1.8562mm      6.4749mm  T        315.00 12pF           
+X2         FC-135               0.6096mm      4.5212mm      0.6096mm      4.5212mm     -0.2743mm      3.6373mm  T         45.00 32.768kHz      
+Bat1       CR1632_HOLDER_SMD           0mm           0mm           0mm           0mm      4.2346mm      9.0812mm  B        245.00 *              
+P1         LIST_1x2             8.2804mm       3.048mm      8.2804mm       3.048mm       7.846mm      4.2414mm  T        290.00 Pin List 1x2   
+
