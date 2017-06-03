@@ -362,7 +362,7 @@ static void buttons_init(void)
     // module.
     static app_button_cfg_t buttons[] =
     {
-        {CONFIG_MODE_BUTTON_PIN, APP_BUTTON_ACTIVE_LOW, BUTTON_PULL, button_handler},
+        /* {CONFIG_MODE_BUTTON_PIN, APP_BUTTON_ACTIVE_LOW, BUTTON_PULL, button_handler}, */
         {BOOTLOADER_BUTTON_PIN, APP_BUTTON_ACTIVE_LOW, BUTTON_PULL, button_handler}
     };
 
@@ -964,10 +964,8 @@ int main(void)
     /* m_beacon_mode = beacon_mode_button_read(); */
 #if FORCE_CONFIG_MODE
 	/* force config mode for ble debug */
-	/* m_beacon_mode = beacon_mode_config; */
-	m_beacon_mode = beacon_mode_normal;
-#endif
 	m_beacon_mode = beacon_mode_config;
+#endif
     // Read beacon params from flash
     p_beacon = beacon_params_get();
 	/* printf("mode get\n"); */
@@ -979,7 +977,7 @@ int main(void)
     }
 
     beacon_start(m_beacon_mode);
-	/* acc_init(); */
+	acc_init();
 	display_init();
 
     // Enter main loop.

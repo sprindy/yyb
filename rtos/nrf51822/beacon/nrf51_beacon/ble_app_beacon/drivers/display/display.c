@@ -118,6 +118,7 @@ static void display_turn_led_on(uint8_t index, bool on)
 		return;
 	}
 
+#if 1
 	/* reinit all led gpio as output */
 	nrf_gpio_cfg_output_high_drive(DISPLAY_GPIO_0);
 	nrf_gpio_cfg_output_high_drive(DISPLAY_GPIO_1);
@@ -127,6 +128,16 @@ static void display_turn_led_on(uint8_t index, bool on)
 	nrf_gpio_cfg_output_high_drive(DISPLAY_GPIO_5);
 	nrf_gpio_cfg_output_high_drive(DISPLAY_GPIO_6);
 	nrf_gpio_cfg_output_high_drive(DISPLAY_GPIO_7);
+#else
+	nrf_gpio_cfg_output(DISPLAY_GPIO_0);
+	nrf_gpio_cfg_output(DISPLAY_GPIO_1);
+	nrf_gpio_cfg_output(DISPLAY_GPIO_2);
+	nrf_gpio_cfg_output(DISPLAY_GPIO_3);
+	nrf_gpio_cfg_output(DISPLAY_GPIO_4);
+	nrf_gpio_cfg_output(DISPLAY_GPIO_5);
+	nrf_gpio_cfg_output(DISPLAY_GPIO_6);
+	nrf_gpio_cfg_output(DISPLAY_GPIO_7);
+#endif
 
 	switch(index){
 		case 0:
@@ -570,14 +581,14 @@ static void display_work_timerout(void *p_context)
 	/* only for led test */
 	static uint8_t i = 0;
 	/* if (i++ <= DISPLAY_LED_NUM - 1) { */
-	/* if (i++ <= 3) { */
-	if(1)
-	{
-		display_turn_led_on(4, true);
-		uint8_t buf=nrf_gpio_word_byte_read(&NRF_GPIO->PIN_CNF[4], 2);
+	/* if (i <= 1) { */
+	if(1) {
+		display_turn_led_on(1, true);
+		/* uint8_t buf=nrf_gpio_word_byte_read(&NRF_GPIO->PIN_CNF[4], 2); */
 		/* printf("%s %d\n",__func__, i); */
-		printf("%s %d 0x%2x\n",__func__, i, buf);
-		ble_printf("%s %d 0x%2x\n",__func__, i, buf);
+		/* printf("%s %d 0x%2x\n",__func__, i, buf); */
+		/* ble_printf("%s %d 0x%2x\n",__func__, i, buf); */
+		/* i++; */
 	}
 	else
 		i = 0;
@@ -712,7 +723,7 @@ uint32_t display_init(void)
 	uint32_t err_code;
 
 	/* nrf_gpio_cfg_output(DISPLAY_GPIO_0); */
-	nrf_gpio_cfg_output_high_drive(DISPLAY_GPIO_0);
+	nrf_gpio_cfg_output(DISPLAY_GPIO_0);
 	nrf_gpio_cfg_output(DISPLAY_GPIO_1);
 	nrf_gpio_cfg_output(DISPLAY_GPIO_2);
 	nrf_gpio_cfg_output(DISPLAY_GPIO_3);
@@ -737,5 +748,4 @@ uint32_t display_init(void)
 	}
 
 	return err_code;
-}
-
+} 
