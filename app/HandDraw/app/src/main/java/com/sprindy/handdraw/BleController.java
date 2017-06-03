@@ -65,6 +65,16 @@ public class BleController{
     private static final UUID CONFIG_ADV_INTERVAL_CHARACTERISTIC_UUID = new UUID(0x955A15280FE2F5AAl, 0xA09484B8D4F3E8ADl);
     private static final UUID CONFIG_LED_SETTINGS_CHARACTERISTIC_UUID = new UUID(0x955A15290FE2F5AAl, 0xA09484B8D4F3E8ADl);
 
+    public static final UUID TX_POWER_UUID = UUID.fromString("00001804-0000-1000-8000-00805f9b34fb");
+    public static final UUID TX_POWER_LEVEL_UUID = UUID.fromString("00002a07-0000-1000-8000-00805f9b34fb");
+    public static final UUID CCCD = UUID.fromString("00002902-0000-1000-8000-00805f9b34fb");
+    public static final UUID FIRMWARE_REVISON_UUID = UUID.fromString("00002a26-0000-1000-8000-00805f9b34fb");
+    public static final UUID DIS_UUID = UUID.fromString("0000180a-0000-1000-8000-00805f9b34fb");
+    public static final UUID RX_SERVICE_UUID = UUID.fromString("6e400001-b5a3-f393-e0a9-e50e24dcca9e");
+    public static final UUID RX_CHAR_UUID = UUID.fromString("6e400002-b5a3-f393-e0a9-e50e24dcca9e");
+    public static final UUID TX_CHAR_UUID = UUID.fromString("6e400003-b5a3-f393-e0a9-e50e24dcca9e");
+
+
     // Stops scanning after 10 seconds.
     private static final long SCAN_PERIOD = 10000;
     private int[] fontArray ;
@@ -82,35 +92,35 @@ public class BleController{
     }
 
 
-    public void bleListInit(final Activity activity){
-        // the sample offer by AndroidDevelop: "android.R.layout.simple_list_item_1"
-        // do not change to "R.id.list_ble", or will be kill process when List.add
-        bleListAdapter = new BleAdapter(activity,
-                R.layout.ble_item, bleListData);
-        ble_listView = (ListView)activity.findViewById(R.id.list_ble);
-        ble_listView.setAdapter(bleListAdapter);
-
-        ble_listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Ble ble = bleListData.get(position);
-//                Toast.makeText(activity.this, ble.getDeviceName() + " " + ble.getDeviceHwAddress(),
+//    public void bleListInit(final Activity activity){
+//        // the sample offer by AndroidDevelop: "android.R.layout.simple_list_item_1"
+//        // do not change to "R.id.list_ble", or will be kill process when List.add
+//        bleListAdapter = new BleAdapter(activity,
+//                R.layout.ble_item, bleListData);
+//        ble_listView = (ListView)activity.findViewById(R.id.list_ble);
+//        ble_listView.setAdapter(bleListAdapter);
+//
+//        ble_listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                Ble ble = bleListData.get(position);
+////                Toast.makeText(activity.this, ble.getDeviceName() + " " + ble.getDeviceHwAddress(),
+////                        Toast.LENGTH_SHORT).show();
+//                Log.d(TAG, "setOnItemClickListener: " + ble.getDeviceName() + " "
+//                        + ble.getDeviceHwAddress());
+//
+//                //Bluetooth hardware addresses must be upper case
+//                BluetoothDevice bluetoothDevice = mBleAdapter.getRemoteDevice(ble.getDeviceHwAddress());
+//
+//                bluetoothGatt = bluetoothDevice.connectGatt(activity, false,
+//                        bluetoothGattCallback);
+//                if (bluetoothGatt == null){
+//                    Toast.makeText(activity,  "bluetoothDevice.connectGatt fail",
 //                        Toast.LENGTH_SHORT).show();
-                Log.d(TAG, "setOnItemClickListener: " + ble.getDeviceName() + " "
-                        + ble.getDeviceHwAddress());
-
-                //Bluetooth hardware addresses must be upper case
-                BluetoothDevice bluetoothDevice = mBleAdapter.getRemoteDevice(ble.getDeviceHwAddress());
-
-                bluetoothGatt = bluetoothDevice.connectGatt(activity, false,
-                        bluetoothGattCallback);
-                if (bluetoothGatt == null){
-                    Toast.makeText(activity,  "bluetoothDevice.connectGatt fail",
-                        Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-    }
+//                }
+//            }
+//        });
+//    }
 
     public BluetoothGattCallback bluetoothGattCallback = new BluetoothGattCallback(){
         @Override

@@ -43,7 +43,7 @@ public class WritePadDialog extends Dialog {
         mPaintView = new PaintView(mContext, screenWidth, 320);
         if(this.mContext instanceof MainActivity){
             MainActivity mainActivity = (MainActivity) mContext;
-            mPaintView.setBleController(mainActivity.getmBleController());
+//            mPaintView.setBleController(mainActivity.getmBleController());
         }
         mFrameLayout.addView(mPaintView);
         mPaintView.requestFocus();
@@ -71,13 +71,13 @@ public class WritePadDialog extends Dialog {
             }
         });
 
-        mBtnCancel = (Button) findViewById(R.id.write_pad_cancel);
-        mBtnCancel.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                cancel();
-            }
-        });
+//        mBtnCancel = (Button) findViewById(R.id.write_pad_cancel);
+//        mBtnCancel.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//                cancel();
+//            }
+//        });
     }
 }

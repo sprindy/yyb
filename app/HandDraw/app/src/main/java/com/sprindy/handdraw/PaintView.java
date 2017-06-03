@@ -19,14 +19,13 @@ public class PaintView extends View {
     private Path mPath;
     private Bitmap mBitmap;
     private Canvas mCanvas;
-    private BleController bleController;
-
-
+//    private BleController bleController;
 
     private int screenWidth, screenHeight;
     private float currentX, currentY;
 
     private int[][] paintArray = new int[32][32];
+    public int[] fontArray = new int[128];
 
     int xspace;
     int yspace;
@@ -40,13 +39,13 @@ public class PaintView extends View {
         init();
     }
 
-    public BleController getBleController() {
-        return bleController;
-    }
-
-    public void setBleController(BleController bleController) {
-        this.bleController = bleController;
-    }
+//    public BleController getBleController() {
+//        return bleController;
+//    }
+//
+//    public void setBleController(BleController bleController) {
+//        this.bleController = bleController;
+//    }
 
     private void init() {
         mPaint = new Paint();
@@ -183,7 +182,7 @@ public class PaintView extends View {
             Log.e("wangrui", sb1.toString()+"");
         }
         byte[] bytes = new byte[128];
-        int [] fontArray = new int[128];
+//        int [] fontArray = new int[128];
         int k = 0;
         for(int i=0;i<32;i++)
         {
@@ -199,7 +198,7 @@ public class PaintView extends View {
                         | paintArray[i][8*j +7]);
             }
         }
-        bleController.setFontArray(fontArray);
+//        bleController.setFontArray(fontArray);
         String bin = bin2HexStr(bytes);
         Log.e("wangrui" , bin.toString());
 
@@ -213,6 +212,10 @@ public class PaintView extends View {
 
 
         return resizedBitmap;
+    }
+
+    public int[] getFontArray() {
+        return fontArray;
     }
 
     //清除画板

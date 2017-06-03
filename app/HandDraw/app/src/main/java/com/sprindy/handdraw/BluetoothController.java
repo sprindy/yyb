@@ -30,14 +30,14 @@ public class BluetoothController {
             mBtAdapter = BluetoothAdapter.getDefaultAdapter();
         }
 
-        public void btListInit(Activity activity){
-            // the sample offer by AndroidDevelop: "android.R.layout.simple_list_item_1"
-            // do not change to "R.id.list_ble", or will be kill process when List.add
-            btListAdapter = new ArrayAdapter<String>(activity,
-                    android.R.layout.simple_list_item_1, btListData);
-            bt_listView = (ListView)activity.findViewById(R.id.list_ble);
-            bt_listView.setAdapter(btListAdapter);
-        }
+//        public void btListInit(Activity activity){
+//            // the sample offer by AndroidDevelop: "android.R.layout.simple_list_item_1"
+//            // do not change to "R.id.list_ble", or will be kill process when List.add
+//            btListAdapter = new ArrayAdapter<String>(activity,
+//                    android.R.layout.simple_list_item_1, btListData);
+//            bt_listView = (ListView)activity.findViewById(R.id.list_ble);
+//            bt_listView.setAdapter(btListAdapter);
+//        }
 
         public void btRegister(Activity activity) {
             // Register for broadcasts when a device is discovered.
