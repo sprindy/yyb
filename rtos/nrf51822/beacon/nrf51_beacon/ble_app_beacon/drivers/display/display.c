@@ -466,7 +466,7 @@ static void display_turn_led_on(uint8_t index, bool on)
 }
 
 /* length is 20, the last 16 are for display */
-void display_receive_data(uint8_t *p_buf, uint8_t length)
+void display_update_data(uint8_t *p_buf, uint8_t length)
 {
 	if(p_buf == NULL) {
 		printf("no data!\n");

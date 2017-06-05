@@ -6,7 +6,7 @@
 #include <stdint.h>
 #include "log.h"
 
-void display_receive_data(uint8_t *p_buf, uint8_t length);
+void display_update_data(uint8_t *p_buf, uint8_t length);
 
 uint32_t display_change_direction(bool dir);
 uint32_t display_get_repeat_cnt(void);

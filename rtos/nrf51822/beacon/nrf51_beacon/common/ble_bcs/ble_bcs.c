@@ -397,10 +397,9 @@ static uint32_t beacon_led_char_add(ble_bcs_t * p_bcs, const ble_bcs_init_t * p_
     ble_gatts_attr_t    attr_char_value;
     ble_uuid_t          ble_uuid;
     ble_gatts_attr_md_t attr_md;
-    uint8_t             led_data[BCS_DATA_LED_LEN];
 
     memset(&char_md, 0, sizeof(char_md));
-    
+
     char_md.char_props.read   = 1;
     char_md.char_props.write  = 1;
     char_md.p_char_user_desc  = NULL;
@@ -408,20 +407,20 @@ static uint32_t beacon_led_char_add(ble_bcs_t * p_bcs, const ble_bcs_init_t * p_
     char_md.p_user_desc_md    = NULL;
     char_md.p_cccd_md         = NULL;
     char_md.p_sccd_md         = NULL;
-    
+
     ble_uuid.type = p_bcs->uuid_type;
     ble_uuid.uuid = BCS_UUID_BEACON_LED_CHAR;
-    
+
     memset(&attr_md, 0, sizeof(attr_md));
 
     BLE_GAP_CONN_SEC_MODE_SET_OPEN(&attr_md.read_perm);
     BLE_GAP_CONN_SEC_MODE_SET_OPEN(&attr_md.write_perm);
-    
+
     attr_md.vloc       = BLE_GATTS_VLOC_STACK;
     attr_md.rd_auth    = 0;
     attr_md.wr_auth    = 0;
     attr_md.vlen       = 0;
-    
+
     memset(&attr_char_value, 0, sizeof(attr_char_value));
 
     attr_char_value.p_uuid       = &ble_uuid;
@@ -429,12 +428,8 @@ static uint32_t beacon_led_char_add(ble_bcs_t * p_bcs, const ble_bcs_init_t * p_
     attr_char_value.init_len     = BCS_DATA_LED_LEN;
     attr_char_value.init_offs    = 0;
     attr_char_value.max_len      = BCS_DATA_LED_LEN;
+	attr_char_value.p_value      = &p_bcs_init->p_beacon->data.led_state;
 
-	for(int i=0; i<BCS_DATA_LED_LEN; i++) {
-		led_data[i] = ((p_bcs_init->p_beacon->data.led_state[i]) );
-	}
-    attr_char_value.p_value      = led_data;
-    
     return sd_ble_gatts_characteristic_add(p_bcs->service_handle, &char_md,
                                                &attr_char_value,
                                                &p_bcs->beacon_led_char_handles);

@@ -421,7 +421,8 @@ static void beacon_write_handler(ble_bcs_t * p_lbs, beacon_data_type_t type, uin
             break;
 
         case beacon_led_data:
-            /* tmp.data.led_state = data[0]; */
+            tmp.data.led_state = data[0];
+#if 0
 			/* remove log to reduce cpu loading */
 			/* printf("receiver led data:"); */
 			for(int i=0; i<BCS_DATA_LED_LEN; i++ ) {
@@ -430,7 +431,8 @@ static void beacon_write_handler(ble_bcs_t * p_lbs, beacon_data_type_t type, uin
 			}
 			printf("\n");
 			/* send new data to display */
-			display_receive_data(data, BCS_DATA_LED_LEN);
+			display_update_data(data, BCS_DATA_LED_LEN);
+#endif
             break;
 
         default:
@@ -548,12 +550,16 @@ static void ble_nus_evt_handler(ble_nus_t * p_nus, uint8_t * p_data, uint16_t le
 		/* ble_log_d("turn led off\n"); */
 	}
 
+#if 1
+	display_update_data(p_data, length);
+#else
     for (uint32_t i = 0; i < length; i++)
     {
         while (app_uart_put(p_data[i]) != NRF_SUCCESS);
     }
     while (app_uart_put('\r') != NRF_SUCCESS);
     while (app_uart_put('\n') != NRF_SUCCESS);
+#endif
 }
 /**@snippet [Handling the data received over BLE] */
 
@@ -838,7 +844,7 @@ static void beacon_params_default_set(void)
     tmp.data.magic_byte   = MAGIC_FLASH_BYTE;
     tmp.data.adv_interval = APP_BEACON_DEFAULT_ADV_INTERVAL_MS;
     tmp.data.company_id   = APP_DEFAULT_COMPANY_IDENTIFIER;
-    tmp.data.led_state[2]    = 0x01;
+    tmp.data.led_state    = 0x01;
     
     beacon_data[BEACON_MANUF_DAT_MINOR_L_IDX] = (uint8_t)(NRF_FICR->DEVICEADDR[0] & 0xFFUL);
     beacon_data[BEACON_MANUF_DAT_MINOR_H_IDX] = (uint8_t)((NRF_FICR->DEVICEADDR[0] >>  8) & 0xFFUL);
@@ -873,7 +879,7 @@ static void beacon_setup(beacon_mode_t mode)
     {
 		printf("normal mode\n");
         advertising_init(mode);
-        /* if (p_beacon->data.led_state[2]) */
+        if (p_beacon->data.led_state)
         {
             led_softblink_start(APP_BEACON_MODE_LED_MSK);
         }

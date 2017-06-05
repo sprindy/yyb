@@ -52,11 +52,21 @@ typedef enum
 
 typedef struct
 {
+	uint8_t total_pkg;
+	uint8_t index_pkg;
+	uint8_t led_state;
+	uint8_t reserved;
+	uint8_t disp_data[16];
+}display_data_t;
+
+typedef struct
+{
     uint8_t  magic_byte;                             /**< Magic byte in flash to detect if data is valid or not. */
     uint8_t  beacon_data[APP_BEACON_MANUF_DATA_LEN]; /**< Beacon manufacturer specific data*/
     uint16_t company_id;                             /**< Advertised beacon company idetifier. */
+	uint16_t pcb_id;
     uint16_t adv_interval;                           /**< Advertising interval in ms */
-    uint8_t  led_state[20];            /**< Softblinking LEDs state */
+    uint8_t  led_state;  		          			 /**< Softblinking LEDs state */
 }beacon_data_t;
 
 typedef union
