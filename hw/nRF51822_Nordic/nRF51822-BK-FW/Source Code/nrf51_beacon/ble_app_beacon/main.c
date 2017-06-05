@@ -22,6 +22,7 @@
 
 #include <stdbool.h>
 #include <stdint.h>
+#include <stdio.h>
 #include "ble_conn_params.h"
 #include "ble.h"
 #include "ble_hci.h"
@@ -32,6 +33,7 @@
 #include "pstorage.h"
 #include "app_gpiote.h"
 #include "app_timer.h"
+#include "app_uart.h"
 #include "app_button.h"
 #include "pca20006.h"
 #include "ble_bcs.h"
@@ -328,18 +330,22 @@ static void power_manage(void)
  */
 static void button_handler(uint8_t pin_no, uint8_t action)
 {
-    if (action == APP_BUTTON_PUSH)
+	printf("%s %s\n", __func__, action ? "push":"release");
+    /* if (action == APP_BUTTON_PUSH) */
     {
         if(pin_no == CONFIG_MODE_BUTTON_PIN)
         {
+	printf("%s config\n", __func__);
             beacon_reset();
         }
         else if (pin_no == BOOTLOADER_BUTTON_PIN)
         {
+	printf("%s bootloader\n", __func__);
             beacon_reset();
         }
         else
         {
+	printf("%s error\n", __func__);
             APP_ERROR_CHECK_BOOL(false);
         }
     }
@@ -852,6 +858,89 @@ static beacon_mode_t beacon_mode_button_read(void)
     return config_mode ? beacon_mode_config : beacon_mode_normal;
 }
 
+#define UART_TX_BUF_SIZE 256                         /**< UART TX buffer size. */
+#define UART_RX_BUF_SIZE 256                         /**< UART RX buffer size. */
+
+/**@brief   Function for handling app_uart events.
+ *
+ * @details This function will receive a single character from the app_uart module and append it to
+ *          a string. The string will be be sent over BLE when the last character received was a
+ *          'new line' i.e '\r\n' (hex 0x0D) or if the string has reached a length of
+ *          @ref NUS_MAX_DATA_LENGTH.
+ */
+/**@snippet [Handling the data received over UART] */
+static void uart_event_handler(app_uart_evt_t * p_event)
+{
+    switch (p_event->evt_type) {
+        case APP_UART_DATA_READY:
+    		nrf_gpio_cfg_output(LED_RGB_RED);
+			if(nrf_gpio_pin_read(LED_RGB_RED)) {
+				nrf_gpio_pin_clear(LED_RGB_RED);
+			}
+			else {
+				nrf_gpio_pin_set(LED_RGB_RED);
+			}
+#if 0  //test ok, but no need any more
+			static uint8_t data_array[BLE_NUS_MAX_DATA_LEN];
+			static uint8_t index = 0;
+    		uint32_t err_code;
+            UNUSED_VARIABLE(app_uart_get(&data_array[index]));
+            index++;
+
+            if ((data_array[index - 1] == '\n') || (index >= (BLE_NUS_MAX_DATA_LEN)))
+            {
+                err_code = ble_nus_string_send(&m_nus, data_array, index);
+                if (err_code != NRF_ERROR_INVALID_STATE) {
+                    APP_ERROR_CHECK(err_code);
+                }
+
+                index = 0;
+            }
+#endif
+            break;
+		case APP_UART_COMMUNICATION_ERROR:
+	        APP_ERROR_HANDLER(p_event->data.error_communication);
+	    break;
+	    case APP_UART_FIFO_ERROR:
+	    	APP_ERROR_HANDLER(p_event->data.error_code);
+	    break;
+        default: break;
+    }
+}
+/**@snippet [Handling the data received over UART] */
+
+/**@brief  Function for initializing the UART module.
+ */
+/**@snippet [UART Initialization] */
+uint32_t uart_init(void)
+{
+	uint32_t err_code;
+
+#if 1
+	app_uart_comm_params_t common_params = {
+		RX_PIN_NUMBER,
+		TX_PIN_NUMBER,
+		RTS_PIN_NUMBER,
+		CTS_PIN_NUMBER,
+		APP_UART_FLOW_CONTROL_DISABLED,
+		false,
+		UART_BAUDRATE_BAUDRATE_Baud38400
+	};
+
+	/* err_code = app_uart_init(&common_params, */
+	APP_UART_FIFO_INIT(&common_params,
+			UART_RX_BUF_SIZE,
+			UART_TX_BUF_SIZE,
+			uart_event_handler,
+			APP_IRQ_PRIORITY_LOW,
+			err_code);
+	APP_ERROR_CHECK(err_code);
+
+#endif
+	return err_code;
+}
+/**@snippet [UART Initialization] */
+
 /**
  * @brief Function for application main entry.
  */
@@ -861,13 +950,20 @@ int main(void)
     APP_SCHED_INIT(SCHED_MAX_EVENT_DATA_SIZE, SCHED_QUEUE_SIZE);
     APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_MAX_TIMERS, APP_TIMER_OP_QUEUE_SIZE, false);
     APP_GPIOTE_INIT(APP_GPIOTE_MAX_USERS);
-    buttons_init();    
+	uart_init();
+	printf("uart_inited\n");
+    buttons_init();
+	printf("buttons_inited\n");
     leds_init();
+	printf("leds_inited\n");
     ble_stack_init();
     flash_access_init();
-    
+	printf("ble_inited\n");
+
     // Read beacon mode
-    m_beacon_mode = beacon_mode_button_read();
+    /* m_beacon_mode = beacon_mode_button_read(); */
+	/* m_beacon_mode = beacon_mode_normal; */
+	m_beacon_mode = beacon_mode_config;
     // Read beacon params from flash
     p_beacon = beacon_params_get();
     if (p_beacon->data.magic_byte != MAGIC_FLASH_BYTE)
