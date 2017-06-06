@@ -469,7 +469,7 @@ static void display_turn_led_on(uint8_t index, bool on)
 void display_update_data(uint8_t *p_buf, uint8_t length)
 {
 	if(p_buf == NULL) {
-		printf("no data!\n");
+		log_d("[DISP] no data!\n");
 		return;
 	}
 
@@ -477,7 +477,7 @@ void display_update_data(uint8_t *p_buf, uint8_t length)
 	uint8_t index = p_buf[1];
 	uint16_t len = length - 4;
 	uint16_t len_add = display_rcv_word_cnt * 4 * DISPLAY_LED_NUM;
-	/* printf("%s index=%d, len=%d. cnt=%d, len_add=%d\n", __func__, */
+	/* log_d("[DISP] %s index=%d, len=%d. cnt=%d, len_add=%d\n", __func__, */
 			/* index, len, display_rcv_word_cnt, len_add); */
 	for(int i=0; i<len; i++ ) {
 		wData[index * len + len_add + i] = p_buf[4+i];
@@ -510,11 +510,12 @@ uint32_t display_timer_start(void)
 #if ENABLE_DISPLAY_TIMER
     if (!m_display_ct.timer_running) {
         err_code = app_timer_start(m_display_ct.timer_id, DISPLAY_TIMER_PERIOD, NULL);
+		APP_ERROR_CHECK(err_code);
         if (err_code != NRF_SUCCESS) {
-			printf("display timer start fail\n");
+			log_d("[DISP] display timer start fail\n");
             return err_code;
         }
-			printf("display timer start sucess\n");
+			log_d("[DISP] display timer start sucess\n");
 
         m_display_ct.timer_running = true;
     }
@@ -530,10 +531,10 @@ uint32_t display_timer_stop(void)
     if (m_display_ct.timer_running) {
         err_code = app_timer_stop(m_display_ct.timer_id);
         if (err_code != NRF_SUCCESS) {
-			printf("display timer stop fail\n");
+			log_d("[DISP] display timer stop fail\n");
             return err_code;
         }
-			printf("display timer stoped \n");
+			log_d("[DISP] display timer stoped \n");
 
         m_display_ct.timer_running = false;
     }
@@ -585,9 +586,9 @@ static void display_work_timerout(void *p_context)
 	if(1) {
 		display_turn_led_on(1, true);
 		/* uint8_t buf=nrf_gpio_word_byte_read(&NRF_GPIO->PIN_CNF[4], 2); */
-		/* printf("%s %d\n",__func__, i); */
-		/* printf("%s %d 0x%2x\n",__func__, i, buf); */
-		/* ble_printf("%s %d 0x%2x\n",__func__, i, buf); */
+		/* log_d("[DISP] %s %d\n",__func__, i); */
+		/* log_d("[DISP] %s %d 0x%2x\n",__func__, i, buf); */
+		/* ble_log_d("[DISP] %s %d 0x%2x\n",__func__, i, buf); */
 		/* i++; */
 	}
 	else
@@ -602,7 +603,7 @@ static void display_work_timerout(void *p_context)
 
 	if(cnt_line%(DISPLAY_LED_NUM * DISPLAY_LINE_DELAY) == 0) {
 		if(cnt_line%(DISPLAY_LED_NUM << 4) == 0) {
-			/* printf("l:%3d cnt:%8d, t:0x%x\n", display_cur_line, cnt_line, tmp); */
+			/* log_d("[DISP] l:%3d cnt:%8d, t:0x%x\n", display_cur_line, cnt_line, tmp); */
 			ble_printf(&wData[display_cur_line], 4);
 			if(display_repeat_cnt++ > 80) {
 				/* display_timer_stop(); */
@@ -659,11 +660,12 @@ static uint32_t display_timer_init(void)
 #if ENABLE_DISPLAY_TIMER
 	m_display_ct.timer_running = false;
 	err_code = app_timer_create(&m_display_ct.timer_id, APP_TIMER_MODE_REPEATED, display_work_timerout);
+	APP_ERROR_CHECK(err_code);
 	if(err_code != NRF_SUCCESS) {
-		printf("create display timer fail\n");
+		log_d("[DISP] create display timer fail\n");
 	}
 	else {
-		printf("create display timer sucess\n");
+		log_d("[DISP] create display timer sucess\n");
 	}
 #endif
 
@@ -706,7 +708,7 @@ static uint32_t display_drv_timer_init(void)
     //Configure TIMER_LED for generating simple light effect - leds on board will invert his state one after the other.
     nrf_drv_timer_config_t timer_cfg = NRF_DRV_TIMER_DEFAULT_CONFIG;
     err_code = nrf_drv_timer_init(&TIMER_LED, &timer_cfg, timer_led_event_handler);
-    APP_ERROR_CHECK(err_code);
+	APP_ERROR_CHECK(err_code);
 
     time_ticks = nrf_drv_timer_ms_to_ticks(&TIMER_LED, time_ms);
 

@@ -141,6 +141,8 @@ void app_error_handler(uint32_t error_code, uint32_t line_num, const uint8_t * p
     
     nrf_gpio_pin_clear(ASSERT_LED_PIN_NO);
 
+	log_d("[nrf err] %s: %d, %#x\n", p_fname, lin_num, err_code );
+
     UNUSED_VARIABLE(err_code);
     UNUSED_VARIABLE(lin_num);
     UNUSED_VARIABLE(p_fname);
@@ -383,7 +385,6 @@ static void beacon_write_handler(ble_bcs_t * p_lbs, beacon_data_type_t type, uin
     static beacon_flash_db_t tmp;
     
     memcpy(&tmp, p_beacon, sizeof(beacon_flash_db_t));
-	/* printf("sizeof(beacon_flash_db_t)=%d\n", sizeof(beacon_flash_db_t)); */
     
     tmp.data.magic_byte = MAGIC_FLASH_BYTE;
     
@@ -424,12 +425,12 @@ static void beacon_write_handler(ble_bcs_t * p_lbs, beacon_data_type_t type, uin
             tmp.data.led_state = data[0];
 #if 0
 			/* remove log to reduce cpu loading */
-			/* printf("receiver led data:"); */
+			/* log_d("receiver led data:"); */
 			for(int i=0; i<BCS_DATA_LED_LEN; i++ ) {
 				tmp.data.led_state[i] = data[i];
-				printf("0x%02x ", data[i]);
+				log_d("0x%02x ", data[i]);
 			}
-			printf("\n");
+			log_d("\n");
 			/* send new data to display */
 			display_update_data(data, BCS_DATA_LED_LEN);
 #endif
@@ -807,17 +808,14 @@ static beacon_flash_db_t * beacon_params_get(void)
 {
     uint32_t err_code;
     pstorage_module_param_t pstorage_param;
-    
+
     pstorage_param.cb = pstorage_ntf_cb;
     pstorage_param.block_size = sizeof(beacon_flash_db_t);
-#if 1
     pstorage_param.block_count = 1;
-#else
-	pstorage_param.block_count = 64; //8 words //boot fail
-#endif
+
     err_code = pstorage_register(&pstorage_param, &m_pstorage_block_id);
     APP_ERROR_CHECK(err_code);
-    
+
     return (beacon_flash_db_t *)m_pstorage_block_id.block_id;
 }
 
@@ -866,7 +864,7 @@ static void beacon_setup(beacon_mode_t mode)
 {
     if(mode == beacon_mode_config)
     {
-		printf("config mode\n");
+		log_d("config mode\n");
         gap_params_init();
         services_init();
         advertising_init(mode);
@@ -877,7 +875,7 @@ static void beacon_setup(beacon_mode_t mode)
     }
     else
     {
-		printf("normal mode\n");
+		log_d("normal mode\n");
         advertising_init(mode);
         if (p_beacon->data.led_state)
         {
@@ -899,6 +897,7 @@ static void beacon_reset(void)
     if (count == 0)
     {
         m_beacon_reset = false;
+		log_d("[nrf] %s\n", __func__ );
         NVIC_SystemReset();
     }
     else
@@ -955,14 +954,12 @@ int main(void)
     APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_MAX_TIMERS, APP_TIMER_OP_QUEUE_SIZE, false);
     APP_GPIOTE_INIT(APP_GPIOTE_MAX_USERS);
 	uart_init();
-#if ENABLE_UART_DEBUG
-	printf("uart inited\n");
-#endif
+	log_d("[APP] uart inited\n");
     /* buttons_init(); */
-	/* printf("buttons inited\n"); */
+	/* log_d("buttons inited\n"); */
     /* leds_init(); */
     ble_stack_init();
-	printf("ble stack inited\n");
+	log_d("[APP] ble stack inited\n");
 	ble_nus_service_init();
     flash_access_init();
 
@@ -974,17 +971,17 @@ int main(void)
 #endif
     // Read beacon params from flash
     p_beacon = beacon_params_get();
-	/* printf("mode get\n"); */
+	/* log_d("mode get\n"); */
     if (p_beacon->data.magic_byte != MAGIC_FLASH_BYTE)
     {
-		printf("No valid params found, write default params\n");
+		log_d("[APP] No valid params found, write default params\n");
         // No valid params found, write default params.
         beacon_params_default_set();
     }
 
     beacon_start(m_beacon_mode);
-	acc_init();
-	display_init();
+	/* acc_init(); */
+	/* display_init(); */
 
     // Enter main loop.
     for (;;)

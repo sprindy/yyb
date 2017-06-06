@@ -20,35 +20,33 @@ static acc_context_t m_acc_ct = {0};
 static app_gpiote_user_id_t           m_gpiote_user_id;            /**< GPIOTE user id for buttons module. */
 //static pin_transition_t               m_pin_transition;            /**< pin transaction direction. */
 
+#if ENABLE_ACC_TIMER
 uint32_t acc_timer_start(void)
 {
-#if ENABLE_ACC_TIMER
     if (!m_acc_ct.timer_running) {
         uint32_t err_code;
 
         err_code = app_timer_start(m_acc_ct.timer_id, ACC_TIMER_PERIOD, NULL);
+		APP_ERROR_CHECK(err_code);
+
         if (err_code != NRF_SUCCESS) {
-#if ENABLE_UART_DEBUG
-			printf("acc timer start fail\n");
-#endif
+			log_d("[ACC] acc timer start fail\n");
             return err_code;
         }
 		else {
-#if ENABLE_UART_DEBUG
-			printf("acc timer start sucess\n");
-#endif
+			log_d("[ACC] acc timer start sucess\n");
 		}
 
         m_acc_ct.timer_running = true;
     }
-#endif
 
     return NRF_SUCCESS;
 }
+#endif
 
+#if ENABLE_ACC_TIMER
 static void acc_work_timerout(void *p_context)
 {
-#if ENABLE_ACC_TIMER
     int16_t acc_value[3];
 	AxesRaw_t buff;
 	LIS3DH_GetAccAxesRaw(&buff);
@@ -69,29 +67,24 @@ static void acc_work_timerout(void *p_context)
 	/* printf("acc value: X:%s%6d, Y:%s%6d, Z:%s%6d\n", acc_value[0]>0 ? " ":"-", acc_value[0], acc_value[1]>0 ? " ":"-", acc_value[1], acc_value[2]>0 ? " ":"-", acc_value[2]); */
 	/* printf("X:%6d, Y:%6d, Z:%6d\n", acc_value[0], acc_value[1], acc_value[2]); */
 	/* printf("X:%6d, Y:%6d, Z:%6d  0x%x\n", acc_value[0], acc_value[1], acc_value[2], val); */
-#if ENABLE_UART_DEBUG
-	printf("X:%6d, Y:%6d, Z:%6d  0x%2x %s\n", acc_value[0], acc_value[1], acc_value[2], val, pin ? "H":"L");
-#endif
+	log_d("[ACC] X:%6d, Y:%6d, Z:%6d  0x%2x %s\n", acc_value[0], acc_value[1], acc_value[2], val, pin ? "H":"L");
 
-#endif
 }
 
 static uint32_t acc_timer_init(void)
 {
 	uint32_t err_code;
 
-#if ENABLE_ACC_TIMER
 	m_acc_ct.timer_running = false;
 	err_code = app_timer_create(&m_acc_ct.timer_id, APP_TIMER_MODE_REPEATED, acc_work_timerout);
+	APP_ERROR_CHECK(err_code);
 	if(err_code != NRF_SUCCESS) {
-#if ENABLE_UART_DEBUG
-		printf("create acc timer fail");
-#endif
+		log_d("[ACC] create acc timer fail");
 	}
 
-#endif
 	return err_code;
 }
+#endif
 
 /* failing edge will work */
 /**@brief Function for handling the GPIOTE event.
@@ -141,12 +134,12 @@ static void acc_gpiote_event_handler(uint32_t event_pins_low_to_high, uint32_t e
 			}
 #else
 			display_change_direction(true);
-			/* acc_log_d("0x%2x Y++++\n", val); */
+			log_d("[ACC] 0x%2x Y++++\n", val);
 #endif
 		}
 		if(val & 0x04) {
 			display_change_direction(false);
-			/* acc_log_d("0x%2x Y----\n", val); */
+			log_d("[ACC] 0x%2x Y----\n", val);
 		}
 #if 0
 		if(val & 0x02)
@@ -170,8 +163,12 @@ static uint32_t acc_gpiote_init(void)
 										pins_transition_mask,
 										pins_transition_mask,
 										acc_gpiote_event_handler);
+	APP_ERROR_CHECK(err_code);
 	if (err_code != NRF_SUCCESS) {
 		return err_code;
+	}
+	else {
+		log_d("[ACC] %s success.\n", __func__);
 	}
 
 	return app_gpiote_user_enable(m_gpiote_user_id);
@@ -193,7 +190,7 @@ uint32_t acc_init(void)
 
 	err_code = acc_gpiote_init();
 	if(err_code == NRF_SUCCESS) {
-		/* acc_log_d("acc gpiote init sucess\n"); */
+		log_d("[ACC] acc gpiote init sucess\n");
 	}
 
 	/* init spi memory */
@@ -201,7 +198,7 @@ uint32_t acc_init(void)
 
 	uint8_t val = 0;
 	LIS3DH_GetWHO_AM_I(&val);
-	/* acc_log_d("%s who am i:0x%x\n", __func__, val); */
+	log_d("[ACC] %s who am i:0x%x\n", __func__, val);
 	if(val == 0x33) {
 		m_acc_ct.acc_en = true;
 	}
@@ -258,10 +255,12 @@ uint32_t acc_init(void)
 	}
 #endif
 
+#if ENABLE_ACC_TIMER
 	err_code = acc_timer_init();
 	if(err_code == NRF_SUCCESS) {
 		 err_code = acc_timer_start();
 	}
+#endif
 
 	return err_code;
 }
