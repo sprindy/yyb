@@ -48,7 +48,7 @@ IF %1==app (
 	%nrfutilPath%\nrfutil.exe dfu genpkg --application %outputPath%\%binFileName% --application-version 0xff %outputPath%\%zipFileName%
 )
 
-adb.exe push %outputPath%\%zipFileName% \sdcard\Download
+adb.exe push %outputPath%\%zipFileName% /sdcard/Download/
 
 ::fromelf --bin -o _build\nrf51822_beacon_app.bin _build\nrf51822_beacon_app.axf
 ::fromelf --bin -o _build\nrf51822_beacon_bootloader.bin _build\nrf51822_beacon_bootloader.axf
