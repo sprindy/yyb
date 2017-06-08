@@ -307,7 +307,7 @@ static void advertising_init(beacon_mode_t mode)
         m_adv_params.p_peer_addr = NULL;
         m_adv_params.fp          = BLE_GAP_ADV_FP_ANY;
         m_adv_params.interval    = APP_CONFIG_ADV_INTERVAL;
-        m_adv_params.timeout     = APP_CONFIG_ADV_TIMEOUT;           
+        m_adv_params.timeout     = APP_CONFIG_ADV_TIMEOUT;
     }
     else
     {
@@ -726,8 +726,18 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
 
         case BLE_GAP_EVT_TIMEOUT:
             if (p_ble_evt->evt.gap_evt.params.timeout.src == BLE_GAP_TIMEOUT_SRC_ADVERTISEMENT)
-            { 
-                beacon_reset();
+            {
+#if 0
+				if(nrf_gpio_pin_read(LED_RGB_RED)) {
+					nrf_gpio_pin_clear(LED_RGB_RED);
+				}
+				else {
+					nrf_gpio_pin_set(LED_RGB_RED);
+				}
+#endif
+				/* beacon_reset(); */
+				/* restart advertising when timeout */
+				advertising_start();
             }
             break;
 
@@ -864,7 +874,7 @@ static void beacon_setup(beacon_mode_t mode)
 {
     if(mode == beacon_mode_config)
     {
-		log_d("config mode\n");
+		log_d("[APP] config mode\n");
         gap_params_init();
         services_init();
         advertising_init(mode);
@@ -875,7 +885,7 @@ static void beacon_setup(beacon_mode_t mode)
     }
     else
     {
-		log_d("normal mode\n");
+		log_d("[APP] normal mode\n");
         advertising_init(mode);
         if (p_beacon->data.led_state)
         {
@@ -890,7 +900,7 @@ static void beacon_reset(void)
 {
     uint32_t err_code;
     uint32_t count;
-    
+
     // Check if storage access is in progress.
     err_code = pstorage_access_status_get(&count);
     APP_ERROR_CHECK(err_code);
@@ -980,8 +990,8 @@ int main(void)
     }
 
     beacon_start(m_beacon_mode);
-	/* acc_init(); */
-	/* display_init(); */
+	acc_init();
+	display_init();
 
     // Enter main loop.
     for (;;)

@@ -188,10 +188,7 @@ uint32_t acc_init(void)
 	nrf_gpio_cfg_input(ACC_PIN_INT2, NRF_GPIO_PIN_NOPULL);
 	nrf_gpio_cfg_input(ACC_PIN_MISO, NRF_GPIO_PIN_NOPULL);
 
-	err_code = acc_gpiote_init();
-	if(err_code == NRF_SUCCESS) {
-		log_d("[ACC] acc gpiote init sucess\n");
-	}
+	acc_gpiote_init();
 
 	/* init spi memory */
 	SPI_Mems_Init();
