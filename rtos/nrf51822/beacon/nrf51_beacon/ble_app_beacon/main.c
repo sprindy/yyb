@@ -578,6 +578,9 @@ void ble_nus_service_init(void)
 
     err_code = ble_nus_init(&m_nus, &nus_init);
     APP_ERROR_CHECK(err_code);
+	if(err_code == NRF_SUCCESS) {
+		log_d("[BLE] %s success.\n", __func__);
+	}
 }
 
 /**@brief Function for initializing services that will be used by the application.
@@ -964,12 +967,10 @@ int main(void)
     APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_MAX_TIMERS, APP_TIMER_OP_QUEUE_SIZE, false);
     APP_GPIOTE_INIT(APP_GPIOTE_MAX_USERS);
 	uart_init();
-	log_d("[APP] uart inited\n");
     /* buttons_init(); */
 	/* log_d("buttons inited\n"); */
     /* leds_init(); */
     ble_stack_init();
-	log_d("[APP] ble stack inited\n");
 	ble_nus_service_init();
     flash_access_init();
 

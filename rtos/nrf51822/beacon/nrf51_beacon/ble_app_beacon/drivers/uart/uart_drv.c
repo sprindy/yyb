@@ -4,6 +4,7 @@
 #include "pca20006.h"
 #include "app_uart.h"
 #include "uart_drv.h"
+#include "log.h"
 
 #include "nrf.h"
 #include "nrf_delay.h"
@@ -89,6 +90,9 @@ uint32_t uart_init(void)
 			APP_IRQ_PRIORITY_LOW,
 			err_code);
 	APP_ERROR_CHECK(err_code);
+	if(err_code == NRF_SUCCESS) {
+		log_d("[UART] %s success.\n", __func__);
+	}
 
 #endif
 	return err_code;

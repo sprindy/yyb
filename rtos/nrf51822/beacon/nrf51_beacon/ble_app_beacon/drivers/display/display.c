@@ -672,48 +672,46 @@ static uint32_t display_timer_init(void)
 	return err_code;
 }
 
-const nrf_drv_timer_t TIMER_LED = NRF_DRV_TIMER_INSTANCE(0);
+const nrf_drv_timer_t TIMER_LED = NRF_DRV_TIMER_INSTANCE(1);
 /**
  * @brief Handler for timer events.
  */
 void timer_led_event_handler(nrf_timer_event_t event_type, void* p_context)
 {
-    static uint32_t i;
-    /* uint32_t led_to_invert = ((i++) % LEDS_NUMBER); */
-
+	static uint32_t cnt=0;
     switch (event_type)
     {
-        case NRF_TIMER_EVENT_COMPARE0:
-			nrf_gpio_cfg_output(LED_RGB_RED);
-			if(nrf_gpio_pin_read(LED_RGB_RED))
-				nrf_gpio_pin_clear(LED_RGB_RED);
-			else
-				nrf_gpio_pin_set(LED_RGB_RED);
-
-            /* bsp_board_led_invert(led_to_invert); */
+        case NRF_TIMER_EVENT_COMPARE1:
+			if(cnt++ == 100) {
+				cnt = 0;
+				nrf_gpio_cfg_output(LED_RGB_RED);
+				if(nrf_gpio_pin_read(LED_RGB_RED))
+					nrf_gpio_pin_clear(LED_RGB_RED);
+				else
+					nrf_gpio_pin_set(LED_RGB_RED);
+			}
             break;
-
-        default:
-            //Do nothing.
-            break;
+        default: break;
     }
 }
 
 static uint32_t display_drv_timer_init(void)
 {
-    uint32_t time_ms = 500; //Time(in miliseconds) between consecutive compare events.
+    uint32_t time_ms = 10000; //Time(in miliseconds) between consecutive compare events.
     uint32_t time_ticks;
     uint32_t err_code = NRF_SUCCESS;
 
-    //Configure TIMER_LED for generating simple light effect - leds on board will invert his state one after the other.
     nrf_drv_timer_config_t timer_cfg = NRF_DRV_TIMER_DEFAULT_CONFIG;
     err_code = nrf_drv_timer_init(&TIMER_LED, &timer_cfg, timer_led_event_handler);
 	APP_ERROR_CHECK(err_code);
+	if(err_code == NRF_SUCCESS) {
+		log_d("[DISP] %s success.\n", __func__);
+	}
 
     time_ticks = nrf_drv_timer_ms_to_ticks(&TIMER_LED, time_ms);
 
     nrf_drv_timer_extended_compare(
-         &TIMER_LED, NRF_TIMER_CC_CHANNEL0, time_ticks, NRF_TIMER_SHORT_COMPARE0_CLEAR_MASK, true);
+         &TIMER_LED, NRF_TIMER_CC_CHANNEL1, time_ticks, NRF_TIMER_SHORT_COMPARE1_CLEAR_MASK, true);
 
     nrf_drv_timer_enable(&TIMER_LED);
 
@@ -724,7 +722,6 @@ uint32_t display_init(void)
 {
 	uint32_t err_code;
 
-	/* nrf_gpio_cfg_output(DISPLAY_GPIO_0); */
 	nrf_gpio_cfg_output(DISPLAY_GPIO_0);
 	nrf_gpio_cfg_output(DISPLAY_GPIO_1);
 	nrf_gpio_cfg_output(DISPLAY_GPIO_2);
@@ -743,11 +740,14 @@ uint32_t display_init(void)
 	nrf_gpio_pin_clear(DISPLAY_GPIO_6);
 	nrf_gpio_pin_clear(DISPLAY_GPIO_7);
 
-	/* err_code = display_drv_timer_init(); */
+#if ENABLE_HW_TIMER
+	err_code = display_drv_timer_init();
+#else
 	err_code = display_timer_init();
 	if(err_code == NRF_SUCCESS) {
 		err_code = display_timer_start();
 	}
+#endif
 
 	return err_code;
 } 

@@ -27,6 +27,7 @@
 #endif /* DISPLAY_ONE_WORD */
 #endif /* DISPLAY_LED_TEST */
 
+#define ENABLE_HW_TIMER      1
 #define ENABLE_UART_DEBUG    1
 #define ENABLE_BLE_NUS_DEBUG 1
 #define FORCE_CONFIG_MODE	 1
