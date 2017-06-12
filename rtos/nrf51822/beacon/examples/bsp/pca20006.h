@@ -14,7 +14,7 @@
 
 // LEDs and buttons definition for PCA20006 board (beacon)
 #define DISPLAY_LED_TEST 0
-#define DISPLAY_ONE_WORD 1
+#define DISPLAY_ONE_WORD 0
 #if DISPLAY_LED_TEST
 #define DISPLAY_TIMER_PERIOD 0x2000
 #else

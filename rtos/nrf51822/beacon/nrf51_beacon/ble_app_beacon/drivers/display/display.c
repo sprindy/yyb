@@ -24,9 +24,9 @@ static display_context_t m_display_ct = {0};
 static bool display_dir = false;
 #if DISPLAY_ONE_WORD
 static uint8_t display_cur_word = 0;
+#endif
 static uint8_t display_repeat_cnt = 0;
 static uint8_t display_rcv_word_cnt = 0;
-#endif
 static uint32_t display_cur_line = 0;
 
 char wData[DISPLAY_DATA_BYTE_LEN] = {
@@ -576,24 +576,8 @@ uint32_t display_get_repeat_cnt(void)
 	return display_repeat_cnt;
 }
 
-static void display_work_timerout(void *p_context)
+static void display_work()
 {
-#if DISPLAY_LED_TEST
-	/* only for led test */
-	static uint8_t i = 0;
-	/* if (i++ <= DISPLAY_LED_NUM - 1) { */
-	/* if (i <= 1) { */
-	if(1) {
-		display_turn_led_on(1, true);
-		/* uint8_t buf=nrf_gpio_word_byte_read(&NRF_GPIO->PIN_CNF[4], 2); */
-		/* log_d("[DISP] %s %d\n",__func__, i); */
-		/* log_d("[DISP] %s %d 0x%2x\n",__func__, i, buf); */
-		/* ble_log_d("[DISP] %s %d 0x%2x\n",__func__, i, buf); */
-		/* i++; */
-	}
-	else
-		i = 0;
-#else
 	static uint32_t cnt_line = 0;
 	static uint32_t tmp = 0x0;
 	/* if (i++ <= DISPLAY_LED_NUM - 1) { */
@@ -602,16 +586,17 @@ static void display_work_timerout(void *p_context)
 	}
 
 	if(cnt_line%(DISPLAY_LED_NUM * DISPLAY_LINE_DELAY) == 0) {
-		if(cnt_line%(DISPLAY_LED_NUM << 4) == 0) {
+		/* if(cnt_line%(DISPLAY_LED_NUM << 4) == 0) { */
 			/* log_d("[DISP] l:%3d cnt:%8d, t:0x%x\n", display_cur_line, cnt_line, tmp); */
-			ble_printf(&wData[display_cur_line], 4);
-			if(display_repeat_cnt++ > 80) {
+			/* ble_printf(&wData[display_cur_line], 4); */
+			/* if(display_repeat_cnt++ > 80) { */
 				/* display_timer_stop(); */
-			}
-		}
+			/* } */
+		/* } */
 
 		tmp = 0;
 		if(display_cur_line >= sizeof(wData)/4) {
+			display_cur_line = 0;
 			return;
 		}
 		if(display_cur_line < 0) {
@@ -650,6 +635,28 @@ static void display_work_timerout(void *p_context)
 	}
 
 	cnt_line++;
+
+}
+
+static void display_work_timerout(void *p_context)
+{
+#if DISPLAY_LED_TEST
+	/* only for led test */
+	static uint8_t i = 0;
+	/* if (i++ <= DISPLAY_LED_NUM - 1) { */
+	/* if (i <= 1) { */
+	if(1) {
+		display_turn_led_on(1, true);
+		/* uint8_t buf=nrf_gpio_word_byte_read(&NRF_GPIO->PIN_CNF[4], 2); */
+		/* log_d("[DISP] %s %d\n",__func__, i); */
+		/* log_d("[DISP] %s %d 0x%2x\n",__func__, i, buf); */
+		/* ble_log_d("[DISP] %s %d 0x%2x\n",__func__, i, buf); */
+		/* i++; */
+	}
+	else
+		i = 0;
+#else
+	display_work();
 #endif
 }
 
@@ -682,6 +689,7 @@ void timer_led_event_handler(nrf_timer_event_t event_type, void* p_context)
     switch (event_type)
     {
         case NRF_TIMER_EVENT_COMPARE1:
+#if 0
 			if(cnt++ == 100) {
 				cnt = 0;
 				nrf_gpio_cfg_output(LED_RGB_RED);
@@ -690,6 +698,9 @@ void timer_led_event_handler(nrf_timer_event_t event_type, void* p_context)
 				else
 					nrf_gpio_pin_set(LED_RGB_RED);
 			}
+#else
+			display_work();
+#endif
             break;
         default: break;
     }
@@ -697,7 +708,7 @@ void timer_led_event_handler(nrf_timer_event_t event_type, void* p_context)
 
 static uint32_t display_drv_timer_init(void)
 {
-    uint32_t time_ms = 10000; //Time(in miliseconds) between consecutive compare events.
+    uint32_t time_us = 40; //Time between consecutive compare events.
     uint32_t time_ticks;
     uint32_t err_code = NRF_SUCCESS;
 
@@ -708,7 +719,7 @@ static uint32_t display_drv_timer_init(void)
 		log_d("[DISP] %s success.\n", __func__);
 	}
 
-    time_ticks = nrf_drv_timer_ms_to_ticks(&TIMER_LED, time_ms);
+    time_ticks = nrf_drv_timer_us_to_ticks(&TIMER_LED, time_us);
 
     nrf_drv_timer_extended_compare(
          &TIMER_LED, NRF_TIMER_CC_CHANNEL1, time_ticks, NRF_TIMER_SHORT_COMPARE1_CLEAR_MASK, true);
