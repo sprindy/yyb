@@ -23,7 +23,7 @@
 #define DISPLAY_TIMER_PERIOD 4
 #else
 /* display four words in one screen*/
-#define DISPLAY_TIMER_PERIOD 1
+#define DISPLAY_TIMER_PERIOD 2
 #endif /* DISPLAY_ONE_WORD */
 #endif /* DISPLAY_LED_TEST */
 
@@ -34,20 +34,20 @@
 
 #define DISPLAY_LINE_DELAY  1
 #define DISPLAY_LED_NUM 32
-#define DISPLAY_GPIO_0	 0
-#define DISPLAY_GPIO_1	 1
-#define DISPLAY_GPIO_2	 2
-#define DISPLAY_GPIO_3	 3
-#define DISPLAY_GPIO_4	 4
-#define DISPLAY_GPIO_5	 5
-#define DISPLAY_GPIO_6	 6
-#define DISPLAY_GPIO_7	15
+#define DISPLAY_GPIO_0	 20
+#define DISPLAY_GPIO_1	 19
+#define DISPLAY_GPIO_2	 18
+#define DISPLAY_GPIO_3	 17
+#define DISPLAY_GPIO_4	 16
+#define DISPLAY_GPIO_5	 15
+#define DISPLAY_GPIO_6	 14
+#define DISPLAY_GPIO_7	 13
 
 #define LEDS_NUMBER    3
 
-#define LED_RGB_RED    7
-#define LED_RGB_GREEN  24
-#define LED_RGB_BLUE   25
+#define LED_RGB_RED    2
+#define LED_RGB_GREEN  1
+#define LED_RGB_BLUE   3
 
 #define BSP_LED_0 LED_RGB_RED
 #define BSP_LED_1 LED_RGB_GREEN
@@ -59,8 +59,8 @@
 #define LEDS_MASK      (BSP_LED_0_MASK | BSP_LED_1_MASK | BSP_LED_2_MASK)
 #define LEDS_INV_MASK  0x00000000
 
-#define BUTTON_0       15
-#define BUTTON_1       6
+#define BUTTON_0       9
+#define BUTTON_1       16
 /* #define BUTTON_PULL    NRF_GPIO_PIN_PULLUP */
 #define BUTTON_PULL    NRF_GPIO_PIN_NOPULL
 
@@ -77,8 +77,8 @@
 
 #if ENABLE_UART_DEBUG
 #if 1
-#define RX_PIN_NUMBER  21
-#define TX_PIN_NUMBER  30
+#define RX_PIN_NUMBER  22
+#define TX_PIN_NUMBER  23
 #endif
 #define CTS_PIN_NUMBER 20
 #define RTS_PIN_NUMBER 22
@@ -88,14 +88,16 @@
 
 /* config acc LIS2DH */
 #define ACC_TIMER_PERIOD 0x200
-#define ACC_PIN_MISO     10
-#define ACC_PIN_MOSI      9
-#define ACC_PIN_CSN      11
-#define ACC_PIN_SCK      12
-#define ACC_PIN_INT1     13
-#define ACC_PIN_INT2     14
-/* #define ACC_FREQUENCY  LIS2DH12_FREQUENCY */
+#define ACC_PIN_MISO      7
+#define ACC_PIN_MOSI      6
+#define ACC_PIN_CSN       8
+#define ACC_PIN_SCK       5
+#define ACC_PIN_INT2     29
+#define ACC_PIN_INT1      4
+#define ACC_INT_USE_X     1
+#define ACC_INT_USE_Y     0
 
 #define ENABLE_DISPLAY_TIMER 1
 #define ENABLE_ACC_TIMER     0
-#endif
+
+#endif  /* PCA20006_H */

@@ -969,7 +969,7 @@ int main(void)
 	uart_init();
     /* buttons_init(); */
 	/* log_d("buttons inited\n"); */
-    /* leds_init(); */
+    leds_init();
     ble_stack_init();
 	ble_nus_service_init();
     flash_access_init();

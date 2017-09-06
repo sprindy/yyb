@@ -81,6 +81,9 @@ static uint32_t acc_timer_init(void)
 	if(err_code != NRF_SUCCESS) {
 		log_d("[ACC] create acc timer fail");
 	}
+	else {
+		log_d("[ACC] create acc timer success");
+	}
 
 	return err_code;
 }
@@ -118,6 +121,7 @@ static void acc_gpiote_event_handler(uint32_t event_pins_low_to_high, uint32_t e
 		if(val & 0x10)
 			printf("0x%2x Z----\n", val);
 #endif
+#if ACC_INT_USE_Y
 		if(val & 0x08) {
 #if 0
 			int16_t acc_value[3];
@@ -141,7 +145,8 @@ static void acc_gpiote_event_handler(uint32_t event_pins_low_to_high, uint32_t e
 			display_change_direction(false);
 			log_d("[ACC] 0x%2x Y----\n", val);
 		}
-#if 0
+#endif
+#if ACC_INT_USE_X
 		if(val & 0x02)
 			printf("0x%2x X++++\n", val);
 		if(val & 0x01)
@@ -202,6 +207,9 @@ uint32_t acc_init(void)
 #if 1
 	/* LIS3DH_WriteReg(LIS3DH_CTRL_REG1, 0x27); //10Hz */
 	LIS3DH_WriteReg(LIS3DH_CTRL_REG1, 0x47); //50Hz
+	uint8_t data = 0;
+	LIS3DH_ReadReg(LIS3DH_CTRL_REG1, &data);
+	log_d("[ACC] %s write reg CTRL_REG1:%s\n", __func__, data==0x47 ? "success":"fail");
 	LIS3DH_WriteReg(LIS3DH_CTRL_REG2, 0x01);
 	LIS3DH_WriteReg(LIS3DH_CTRL_REG3, 0x40);
 	/* LIS3DH_WriteReg(LIS3DH_CTRL_REG4, 0x88); //2g */
