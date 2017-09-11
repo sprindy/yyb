@@ -1,12 +1,8 @@
 SET PATH=C:\Keil_v5\ARM\ARMCC\Bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\Nordic Semiconductor\nrf5x\bin\;C:\adb
-SET ARMCC5_ASMOPT=--diag_suppress=9931
-SET ARMCC5_CCOPT=--diag_suppress=9931
-SET ARMCC5_LINKOPT=--diag_suppress=9931
 SET CPU_TYPE=nRF51822_xxAA
 SET CPU_VENDOR=Nordic Semiconductor
 SET UV2_TARGET=nrf51822_xxac_s110
 SET CPU_CLOCK=0x00F42400
-
 "C:\Keil_v5\ARM\ARMCC\Bin\ArmCC" --Via ".\_build\main.__i"
 "C:\Keil_v5\ARM\ARMCC\Bin\ArmCC" --Via ".\_build\led_softblink.__i"
 "C:\Keil_v5\ARM\ARMCC\Bin\ArmCC" --Via ".\_build\display.__i"

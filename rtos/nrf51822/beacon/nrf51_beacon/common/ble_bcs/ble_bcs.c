@@ -12,6 +12,7 @@
 
 #include "ble_bcs.h"
 #include <string.h>
+#include <stdio.h>
 #include "nordic_common.h"
 #include "ble_srv_common.h"
 #include "app_util.h"

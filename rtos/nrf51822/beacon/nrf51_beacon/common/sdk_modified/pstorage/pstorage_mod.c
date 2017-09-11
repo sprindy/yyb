@@ -14,6 +14,7 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <string.h>
+/* #include <stdio.h> */
 #include "nordic_common.h"
 #include "nrf_error.h"
 #include "nrf_assert.h"
@@ -725,6 +726,7 @@ static uint32_t cmd_process(void)
             p_data_addr  += offset;
             storage_addr += (p_cmd->offset + offset);
 
+			/* printf("%s, storage_addr:0x%x, size:0x%x\n", __func__, storage_addr, size); */
             if (size < SOC_MAX_WRITE_SIZE)
             {
                 retval = sd_flash_write(((uint32_t *)storage_addr),
@@ -826,6 +828,7 @@ uint32_t pstorage_init(void)
 
     m_next_app_instance = 0;
     m_next_page_addr    = PSTORAGE_DATA_START_ADDR;
+	/* printf("[FLSH] %s: pstorage data start addr:0x%x\n", __func__, m_next_page_addr); */
     m_round_val         = 0;
 
     for (uint32_t index = 0; index < PSTORAGE_MAX_APPLICATIONS; index++)
@@ -885,6 +888,7 @@ uint32_t pstorage_register(pstorage_module_param_t * p_module_param,
 
     p_block_id->module_id = m_next_app_instance;
     p_block_id->block_id  = m_next_page_addr;
+	/* printf("[FLSH] %s: pstorage data new addr:0x%x\n", __func__, m_next_page_addr); */
 
     m_app_table[m_next_app_instance].base_id     = p_block_id->block_id;
     m_app_table[m_next_app_instance].cb          = p_module_param->cb;

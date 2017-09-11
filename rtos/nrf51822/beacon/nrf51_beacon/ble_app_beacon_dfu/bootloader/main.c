@@ -31,7 +31,6 @@
 #include "bootloader.h"
 #include "bootloader_util.h"
 #include <stdint.h>
-#include <stdio.h>
 #include <string.h>
 #include <stddef.h>
 #include "nordic_common.h"
@@ -51,7 +50,6 @@
 #include "pstorage_platform.h"
 #include "nrf_mbr.h"
 #include "led_softblink.h"
-#include "uart_drv.h"
 
 #define LED_R_MSK                             (1UL << LED_RGB_RED)                              /**< Red LED bitmask */
 #define LED_G_MSK                             (1UL << LED_RGB_GREEN)                            /**< Green LED bitmask */
@@ -60,7 +58,7 @@
 #define IS_SRVC_CHANGED_CHARACT_PRESENT 1                                                       /**< Include or not the service_changed characteristic. if not enabled, the server's database cannot be changed for the lifetime of the device*/
 
 #define BOOTLOADER_BUTTON               BUTTON_0                                                /**< Button used to enter SW update mode. */
-#define UPDATE_IN_PROGRESS_LED_MSK      (LED_R_MSK)                                             /**< Led used to indicate that DFU is active. */
+#define UPDATE_IN_PROGRESS_LED_MSK      (LED_B_MSK)                                             /**< Led used to indicate that DFU is active. */
 
 #define APP_TIMER_PRESCALER             0                                                       /**< Value of the RTC1 PRESCALER register. */
 #define APP_TIMER_MAX_TIMERS            4                                                       /**< Maximum number of simultaneously created timers. */
@@ -214,8 +212,6 @@ int main(void)
     APP_ERROR_CHECK_BOOL(NRF_FICR->CODEPAGESIZE == CODE_PAGE_SIZE);
 
     // Initialize.
-	/* no enough rom */
-	/* uart_init(); */
     timers_init();
     buttons_init();
     leds_init();
@@ -264,11 +260,6 @@ int main(void)
         // @note: Only applications running from DFU_BANK_0_REGION_START is supported.
         bootloader_app_start(DFU_BANK_0_REGION_START);
     }
-
-	nrf_gpio_cfg_output(DISPLAY_GPIO_0);
-	nrf_gpio_cfg_output(DISPLAY_GPIO_4);
-	nrf_gpio_pin_clear(DISPLAY_GPIO_4);
-	nrf_gpio_pin_set(DISPLAY_GPIO_0);
-
+    
     NVIC_SystemReset();
 }

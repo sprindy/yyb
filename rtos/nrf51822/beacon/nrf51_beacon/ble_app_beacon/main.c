@@ -828,6 +828,7 @@ static beacon_flash_db_t * beacon_params_get(void)
 
     err_code = pstorage_register(&pstorage_param, &m_pstorage_block_id);
     APP_ERROR_CHECK(err_code);
+	log_d("[APP] %s: pstorage address:0x%x 0x%x\n", __func__, m_pstorage_block_id, &m_pstorage_block_id);
 
     return (beacon_flash_db_t *)m_pstorage_block_id.block_id;
 }
@@ -864,6 +865,7 @@ static void beacon_params_default_set(void)
     
     memcpy(tmp.data.beacon_data, beacon_data, APP_BEACON_MANUF_DATA_LEN);
     
+	log_d("[APP] %s: pstorage address:0x%x 0x%x\n", __func__, m_pstorage_block_id, &m_pstorage_block_id);
     err_code = pstorage_clear(&m_pstorage_block_id, sizeof(beacon_flash_db_t));
     APP_ERROR_CHECK(err_code);
     
