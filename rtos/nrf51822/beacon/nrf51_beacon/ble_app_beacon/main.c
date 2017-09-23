@@ -46,6 +46,13 @@
 #include "uart_drv.h"
 #include "acc_drv.h"
 
+/* Nus command from smart phone */
+#define NUS_CMD_BLINK                   'b'
+#define NUS_CMD_DISPLAY                 'd'
+#define NUS_CMD_REBOOT                  'r'
+#define NUS_CMD_GET_PARAM               'g'
+#define NUS_CMD_SET_PARAM               's'
+
 /* Button definitions */
 #define BOOTLOADER_BUTTON_PIN           BUTTON_0                                    /**< Button used to enter DFU mode. */
 #define CONFIG_MODE_BUTTON_PIN          BUTTON_1                                    /**< Button used to enter config mode. */
@@ -231,7 +238,7 @@ static void leds_init(void)
     led_sb_init_params.duty_cycle_max  = 20;
     led_sb_init_params.duty_cycle_min  = 0;
     led_sb_init_params.duty_cycle_step = 1;
-    led_sb_init_params.leds_pin_bm     = (LED_R_MSK | LED_G_MSK | LED_B_MSK);
+    led_sb_init_params.leds_pin_bm     = APP_CONFIG_MODE_LED_MSK;
     led_sb_init_params.off_time_ms     = 4000;
     led_sb_init_params.on_time_ms      = 0;
     
@@ -529,6 +536,33 @@ void ble_printf(char *fmt, ...)
 	}
 }
 
+static void leds_set_led_status(uint8_t led, uint8_t status)
+{
+	if( (led != LED_RGB_RED) || (led != LED_RGB_GREEN) || (led != LED_RGB_BLUE) )
+		return;
+
+	switch(status) {
+		case 0:
+			nrf_gpio_pin_clear(led);
+			break;
+		case 1:
+			nrf_gpio_pin_set(led);
+			break;
+		case 2:
+			/* nrf_gpio_cfg_output(LED_RGB_RED); */
+			if(nrf_gpio_pin_read(led)) {
+				nrf_gpio_pin_clear(led);
+				/* ble_log_d("turn led on\n"); */
+			}
+			else {
+				nrf_gpio_pin_set(led);
+				/* ble_log_d("turn led off\n"); */
+			}
+			break;
+		default: break;
+	}
+}
+
 /**@brief Function for handling the data from the Nordic UART Service.
  *
  * @details This function will process the data received from the Nordic UART BLE Service and send
@@ -536,22 +570,52 @@ void ble_printf(char *fmt, ...)
  *
  * @param[in] p_nus    Nordic UART Service structure.
  * @param[in] p_data   Data to be send to UART module.
+ * 		NUS_CMD_BLINK:
+ * 			  b off:   Stop led soft blink;
+ * 			  b on:    Start led soft blink;
+ * 		NUS_CMD_DISPLAY:
+ * 			  d off:   Stop led display;
+ * 			  d on:    Start led display;
  * @param[in] length   Length of the data.
  */
 /**@snippet [Handling the data received over BLE] */
 static void ble_nus_evt_handler(ble_nus_t * p_nus, uint8_t * p_data, uint16_t length)
 {
-	nrf_gpio_cfg_output(LED_RGB_RED);
-	if(nrf_gpio_pin_read(LED_RGB_RED)) {
-		nrf_gpio_pin_clear(LED_RGB_RED);
-		/* ble_log_d("turn led on\n"); */
-	}
-	else {
-		nrf_gpio_pin_set(LED_RGB_RED);
-		/* ble_log_d("turn led off\n"); */
+	uint8_t nus_cmd = 0;
+	nus_cmd = p_data[0];
+	/* crush when printf log */
+	/* log_d("[BLE] %s nus command:%c.\n", __func__, nus_cmd); */
+
+	switch (nus_cmd) {
+		case NUS_CMD_BLINK:
+			if('o' != p_data[2])
+				return;
+			if('n' == p_data[3])
+				led_softblink_start(APP_CONFIG_MODE_LED_MSK);
+			else if('f' == p_data[3])
+				led_softblink_stop(APP_CONFIG_MODE_LED_MSK);
+			break;
+		case NUS_CMD_DISPLAY:
+			if('o' != p_data[2])
+				return;
+			if('n' == p_data[3])
+				display_timer_start();
+			else if('f' == p_data[3])
+				display_timer_stop();
+			break;
+		case NUS_CMD_REBOOT:
+			beacon_reset();
+			break;
+		case NUS_CMD_SET_PARAM:
+			leds_set_led_status(LED_RGB_GREEN, 2);
+			break;
+		case NUS_CMD_GET_PARAM:
+			leds_set_led_status(LED_RGB_BLUE, 2);
+			break;
+		default:break;
 	}
 
-#if 1
+#if 0
 	display_update_data(p_data, length);
 #else
     for (uint32_t i = 0; i < length; i++)

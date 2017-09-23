@@ -13,6 +13,8 @@
 #define DISPLAY_ONE_WORD_BYTES (DISPLAY_LED_NUM * 4)
 #define DISPLAY_DATA_BYTE_LEN  (DISPLAY_WORDS_CNT * DISPLAY_ONE_WORD_BYTES)
 
+const nrf_drv_timer_t TIMER_LED = NRF_DRV_TIMER_INSTANCE(1);
+
 typedef struct
 {
     app_timer_id_t       timer_id;
@@ -518,6 +520,10 @@ void display_one_line(uint32_t line_data)
 uint32_t display_timer_start(void)
 {
 	uint32_t err_code = NRF_SUCCESS;
+#if ENABLE_HW_TIMER
+    nrf_drv_timer_resume(&TIMER_LED);
+#endif
+
 #if ENABLE_DISPLAY_TIMER
     if (!m_display_ct.timer_running) {
         err_code = app_timer_start(m_display_ct.timer_id, DISPLAY_TIMER_PERIOD, NULL);
@@ -538,6 +544,10 @@ uint32_t display_timer_start(void)
 uint32_t display_timer_stop(void)
 {
 	uint32_t err_code = NRF_SUCCESS;
+#if ENABLE_HW_TIMER
+    nrf_drv_timer_pause(&TIMER_LED);
+#endif
+
 #if ENABLE_DISPLAY_TIMER
     if (m_display_ct.timer_running) {
         err_code = app_timer_stop(m_display_ct.timer_id);
@@ -690,7 +700,6 @@ static uint32_t display_timer_init(void)
 	return err_code;
 }
 
-const nrf_drv_timer_t TIMER_LED = NRF_DRV_TIMER_INSTANCE(1);
 /**
  * @brief Handler for timer events.
  */

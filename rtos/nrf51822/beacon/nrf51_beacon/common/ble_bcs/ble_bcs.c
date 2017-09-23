@@ -98,15 +98,15 @@ void ble_bcs_on_ble_evt(ble_bcs_t * p_bcs, ble_evt_t * p_ble_evt)
     switch (p_ble_evt->header.evt_id)
     {
         case BLE_GAP_EVT_CONNECTED:
-			printf("%s connected\n", __func__);
+			/* printf("%s connected\n", __func__); */
             on_connect(p_bcs, p_ble_evt);
             break;
         case BLE_GAP_EVT_DISCONNECTED:
-			printf("%s disconnected\n", __func__);
+			/* printf("%s disconnected\n", __func__); */
             on_disconnect(p_bcs, p_ble_evt);
             break;
         case BLE_GATTS_EVT_WRITE:
-			printf("%s write\n", __func__);
+			/* printf("%s write\n", __func__); */
             on_write(p_bcs, p_ble_evt);
             break;
         default:

@@ -97,7 +97,7 @@
 #define ACC_INT_USE_X     1
 #define ACC_INT_USE_Y     0
 
-#define ENABLE_DISPLAY_TIMER 1
+#define ENABLE_DISPLAY_TIMER 0
 #define ENABLE_ACC_TIMER     0
 
 #endif  /* PCA20006_H */
