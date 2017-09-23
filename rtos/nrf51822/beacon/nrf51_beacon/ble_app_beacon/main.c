@@ -53,6 +53,8 @@
 #define NUS_CMD_GET_PARAM               'g'
 #define NUS_CMD_SET_PARAM               's'
 
+#define PARAM_LED_STATE                 'l'
+
 /* Button definitions */
 #define BOOTLOADER_BUTTON_PIN           BUTTON_0                                    /**< Button used to enter DFU mode. */
 #define CONFIG_MODE_BUTTON_PIN          BUTTON_1                                    /**< Button used to enter config mode. */
@@ -115,6 +117,9 @@
 static beacon_mode_t        m_beacon_mode;                                          /**< Current beacon mode */
 static beacon_flash_db_t    *p_beacon;                                              /**< Pointer to beacon params */
 static pstorage_handle_t    m_pstorage_block_id;                                    /**< Pstorage handle for beacon params */
+
+/* struct to access all params */
+static beacon_flash_db_t beacon_yyb_params_t;
 
 static ble_gap_sec_params_t m_sec_params;                                           /**< Security requirements for this application. */
 static uint16_t             m_conn_handle = BLE_CONN_HANDLE_INVALID;                /**< Handle of the current connection. */
@@ -430,17 +435,6 @@ static void beacon_write_handler(ble_bcs_t * p_lbs, beacon_data_type_t type, uin
 
         case beacon_led_data:
             tmp.data.led_state = data[0];
-#if 0
-			/* remove log to reduce cpu loading */
-			/* log_d("receiver led data:"); */
-			for(int i=0; i<BCS_DATA_LED_LEN; i++ ) {
-				tmp.data.led_state[i] = data[i];
-				log_d("0x%02x ", data[i]);
-			}
-			log_d("\n");
-			/* send new data to display */
-			display_update_data(data, BCS_DATA_LED_LEN);
-#endif
             break;
 
         default:
@@ -563,6 +557,38 @@ static void leds_set_led_status(uint8_t led, uint8_t status)
 	}
 }
 
+static void yyb_params_store(beacon_data_type_t type, uint8_t * pdata, uint16_t len)
+{
+    uint32_t err_code;
+
+	if(NULL == p_beacon)
+		return;
+
+	switch(type) {
+		case beacon_led_data:
+			if('o' != pdata[0])
+				return;
+			if('n' == pdata[1]) {
+				beacon_yyb_params_t.data.led_state = 1;
+			}
+			else if('f' == pdata[1]) {
+				beacon_yyb_params_t.data.led_state = 0;
+			}
+			break;
+		case beacon_yyb_pcbid:
+			break;
+		default:break;
+	}
+
+    err_code = pstorage_clear(&m_pstorage_block_id, sizeof(beacon_flash_db_t));
+    APP_ERROR_CHECK(err_code);
+
+    err_code = pstorage_store(&m_pstorage_block_id, (uint8_t *)&beacon_yyb_params_t
+			, sizeof(beacon_flash_db_t), 0);
+
+    APP_ERROR_CHECK(err_code);
+}
+
 /**@brief Function for handling the data from the Nordic UART Service.
  *
  * @details This function will process the data received from the Nordic UART BLE Service and send
@@ -607,7 +633,12 @@ static void ble_nus_evt_handler(ble_nus_t * p_nus, uint8_t * p_data, uint16_t le
 			beacon_reset();
 			break;
 		case NUS_CMD_SET_PARAM:
-			leds_set_led_status(LED_RGB_GREEN, 2);
+			switch(p_data[2]) {
+				case PARAM_LED_STATE:
+					yyb_params_store(beacon_led_data, p_data+4, length-4);
+					break;
+				default:break;
+			}
 			break;
 		case NUS_CMD_GET_PARAM:
 			leds_set_led_status(LED_RGB_BLUE, 2);
@@ -949,8 +980,10 @@ static void beacon_setup(beacon_mode_t mode)
         advertising_init(mode);
         conn_params_init();
         sec_params_init();
-        led_softblink_off_time_set(2000);
-        led_softblink_start(APP_CONFIG_MODE_LED_MSK);
+        if (p_beacon->data.led_state) {
+			led_softblink_off_time_set(2000);
+			led_softblink_start(APP_CONFIG_MODE_LED_MSK);
+		}
     }
     else
     {
@@ -976,7 +1009,7 @@ static void beacon_reset(void)
     if (count == 0)
     {
         m_beacon_reset = false;
-		log_d("[nrf] %s\n", __func__ );
+		log_d("[SYS] %s\n", __func__ );
         NVIC_SystemReset();
     }
     else
@@ -1055,6 +1088,8 @@ int main(void)
         // No valid params found, write default params.
         beacon_params_default_set();
     }
+	/* load all params to memory */
+    memcpy(&beacon_yyb_params_t, p_beacon, sizeof(beacon_flash_db_t));
 
     beacon_start(m_beacon_mode);
 	acc_init();
