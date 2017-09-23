@@ -1,14 +1,30 @@
 @echo off
 set fromelfPath=C:\Keil_v5\ARM\ARMCC\bin
-set nrfutilPath="C:\Program Files\Nordic Semiconductor\Master Control Panel\3.10.0.14\nrf"
+set nrfutilPath="C:\Program Files (x86)\Nordic Semiconductor\Master Control Panel\3.10.0.14\nrf"
+if exist %nrfutilPath% (
+	echo "64bits Windows"
+) else (
+	echo "32bits Windows"
+	set nrfutilPath="C:\Program Files\Nordic Semiconductor\Master Control Panel\3.10.0.14\nrf"
+)
 
-::set projectRootDir="X:\vr\YYB\rtos\nrf51822\beacon\"
+set folder1=Y:\vr\YYB
+set folder2=Y:\yyb
+
+if exist %folder1% (
+	echo "project dir: %folder1%"
+	set PROJECT_DIR=%folder1%
+) else (
+	echo "project dir: %folder2%"
+	set PROJECT_DIR=%folder2%
+)
+
 ::set projectRootDir="Y:\yyb\hw\nRF51822_Nordic\nRF51822-BK-FW\Source Code\"
-set projectRootDir=Y:\yyb\rtos\nrf51822\beacon\
+set projectRootDir=%PROJECT_DIR%\rtos\nrf51822\beacon\
 
 set CUR_DIR=%cd%
 echo %CUR_DIR%
-	
+
 IF %1==app (
 	::default update applicaton
 	set outputFileName=nrf51822_beacon_app
@@ -21,7 +37,7 @@ IF %1==app (
 IF %1==bl (
 	set outputFileName=nrf51822_beacon_bootloader
 	set outputPath=%projectRootDir%nrf51_beacon\ble_app_beacon_dfu\bootloader\pca20006\dual_bank_ble_s110\arm\_build
-	
+
 	cd %projectRootDir%nrf51_beacon\ble_app_beacon_dfu\bootloader\pca20006\dual_bank_ble_s110\arm\
 	call nrf51822_xxac.BAT
 	cd %CUR_DIR%
