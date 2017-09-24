@@ -27,10 +27,13 @@
 #endif /* DISPLAY_ONE_WORD */
 #endif /* DISPLAY_LED_TEST */
 
+#define ENABLE_DISPLAY_TIMER 0
+#define ENABLE_ACC_TIMER     0
 #define ENABLE_HW_TIMER      1
 #define ENABLE_UART_DEBUG    1
 #define ENABLE_BLE_NUS_DEBUG 1
 #define FORCE_CONFIG_MODE	 1
+#define YYB_NEW_PARAMS_FLASH 0
 
 #define DISPLAY_LINE_DELAY  1
 #define DISPLAY_LED_NUM 32
@@ -96,8 +99,5 @@
 #define ACC_PIN_INT1      4
 #define ACC_INT_USE_X     1
 #define ACC_INT_USE_Y     0
-
-#define ENABLE_DISPLAY_TIMER 0
-#define ENABLE_ACC_TIMER     0
 
 #endif  /* PCA20006_H */

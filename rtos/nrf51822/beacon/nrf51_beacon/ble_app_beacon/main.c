@@ -117,6 +117,9 @@
 static beacon_mode_t        m_beacon_mode;                                          /**< Current beacon mode */
 static beacon_flash_db_t    *p_beacon;                                              /**< Pointer to beacon params */
 static pstorage_handle_t    m_pstorage_block_id;                                    /**< Pstorage handle for beacon params */
+#if YYB_NEW_PARAMS_FLASH
+static pstorage_handle_t    m_pstorage_block_yyb_id;                                    /**< Pstorage handle for yyb display data */
+#endif
 
 /* struct to access all params */
 static beacon_flash_db_t beacon_yyb_params_t;
@@ -910,6 +913,25 @@ static void flash_access_init(void)
     APP_ERROR_CHECK(err_code);    
 }
 
+#if YYB_NEW_PARAMS_FLASH
+/** @brief Function to get a pointer to yyb display data array in flash. Should only be called once during initialization.
+*/
+static yyb_flash_db_t * yyb_display_data_get(void)
+{
+    uint32_t err_code;
+    pstorage_module_param_t pstorage_param;
+    pstorage_param.cb = pstorage_ntf_cb;
+    pstorage_param.block_size = sizeof(yyb_flash_db_t);
+    pstorage_param.block_count = 1;
+
+    err_code = pstorage_register(&pstorage_param, &m_pstorage_block_yyb_id);
+    APP_ERROR_CHECK(err_code);
+	log_d("[FLSH] %s: display data start address:0x%x size:0x%x\n", __func__, m_pstorage_block_yyb_id.block_id, sizeof(yyb_flash_db_t));
+
+    return (yyb_flash_db_t *)m_pstorage_block_yyb_id.block_id;
+}
+#endif
+
 /** @brief Function to get a pointer to beacon parameters in flash. Should only be called once during initialization.
 */
 static beacon_flash_db_t * beacon_params_get(void)
@@ -923,7 +945,7 @@ static beacon_flash_db_t * beacon_params_get(void)
 
     err_code = pstorage_register(&pstorage_param, &m_pstorage_block_id);
     APP_ERROR_CHECK(err_code);
-	log_d("[APP] %s: pstorage address:0x%x 0x%x\n", __func__, m_pstorage_block_id, &m_pstorage_block_id);
+	log_d("[FLSH] %s: beacon params address:0x%x size:0x%x\n", __func__, m_pstorage_block_id.block_id, sizeof(beacon_flash_db_t));
 
     return (beacon_flash_db_t *)m_pstorage_block_id.block_id;
 }
@@ -959,11 +981,10 @@ static void beacon_params_default_set(void)
     beacon_data[BEACON_MANUF_DAT_MAJOR_H_IDX] = (uint8_t)((NRF_FICR->DEVICEADDR[0] >> 24) & 0xFFUL);
     
     memcpy(tmp.data.beacon_data, beacon_data, APP_BEACON_MANUF_DATA_LEN);
-    
-	log_d("[APP] %s: pstorage address:0x%x 0x%x\n", __func__, m_pstorage_block_id, &m_pstorage_block_id);
+
     err_code = pstorage_clear(&m_pstorage_block_id, sizeof(beacon_flash_db_t));
     APP_ERROR_CHECK(err_code);
-    
+
     err_code = pstorage_store(&m_pstorage_block_id, (uint8_t *)&tmp, sizeof(beacon_flash_db_t), 0);
     APP_ERROR_CHECK(err_code);
 }

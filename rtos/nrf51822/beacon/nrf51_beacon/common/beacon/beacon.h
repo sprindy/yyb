@@ -64,15 +64,45 @@ typedef struct
     uint8_t  magic_byte;                             /**< Magic byte in flash to detect if data is valid or not. */
     uint8_t  beacon_data[APP_BEACON_MANUF_DATA_LEN]; /**< Beacon manufacturer specific data*/
     uint16_t company_id;                             /**< Advertised beacon company idetifier. */
-	uint16_t pcb_id;
     uint16_t adv_interval;                           /**< Advertising interval in ms */
     uint8_t  led_state;  		          			 /**< Softblinking LEDs state */
+	uint8_t  reserved;
 }beacon_data_t;
+
+typedef struct
+{
+	beacon_mode_t boot_mode;               // = "config"
+	uint8_t       pcb_id[8];               // = "20170208";
+	uint8_t       display_led_test;        // = 0
+	uint8_t       display_words_num;       // = 4
+	uint8_t       display_timer_period[4]; // = 0x2000
+	uint8_t       display_line_delay;      // = 1
+	uint8_t       acc_timer_period[4];     // = 0x200
+	uint8_t       enable_hw_timer;
+	uint8_t       enable_nus_debug;
+	uint8_t       enable_uart_debug;
+	uint8_t       enable_uart_hwfc;        // = 0
+	uint8_t       uart_baudrate[6];        // = 38400
+}yyb_data_t;
 
 typedef union
 {
     beacon_data_t data;
+	yyb_data_t    yyb_data;
+	uint16_t      data_array[10];
     uint32_t      padding[CEIL_DIV(sizeof(beacon_data_t), 4)];
 }beacon_flash_db_t;
+
+#if YYB_NEW_PARAMS_FLASH
+typedef struct
+{
+	uint16_t data_array[10];
+}yyb_dis_data_t;
+
+typedef union
+{
+	yyb_dis_data_t data;
+}yyb_flash_db_t;
+#endif /* YYB_NEW_PARAMS_FLASH */
 
 #endif

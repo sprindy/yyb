@@ -888,7 +888,8 @@ uint32_t pstorage_register(pstorage_module_param_t * p_module_param,
 
     p_block_id->module_id = m_next_app_instance;
     p_block_id->block_id  = m_next_page_addr;
-	/* printf("[FLSH] %s: pstorage data new addr:0x%x\n", __func__, m_next_page_addr); */
+	/* PSTORAGE_FLASH_PAGE_SIZE = 0x400 */
+	/* printf("[FLSH] %s: pstorage data new addr:0x%x, page size:0x%x\n", __func__, m_next_page_addr, PSTORAGE_FLASH_PAGE_SIZE); */
 
     m_app_table[m_next_app_instance].base_id     = p_block_id->block_id;
     m_app_table[m_next_app_instance].cb          = p_module_param->cb;
