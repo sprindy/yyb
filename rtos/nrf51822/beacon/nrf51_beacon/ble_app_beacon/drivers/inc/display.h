@@ -5,6 +5,7 @@
 #include <stdbool.h>
 #include <stdint.h>
 #include "log.h"
+#include "beacon.h"
 
 void display_update_data(uint8_t *p_buf, uint8_t length);
 
@@ -21,7 +22,7 @@ uint32_t display_timer_stop(void);
  */
 uint32_t display_work_init(void);
 
-uint32_t display_init(void);
+uint32_t display_init(beacon_flash_db_t *pdata);
 
 
 #endif

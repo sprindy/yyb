@@ -578,6 +578,16 @@ static void yyb_params_store(beacon_data_type_t type, uint8_t * pdata, uint16_t 
 				beacon_yyb_params_t.data.led_state = 0;
 			}
 			break;
+		case beacon_yyb_hw_timer:
+			if('o' != pdata[0])
+				return;
+			if('n' == pdata[1]) {
+				beacon_yyb_params_t.yyb_data.enable_hw_timer = 1;
+			}
+			else if('f' == pdata[1]) {
+				beacon_yyb_params_t.yyb_data.enable_hw_timer = 0;
+			}
+			break;
 		case beacon_yyb_pcbid:
 			break;
 		default:break;
@@ -627,10 +637,14 @@ static void ble_nus_evt_handler(ble_nus_t * p_nus, uint8_t * p_data, uint16_t le
 		case NUS_CMD_DISPLAY:
 			if('o' != p_data[2])
 				return;
-			if('n' == p_data[3])
+			if('n' == p_data[3]) {
 				display_timer_start();
-			else if('f' == p_data[3])
+				yyb_params_store(beacon_yyb_hw_timer, p_data+2, length-2);
+			}
+			else if('f' == p_data[3]) {
 				display_timer_stop();
+				yyb_params_store(beacon_yyb_hw_timer, p_data+2, length-2);
+			}
 			break;
 		case NUS_CMD_REBOOT:
 			beacon_reset();
@@ -1114,7 +1128,7 @@ int main(void)
 
     beacon_start(m_beacon_mode);
 	acc_init();
-	display_init();
+	display_init(&beacon_yyb_params_t);
 
     // Enter main loop.
     for (;;)

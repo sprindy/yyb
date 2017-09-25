@@ -66,7 +66,8 @@ typedef enum {
     beacon_company_id_data,
     beacon_adv_interval_data,
     beacon_led_data,
-	beacon_yyb_pcbid
+	beacon_yyb_pcbid,
+	beacon_yyb_hw_timer
 }beacon_data_type_t;
 
 // Forward declaration of the ble_bcs_t type. 

@@ -30,6 +30,7 @@ static uint8_t display_cur_word = 0;
 static uint8_t display_repeat_cnt = 0;
 static uint8_t display_rcv_word_cnt = 0;
 static uint32_t display_cur_line = 0;
+static uint8_t display_enable_hw_timer = 0;
 
 char wData[DISPLAY_DATA_BYTE_LEN] = {
 #if 0 //wang
@@ -520,9 +521,11 @@ void display_one_line(uint32_t line_data)
 uint32_t display_timer_start(void)
 {
 	uint32_t err_code = NRF_SUCCESS;
-#if ENABLE_HW_TIMER
-    nrf_drv_timer_resume(&TIMER_LED);
-#endif
+	if(display_enable_hw_timer) {
+/* #if ENABLE_HW_TIMER */
+		nrf_drv_timer_resume(&TIMER_LED);
+/* #endif */
+	}
 
 #if ENABLE_DISPLAY_TIMER
     if (!m_display_ct.timer_running) {
@@ -544,9 +547,11 @@ uint32_t display_timer_start(void)
 uint32_t display_timer_stop(void)
 {
 	uint32_t err_code = NRF_SUCCESS;
-#if ENABLE_HW_TIMER
-    nrf_drv_timer_pause(&TIMER_LED);
-#endif
+	if(display_enable_hw_timer) {
+/* #if ENABLE_HW_TIMER */
+		nrf_drv_timer_pause(&TIMER_LED);
+/* #endif */
+	}
 
 #if ENABLE_DISPLAY_TIMER
     if (m_display_ct.timer_running) {
@@ -749,7 +754,7 @@ static uint32_t display_drv_timer_init(void)
 	return err_code;
 }
 
-uint32_t display_init(void)
+uint32_t display_init(beacon_flash_db_t *pdata)
 {
 	uint32_t err_code;
 
@@ -771,9 +776,14 @@ uint32_t display_init(void)
 	nrf_gpio_pin_clear(DISPLAY_GPIO_6);
 	nrf_gpio_pin_clear(DISPLAY_GPIO_7);
 
-#if ENABLE_HW_TIMER
-	err_code = display_drv_timer_init();
-#else
+	display_enable_hw_timer = pdata->yyb_data.enable_hw_timer;
+	log_d("[DISP] %s enable_hw_timer:0x%x, address:0x%x\n", __func__,
+			display_enable_hw_timer, &pdata->yyb_data.enable_hw_timer);
+	if(display_enable_hw_timer) {
+		err_code = display_drv_timer_init();
+	}
+/* #if ENABLE_HW_TIMER */
+#if ENABLE_DISPLAY_TIMER
 	err_code = display_timer_init();
 	if(err_code == NRF_SUCCESS) {
 		err_code = display_timer_start();

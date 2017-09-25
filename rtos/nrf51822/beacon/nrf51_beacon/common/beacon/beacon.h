@@ -66,7 +66,6 @@ typedef struct
     uint16_t company_id;                             /**< Advertised beacon company idetifier. */
     uint16_t adv_interval;                           /**< Advertising interval in ms */
     uint8_t  led_state;  		          			 /**< Softblinking LEDs state */
-	uint8_t  reserved;
 }beacon_data_t;
 
 typedef struct
@@ -85,13 +84,12 @@ typedef struct
 	uint8_t       uart_baudrate[6];        // = 38400
 }yyb_data_t;
 
-typedef union
+typedef struct
 {
     beacon_data_t data;
 	yyb_data_t    yyb_data;
-	uint16_t      data_array[10];
-    uint32_t      padding[CEIL_DIV(sizeof(beacon_data_t), 4)];
-}beacon_flash_db_t;
+    /* uint8_t      padding[CEIL_DIV(sizeof(beacon_data_t), 4)]; */
+} __attribute__((aligned(4))) beacon_flash_db_t;
 
 #if YYB_NEW_PARAMS_FLASH
 typedef struct
