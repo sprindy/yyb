@@ -560,17 +560,17 @@ static void leds_set_led_status(uint8_t led, uint8_t status)
 	}
 }
 
-static void yyb_params_store(beacon_data_type_t type, uint8_t * pdata, uint16_t len)
+static uint32_t yyb_params_store(beacon_data_type_t type, uint8_t * pdata, uint16_t len)
 {
     uint32_t err_code;
 
 	if(NULL == p_beacon)
-		return;
+		return NRF_ERROR_NULL;
 
 	switch(type) {
 		case beacon_led_data:
 			if('o' != pdata[0])
-				return;
+				return NRF_ERROR_INVALID_PARAM;
 			if('n' == pdata[1]) {
 				beacon_yyb_params_t.data.led_state = 1;
 			}
@@ -580,7 +580,7 @@ static void yyb_params_store(beacon_data_type_t type, uint8_t * pdata, uint16_t 
 			break;
 		case beacon_yyb_hw_timer:
 			if('o' != pdata[0])
-				return;
+				return NRF_ERROR_INVALID_PARAM;
 			if('n' == pdata[1]) {
 				beacon_yyb_params_t.yyb_data.enable_hw_timer = 1;
 			}
@@ -600,6 +600,7 @@ static void yyb_params_store(beacon_data_type_t type, uint8_t * pdata, uint16_t 
 			, sizeof(beacon_flash_db_t), 0);
 
     APP_ERROR_CHECK(err_code);
+	return err_code;
 }
 
 /**@brief Function for handling the data from the Nordic UART Service.
@@ -658,7 +659,19 @@ static void ble_nus_evt_handler(ble_nus_t * p_nus, uint8_t * p_data, uint16_t le
 			}
 			break;
 		case NUS_CMD_GET_PARAM:
-			leds_set_led_status(LED_RGB_BLUE, 2);
+			char log_buf[20] = {0};
+			switch(p_data[2]) {
+				case PARAM_LED_STATE:
+					if(beacon_yyb_params_t.data.led_state)
+						strcpy(log_buf, "led status: on\r\n");
+					else
+						strcpy(log_buf, "led status: off\r\n");
+					break;
+				default:
+						strcpy(log_buf, "invaild arguments\r\n");
+					break;
+			}
+			ble_nus_string_send(&m_nus, log_buf, sizeof(log_buf));
 			break;
 		default:break;
 	}
