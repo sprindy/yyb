@@ -50,6 +50,14 @@ typedef enum
     beacon_mode_normal   /**< Normal beacon operation mode. */
 }beacon_mode_t;
 
+typedef enum
+{
+	DISPLAY_WORDS_ZERO_FOR_TEST,
+	DISPLAY_WORDS_ONE,
+	DISPLAY_WORDS_TWO,
+	DISPLAY_WORDS_FOUR = 4
+}display_words_num_t;
+
 typedef struct
 {
 	uint8_t total_pkg;

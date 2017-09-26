@@ -54,6 +54,7 @@
 #define NUS_CMD_SET_PARAM               's'
 
 #define PARAM_LED_STATE                 'l'
+#define PARAM_DISP_WORDS_NUM            'w'
 
 /* Button definitions */
 #define BOOTLOADER_BUTTON_PIN           BUTTON_0                                    /**< Button used to enter DFU mode. */
@@ -588,6 +589,20 @@ static uint32_t yyb_params_store(beacon_data_type_t type, uint8_t * pdata, uint1
 				beacon_yyb_params_t.yyb_data.enable_hw_timer = 0;
 			}
 			break;
+		case beacon_yyb_disp_words_num:
+			if( pdata[0] == '0' + DISPLAY_WORDS_ZERO_FOR_TEST ||
+				pdata[0] == '0' + DISPLAY_WORDS_ONE ||
+				pdata[0] == '0' + DISPLAY_WORDS_TWO ||
+				pdata[0] == '0' + DISPLAY_WORDS_FOUR ) {
+
+				/* app_uart_put(pdata[0]); */
+				/* app_uart_put('\r'); */
+				/* app_uart_put('\n'); */
+				beacon_yyb_params_t.yyb_data.display_words_num = pdata[0] - '0';
+			}
+			else
+				return NRF_ERROR_INVALID_PARAM;
+			break;
 		case beacon_yyb_pcbid:
 			break;
 		default:break;
@@ -648,24 +663,32 @@ static void ble_nus_evt_handler(ble_nus_t * p_nus, uint8_t * p_data, uint16_t le
 			}
 			break;
 		case NUS_CMD_REBOOT:
-			beacon_reset();
+			if(strcmp(p_data, "reboot") >= 0)
+				beacon_reset();
 			break;
 		case NUS_CMD_SET_PARAM:
 			switch(p_data[2]) {
 				case PARAM_LED_STATE:
 					yyb_params_store(beacon_led_data, p_data+4, length-4);
 					break;
+				case PARAM_DISP_WORDS_NUM:
+					yyb_params_store(beacon_yyb_disp_words_num, p_data+4, length-4);
+					break;
 				default:break;
 			}
 			break;
 		case NUS_CMD_GET_PARAM:
 			char log_buf[20] = {0};
+			memset(log_buf, 0, sizeof(log_buf));
 			switch(p_data[2]) {
 				case PARAM_LED_STATE:
 					if(beacon_yyb_params_t.data.led_state)
 						strcpy(log_buf, "led status: on\r\n");
 					else
 						strcpy(log_buf, "led status: off\r\n");
+					break;
+				case PARAM_DISP_WORDS_NUM:
+					log_buf[0] = beacon_yyb_params_t.yyb_data.display_words_num + '0';
 					break;
 				default:
 						strcpy(log_buf, "invaild arguments\r\n");

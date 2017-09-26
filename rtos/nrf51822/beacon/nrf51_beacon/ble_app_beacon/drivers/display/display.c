@@ -30,6 +30,8 @@ static uint8_t display_cur_word = 0;
 static uint8_t display_repeat_cnt = 0;
 static uint8_t display_rcv_word_cnt = 0;
 static uint32_t display_cur_line = 0;
+static uint32_t display_timer_period = 0;
+static uint8_t display_words_num = 0;
 static uint8_t display_enable_hw_timer = 0;
 
 char wData[DISPLAY_DATA_BYTE_LEN] = {
@@ -527,20 +529,24 @@ uint32_t display_timer_start(void)
 /* #endif */
 	}
 
-#if ENABLE_DISPLAY_TIMER
-    if (!m_display_ct.timer_running) {
-        err_code = app_timer_start(m_display_ct.timer_id, DISPLAY_TIMER_PERIOD, NULL);
-		APP_ERROR_CHECK(err_code);
-        if (err_code != NRF_SUCCESS) {
-			log_d("[DISP] display timer start fail\n");
-            return err_code;
-        }
-			log_d("[DISP] display timer start sucess\n");
+/* #if ENABLE_DISPLAY_TIMER */
+	else if(DISPLAY_WORDS_ZERO_FOR_TEST == display_words_num) {
+		/* ToDoList: this will be set by nus command later. */
+		display_timer_period = 0x2000;
+		if (!m_display_ct.timer_running) {
+			err_code = app_timer_start(m_display_ct.timer_id, display_timer_period, NULL);
+			APP_ERROR_CHECK(err_code);
+			if (err_code != NRF_SUCCESS) {
+				log_d("[DISP] display timer start fail\n");
+				return err_code;
+			}
+				log_d("[DISP] display timer start sucess\n");
 
-        m_display_ct.timer_running = true;
-    }
+			m_display_ct.timer_running = true;
+		}
+	}
+/* #endif */
 
-#endif
     return err_code;
 }
 
@@ -553,19 +559,21 @@ uint32_t display_timer_stop(void)
 /* #endif */
 	}
 
-#if ENABLE_DISPLAY_TIMER
-    if (m_display_ct.timer_running) {
-        err_code = app_timer_stop(m_display_ct.timer_id);
-        if (err_code != NRF_SUCCESS) {
-			log_d("[DISP] display timer stop fail\n");
-            return err_code;
-        }
-			log_d("[DISP] display timer stoped \n");
+/* #if ENABLE_DISPLAY_TIMER */
+	else if(DISPLAY_WORDS_ZERO_FOR_TEST == display_words_num) {
+		if (m_display_ct.timer_running) {
+			err_code = app_timer_stop(m_display_ct.timer_id);
+			if (err_code != NRF_SUCCESS) {
+				log_d("[DISP] display timer stop fail\n");
+				return err_code;
+			}
+				log_d("[DISP] display timer stoped \n");
 
-        m_display_ct.timer_running = false;
-    }
+			m_display_ct.timer_running = false;
+		}
+	}
+/* #endif */
 
-#endif
     return err_code;
 }
 uint32_t display_change_direction(bool dir)
@@ -666,31 +674,33 @@ static void display_work()
 
 static void display_work_timerout(void *p_context)
 {
-#if DISPLAY_LED_TEST
-	/* only for led test */
-	static uint8_t i = 0;
-	/* if (i++ <= DISPLAY_LED_NUM - 1) { */
-	/* if (i <= 1) { */
-	if(1) {
-		display_turn_led_on(1, true);
-		/* uint8_t buf=nrf_gpio_word_byte_read(&NRF_GPIO->PIN_CNF[4], 2); */
-		/* log_d("[DISP] %s %d\n",__func__, i); */
-		/* log_d("[DISP] %s %d 0x%2x\n",__func__, i, buf); */
-		/* ble_log_d("[DISP] %s %d 0x%2x\n",__func__, i, buf); */
-		/* i++; */
+	/* 0 for leds test */
+	if(DISPLAY_WORDS_ZERO_FOR_TEST == display_words_num) {
+/* #if DISPLAY_LED_TEST */
+		/* only for led test */
+		static uint8_t i = 0;
+		if (i++ <= DISPLAY_LED_NUM - 1) {
+			display_turn_led_on(i, true);
+			/* uint8_t buf=nrf_gpio_word_byte_read(&NRF_GPIO->PIN_CNF[4], 2); */
+			/* log_d("[DISP] %s %d\n",__func__, i); */
+			/* log_d("[DISP] %s %d 0x%2x\n",__func__, i, buf); */
+			/* ble_log_d("[DISP] %s %d 0x%2x\n",__func__, i, buf); */
+			/* i++; */
+		}
+		else
+			i = 0;
+/* #else */
+	} else {
+		display_work();
 	}
-	else
-		i = 0;
-#else
-	display_work();
-#endif
+/* #endif */
 }
 
 static uint32_t display_timer_init(void)
 {
 	uint32_t err_code;
 
-#if ENABLE_DISPLAY_TIMER
+/* #if ENABLE_DISPLAY_TIMER */
 	m_display_ct.timer_running = false;
 	err_code = app_timer_create(&m_display_ct.timer_id, APP_TIMER_MODE_REPEATED, display_work_timerout);
 	APP_ERROR_CHECK(err_code);
@@ -700,7 +710,7 @@ static uint32_t display_timer_init(void)
 	else {
 		log_d("[DISP] create display timer sucess\n");
 	}
-#endif
+/* #endif */
 
 	return err_code;
 }
@@ -776,19 +786,23 @@ uint32_t display_init(beacon_flash_db_t *pdata)
 	nrf_gpio_pin_clear(DISPLAY_GPIO_6);
 	nrf_gpio_pin_clear(DISPLAY_GPIO_7);
 
+	display_timer_period = atoi(pdata->yyb_data.display_timer_period);
+	display_words_num = pdata->yyb_data.display_words_num;
+	log_d("[DISP] %s display words num:%d\n", __func__, display_words_num);
 	display_enable_hw_timer = pdata->yyb_data.enable_hw_timer;
 	log_d("[DISP] %s enable_hw_timer:0x%x, address:0x%x\n", __func__,
 			display_enable_hw_timer, &pdata->yyb_data.enable_hw_timer);
+/* #if ENABLE_HW_TIMER */
 	if(display_enable_hw_timer) {
 		err_code = display_drv_timer_init();
 	}
-/* #if ENABLE_HW_TIMER */
-#if ENABLE_DISPLAY_TIMER
-	err_code = display_timer_init();
-	if(err_code == NRF_SUCCESS) {
-		err_code = display_timer_start();
+/* #if ENABLE_DISPLAY_TIMER */
+	else if(DISPLAY_WORDS_ZERO_FOR_TEST == display_words_num) {
+		err_code = display_timer_init();
+		if(err_code == NRF_SUCCESS) {
+			err_code = display_timer_start();
+		}
+/* #endif */
 	}
-#endif
-
 	return err_code;
-} 
+}
