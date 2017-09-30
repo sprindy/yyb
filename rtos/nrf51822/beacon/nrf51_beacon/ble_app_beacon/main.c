@@ -22,6 +22,7 @@
 
 #include <stdbool.h>
 #include <stdint.h>
+#include <stdlib.h>
 #include <stdarg.h>
 #include "ble_conn_params.h"
 #include "ble.h"
@@ -47,14 +48,14 @@
 #include "acc_drv.h"
 
 /* Nus command from smart phone */
-#define NUS_CMD_BLINK                   'b'
-#define NUS_CMD_DISPLAY                 'd'
-#define NUS_CMD_REBOOT                  'r'
-#define NUS_CMD_GET_PARAM               'g'
-#define NUS_CMD_SET_PARAM               's'
+#define NUS_CMD_BLINK                   "blink"
+#define NUS_CMD_DISPLAY                 "display"
+#define NUS_CMD_REBOOT                  "reboot"
+#define NUS_CMD_GET_PARAM               "get"
+#define NUS_CMD_SET_PARAM               "set"
 
-#define PARAM_LED_STATE                 'l'
-#define PARAM_DISP_WORDS_NUM            'w'
+#define PARAM_LED_STATE                 "led"
+#define PARAM_DISP_WORDS_NUM            "words"
 
 /* Button definitions */
 #define BOOTLOADER_BUTTON_PIN           BUTTON_0                                    /**< Button used to enter DFU mode. */
@@ -528,7 +529,7 @@ void ble_printf(char *fmt, ...)
 	length = strlen(log_buf);
 
 	uint32_t err_code;
-	err_code = ble_nus_string_send(&m_nus, log_buf, length);
+	err_code = ble_nus_string_send(&m_nus, (uint8_t *)log_buf, length);
 	if (err_code != NRF_ERROR_INVALID_STATE) {
 		APP_ERROR_CHECK(err_code);
 	}
@@ -561,52 +562,51 @@ static void leds_set_led_status(uint8_t led, uint8_t status)
 	}
 }
 
-static uint32_t yyb_params_store(beacon_data_type_t type, uint8_t * pdata, uint16_t len)
+const unsigned char whiteSpace[] = {' ', '\t'};
+int isaspace(unsigned char c)
+{
+    int     i;
+    for (i = 0; i < sizeof(whiteSpace); i++) {
+        if (c == whiteSpace[i]) {
+            return 1;
+        }
+    }
+    return 0;
+}
+
+uint32_t parse_command_and_data(unsigned char *pLineBuf, unsigned char *argn, uint8_t *argv[], uint8_t MaxArgs)
+{
+	uint32_t n = 0;
+
+    while (n < MaxArgs) {
+        while (isaspace(*pLineBuf)) {
+            pLineBuf++;
+        }
+
+       if (*pLineBuf) {
+            argv[n++] = pLineBuf;
+            /* Go to the next whiteSpace */
+            while (*pLineBuf && !isaspace(*pLineBuf)) {
+                pLineBuf++;
+            }
+            if (*pLineBuf) {
+                *pLineBuf = 0;
+                pLineBuf++;
+            }
+            else break;
+        }
+        else break;
+    }
+
+    *argn = n;
+    return n;
+}
+static uint32_t yyb_params_store(void)
 {
     uint32_t err_code;
 
-	if(NULL == p_beacon)
+	if(NULL == &beacon_yyb_params_t)
 		return NRF_ERROR_NULL;
-
-	switch(type) {
-		case beacon_led_data:
-			if('o' != pdata[0])
-				return NRF_ERROR_INVALID_PARAM;
-			if('n' == pdata[1]) {
-				beacon_yyb_params_t.data.led_state = 1;
-			}
-			else if('f' == pdata[1]) {
-				beacon_yyb_params_t.data.led_state = 0;
-			}
-			break;
-		case beacon_yyb_hw_timer:
-			if('o' != pdata[0])
-				return NRF_ERROR_INVALID_PARAM;
-			if('n' == pdata[1]) {
-				beacon_yyb_params_t.yyb_data.enable_hw_timer = 1;
-			}
-			else if('f' == pdata[1]) {
-				beacon_yyb_params_t.yyb_data.enable_hw_timer = 0;
-			}
-			break;
-		case beacon_yyb_disp_words_num:
-			if( pdata[0] == '0' + DISPLAY_WORDS_ZERO_FOR_TEST ||
-				pdata[0] == '0' + DISPLAY_WORDS_ONE ||
-				pdata[0] == '0' + DISPLAY_WORDS_TWO ||
-				pdata[0] == '0' + DISPLAY_WORDS_FOUR ) {
-
-				/* app_uart_put(pdata[0]); */
-				/* app_uart_put('\r'); */
-				/* app_uart_put('\n'); */
-				beacon_yyb_params_t.yyb_data.display_words_num = pdata[0] - '0';
-			}
-			else
-				return NRF_ERROR_INVALID_PARAM;
-			break;
-		case beacon_yyb_pcbid:
-			break;
-		default:break;
-	}
 
     err_code = pstorage_clear(&m_pstorage_block_id, sizeof(beacon_flash_db_t));
     APP_ERROR_CHECK(err_code);
@@ -636,78 +636,90 @@ static uint32_t yyb_params_store(beacon_data_type_t type, uint8_t * pdata, uint1
 /**@snippet [Handling the data received over BLE] */
 static void ble_nus_evt_handler(ble_nus_t * p_nus, uint8_t * p_data, uint16_t length)
 {
-	uint8_t nus_cmd = 0;
-	nus_cmd = p_data[0];
-	/* crush when printf log */
-	/* log_d("[BLE] %s nus command:%c.\n", __func__, nus_cmd); */
+#define MAX_PARAMS       6
+#define MAX_DATA_LENGTH 20
+	uint8_t argn = 0;
+	unsigned char *argv[MAX_PARAMS] = {0};
+	unsigned char buff[MAX_DATA_LENGTH];
 
-	switch (nus_cmd) {
-		case NUS_CMD_BLINK:
-			if('o' != p_data[2])
-				return;
-			if('n' == p_data[3])
-				led_softblink_start(APP_CONFIG_MODE_LED_MSK);
-			else if('f' == p_data[3])
-				led_softblink_stop(APP_CONFIG_MODE_LED_MSK);
-			break;
-		case NUS_CMD_DISPLAY:
-			if('o' != p_data[2])
-				return;
-			if('n' == p_data[3]) {
-				display_timer_start();
-				yyb_params_store(beacon_yyb_hw_timer, p_data+2, length-2);
-			}
-			else if('f' == p_data[3]) {
-				display_timer_stop();
-				yyb_params_store(beacon_yyb_hw_timer, p_data+2, length-2);
-			}
-			break;
-		case NUS_CMD_REBOOT:
-			if(strcmp(p_data, "reboot") >= 0)
-				beacon_reset();
-			break;
-		case NUS_CMD_SET_PARAM:
-			switch(p_data[2]) {
-				case PARAM_LED_STATE:
-					yyb_params_store(beacon_led_data, p_data+4, length-4);
-					break;
-				case PARAM_DISP_WORDS_NUM:
-					yyb_params_store(beacon_yyb_disp_words_num, p_data+4, length-4);
-					break;
-				default:break;
-			}
-			break;
-		case NUS_CMD_GET_PARAM:
-			char log_buf[20] = {0};
-			memset(log_buf, 0, sizeof(log_buf));
-			switch(p_data[2]) {
-				case PARAM_LED_STATE:
-					if(beacon_yyb_params_t.data.led_state)
-						strcpy(log_buf, "led status: on\r\n");
-					else
-						strcpy(log_buf, "led status: off\r\n");
-					break;
-				case PARAM_DISP_WORDS_NUM:
-					log_buf[0] = beacon_yyb_params_t.yyb_data.display_words_num + '0';
-					break;
-				default:
-						strcpy(log_buf, "invaild arguments\r\n");
-					break;
-			}
-			ble_nus_string_send(&m_nus, log_buf, sizeof(log_buf));
-			break;
-		default:break;
+	/* last data from soft device was not clean */
+	log_d("[BLE] raw data:%s\n", p_data);
+	memset(buff, 0, sizeof(buff));
+	strcpy(buff, p_data);
+	memset(p_data, 0, sizeof(p_data));
+
+	parse_command_and_data((unsigned char *)buff, &argn, argv, MAX_PARAMS);
+	if (argn == 0)
+		return;
+#if 0
+    for (uint8_t i = 0; i < argn; i++) {
+		while(*argv[i]) {
+        	app_uart_put(*argv[i]++);
+		}
+		while (app_uart_put('\r') != NRF_SUCCESS);
+		while (app_uart_put('\n') != NRF_SUCCESS);
+    }
+#endif
+
+    for (uint8_t i = 0; i < argn; i++) {
+		log_d("[BLE] %dth params:%s\n", i, argv[i]);
+    }
+
+	if(!strcmp(argv[0], NUS_CMD_BLINK)) {
+		if(!strcmp(argv[1], "on")) {
+			led_softblink_start(APP_CONFIG_MODE_LED_MSK);
+			beacon_yyb_params_t.data.led_state = 1;
+			yyb_params_store();
+			goto exit;
+		}
+		else if(!strcmp(argv[1], "off")) {
+			led_softblink_stop(APP_CONFIG_MODE_LED_MSK);
+			beacon_yyb_params_t.data.led_state = 0;
+			yyb_params_store();
+			goto exit;
+		}
+	}
+	else if(!strcmp(argv[0], NUS_CMD_DISPLAY)) {
+		if(!strcmp(argv[1], "on")) {
+			display_timer_start();
+			beacon_yyb_params_t.yyb_data.enable_hw_timer = 1;
+			yyb_params_store();
+			goto exit;
+		}
+		else if(!strcmp(argv[1], "off")) {
+			display_timer_stop();
+			beacon_yyb_params_t.yyb_data.enable_hw_timer = 0;
+			yyb_params_store();
+			goto exit;
+		}
+	}
+	else if(!strcmp(argv[0], NUS_CMD_REBOOT)) {
+		beacon_reset();
+	}
+	else if(!strcmp(argv[0], NUS_CMD_SET_PARAM)) {
+		if(!strcmp(argv[1], PARAM_DISP_WORDS_NUM)) {
+			beacon_yyb_params_t.yyb_data.display_words_num = atoi(argv[2]);
+			yyb_params_store();
+			goto exit;
+		}
+	}
+	else if(!strcmp(argv[0], NUS_CMD_GET_PARAM)) {
+		if(!strcmp(argv[1], PARAM_DISP_WORDS_NUM)) {
+			uint8_t num = '0' + beacon_yyb_params_t.yyb_data.display_words_num;
+			ble_nus_string_send(&m_nus, &num, sizeof(num));
+			goto exit;
+		}
+	}
+	else {
+		char log_buf[20] = {0};
+		memset(log_buf, 0, sizeof(log_buf));
+		strcpy(log_buf, "invaild arguments\r\n");
+		ble_nus_string_send(&m_nus, (uint8_t *)log_buf, sizeof(log_buf));
 	}
 
+exit:
 #if 0
 	display_update_data(p_data, length);
-#else
-    for (uint32_t i = 0; i < length; i++)
-    {
-        while (app_uart_put(p_data[i]) != NRF_SUCCESS);
-    }
-    while (app_uart_put('\r') != NRF_SUCCESS);
-    while (app_uart_put('\n') != NRF_SUCCESS);
 #endif
 }
 /**@snippet [Handling the data received over BLE] */

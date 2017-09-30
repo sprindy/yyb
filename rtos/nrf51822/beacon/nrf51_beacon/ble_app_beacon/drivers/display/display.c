@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include "display.h"
 #include "pca20006.h"
@@ -720,11 +721,11 @@ static uint32_t display_timer_init(void)
  */
 void timer_led_event_handler(nrf_timer_event_t event_type, void* p_context)
 {
-	static uint32_t cnt=0;
     switch (event_type)
     {
         case NRF_TIMER_EVENT_COMPARE1:
 #if 0
+			static uint32_t cnt=0;
 			if(cnt++ == 100) {
 				cnt = 0;
 				nrf_gpio_cfg_output(LED_RGB_RED);
