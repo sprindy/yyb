@@ -16,20 +16,20 @@
 #define DISPLAY_LED_TEST 0
 #define DISPLAY_ONE_WORD 0
 #if DISPLAY_LED_TEST
-#define DISPLAY_TIMER_PERIOD 0x2000
+/* #define DISPLAY_TIMER_PERIOD 0x2000 */
 #else
 #if DISPLAY_ONE_WORD
 /* display one word in one screen*/
-#define DISPLAY_TIMER_PERIOD 4
+/* #define DISPLAY_TIMER_PERIOD 4 */
 #else
 /* display four words in one screen*/
-#define DISPLAY_TIMER_PERIOD 2
+/* #define DISPLAY_TIMER_PERIOD 2 */
 #endif /* DISPLAY_ONE_WORD */
 #endif /* DISPLAY_LED_TEST */
 
-#define ENABLE_DISPLAY_TIMER 0
+/* #define ENABLE_DISPLAY_TIMER 0 */
 #define ENABLE_ACC_TIMER     0
-#define ENABLE_HW_TIMER      1
+/* #define ENABLE_HW_TIMER      1 */
 #define ENABLE_UART_DEBUG    1
 #define ENABLE_BLE_NUS_DEBUG 1
 #define FORCE_CONFIG_MODE	 1

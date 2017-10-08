@@ -56,6 +56,7 @@
 
 #define PARAM_LED_STATE                 "led"
 #define PARAM_DISP_WORDS_NUM            "words"
+#define PARAM_DISP_TIMER_PERIOD         "dtp"
 
 /* Button definitions */
 #define BOOTLOADER_BUTTON_PIN           BUTTON_0                                    /**< Button used to enter DFU mode. */
@@ -562,6 +563,15 @@ static void leds_set_led_status(uint8_t led, uint8_t status)
 	}
 }
 
+int my_strtoul (char *data)
+{
+	int base = 10;
+	if (data[0] == '0' && (data[1] == 'x' || data[1] == 'X'))
+		base = 16;
+
+	return (int)strtoul(data, NULL, base);
+}
+
 const unsigned char whiteSpace[] = {' ', '\t'};
 int isaspace(unsigned char c)
 {
@@ -702,12 +712,23 @@ static void ble_nus_evt_handler(ble_nus_t * p_nus, uint8_t * p_data, uint16_t le
 			yyb_params_store();
 			goto exit;
 		}
+		else if(!strcmp(argv[1], PARAM_DISP_TIMER_PERIOD)) {
+			beacon_yyb_params_t.yyb_data.display_timer_period = my_strtoul(argv[2]);
+			yyb_params_store();
+			goto exit;
+		}
 	}
 	else if(!strcmp(argv[0], NUS_CMD_GET_PARAM)) {
 		if(!strcmp(argv[1], PARAM_DISP_WORDS_NUM)) {
 			uint8_t num = '0' + beacon_yyb_params_t.yyb_data.display_words_num;
 			ble_nus_string_send(&m_nus, &num, sizeof(num));
 			goto exit;
+		}
+		else if(!strcmp(argv[1], PARAM_DISP_TIMER_PERIOD)) {
+			char str[12];
+			memset(str, 0, sizeof(str));
+			sprintf(str, "%d", beacon_yyb_params_t.yyb_data.display_timer_period);
+			ble_nus_string_send(&m_nus, str, sizeof(str));
 		}
 	}
 	else {
