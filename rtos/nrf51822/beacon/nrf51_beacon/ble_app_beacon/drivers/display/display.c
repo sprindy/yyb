@@ -25,13 +25,12 @@ typedef struct
 
 static display_context_t m_display_ct = {0};
 static bool display_dir = false;
-#if DISPLAY_ONE_WORD
 static uint8_t display_cur_word = 0;
-#endif
 static uint8_t display_repeat_cnt = 0;
 static uint8_t display_rcv_word_cnt = 0;
 static uint32_t display_cur_line = 0;
 static uint32_t display_timer_period = 0;
+static uint32_t display_hw_timer_period = 0;
 static uint8_t display_words_num = 0;
 static uint8_t display_enable_hw_timer = 0;
 
@@ -468,9 +467,7 @@ uint32_t display_timer_start(void)
 {
 	uint32_t err_code = NRF_SUCCESS;
 	if(display_enable_hw_timer) {
-/* #if ENABLE_HW_TIMER */
 		nrf_drv_timer_resume(&TIMER_LED);
-/* #endif */
 	}
 
 /* #if ENABLE_DISPLAY_TIMER */
@@ -498,9 +495,7 @@ uint32_t display_timer_stop(void)
 {
 	uint32_t err_code = NRF_SUCCESS;
 	if(display_enable_hw_timer) {
-/* #if ENABLE_HW_TIMER */
 		nrf_drv_timer_pause(&TIMER_LED);
-/* #endif */
 	}
 
 /* #if ENABLE_DISPLAY_TIMER */
@@ -524,26 +519,34 @@ uint32_t display_change_direction(bool dir)
 {
 	if(dir) {
 		display_dir = true;
-#if DISPLAY_ONE_WORD
-		display_cur_line = display_cur_word * DISPLAY_LED_NUM;
+		if(DISPLAY_WORDS_ONE == display_words_num) {
+/* #if DISPLAY_ONE_WORD */
+			display_cur_line = display_cur_word * DISPLAY_LED_NUM;
 
-		if(++display_cur_word >= sizeof(wData)/4/DISPLAY_LED_NUM) {
-			display_cur_word = 0;
+			if(++display_cur_word >= sizeof(wData)/4/DISPLAY_LED_NUM) {
+				display_cur_word = 0;
 
-			display_repeat_cnt = 0;
-			/* display_timer_start(); */
+				display_repeat_cnt = 0;
+				/* display_timer_start(); */
+			}
 		}
-#else
-		display_cur_line = 0;
-#endif
+/* #else */
+		else {
+			display_cur_line = 0;
+		}
+/* #endif */
 	}
 	else {
 		display_dir = false;
-#if DISPLAY_ONE_WORD
-		display_cur_line = (display_cur_word+1) * DISPLAY_LED_NUM - 1;
-#else
-		display_cur_line = sizeof(wData)/4 - 1;
-#endif
+		if(DISPLAY_WORDS_ONE == display_words_num) {
+/* #if DISPLAY_ONE_WORD */
+			display_cur_line = (display_cur_word+1) * DISPLAY_LED_NUM - 1;
+		}
+/* #else */
+		else {
+			display_cur_line = sizeof(wData)/4 - 1;
+		}
+/* #endif */
 	}
 
 	return 0;
@@ -585,30 +588,38 @@ static void display_work()
 			tmp |= wData[display_cur_line*4+1]<<16;
 			tmp |= wData[display_cur_line*4+2]<<8;
 			tmp |= wData[display_cur_line*4+3];
-#if DISPLAY_ONE_WORD
-			if(++display_cur_line >= (display_cur_word+1) * DISPLAY_LED_NUM) {
-				display_cur_line = display_cur_word * DISPLAY_LED_NUM;
+			if(DISPLAY_WORDS_ONE == display_words_num) {
+/* #if DISPLAY_ONE_WORD */
+				if(++display_cur_line >= (display_cur_word+1) * DISPLAY_LED_NUM) {
+					display_cur_line = display_cur_word * DISPLAY_LED_NUM;
+				}
 			}
-#else
-			if(++display_cur_line >= sizeof(wData)/4) {
-				display_cur_line = 0;
+/* #else */
+			else {
+				if(++display_cur_line >= sizeof(wData)/4) {
+					display_cur_line = 0;
+				}
 			}
-#endif
+/* #endif */
 		}
 		else {
 			tmp |= wData[display_cur_line*4]<<24;
 			tmp |= wData[display_cur_line*4+1]<<16;
 			tmp |= wData[display_cur_line*4+2]<<8;
 			tmp |= wData[display_cur_line*4+3];
-#if DISPLAY_ONE_WORD
-			if(--display_cur_line < display_cur_word * DISPLAY_LED_NUM) {
-				display_cur_line = (display_cur_word+1) * DISPLAY_LED_NUM - 1;
+			if(DISPLAY_WORDS_ONE == display_words_num) {
+/* #if DISPLAY_ONE_WORD */
+				if(--display_cur_line < display_cur_word * DISPLAY_LED_NUM) {
+					display_cur_line = (display_cur_word+1) * DISPLAY_LED_NUM - 1;
+				}
 			}
-#else
-			if(display_cur_line-- == 0) {
-				display_cur_line = sizeof(wData)/4 - 1;
+/* #else */
+			else {
+				if(display_cur_line-- == 0) {
+					display_cur_line = sizeof(wData)/4 - 1;
+				}
 			}
-#endif
+/* #endif */
 		}
 	}
 
@@ -687,7 +698,7 @@ void timer_led_event_handler(nrf_timer_event_t event_type, void* p_context)
 
 static uint32_t display_drv_timer_init(void)
 {
-    uint32_t time_us = 40; //Time between consecutive compare events.
+    uint32_t time_us = display_hw_timer_period; //Time between consecutive compare events.
     uint32_t time_ticks;
     uint32_t err_code = NRF_SUCCESS;
 
@@ -730,16 +741,21 @@ uint32_t display_init(beacon_flash_db_t *pdata)
 	nrf_gpio_pin_clear(DISPLAY_GPIO_6);
 	nrf_gpio_pin_clear(DISPLAY_GPIO_7);
 
+	/* set default value */
+	pdata->yyb_data.display_timer_period = 0x2000;
 	display_timer_period = pdata->yyb_data.display_timer_period;
-	if(0 == display_timer_period) {
+	if((0xffffffff == display_timer_period) || (0 == display_timer_period)) {
 		display_timer_period = 0x2000;
+	}
+	display_hw_timer_period = pdata->yyb_data.display_hw_timer_period;
+	if((0xffffffff == display_hw_timer_period) || (0 == display_hw_timer_period)) {
+		display_hw_timer_period = 40;
 	}
 	display_words_num = pdata->yyb_data.display_words_num;
 	log_d("[DISP] %s display words num:%d\n", __func__, display_words_num);
-	display_enable_hw_timer = pdata->yyb_data.enable_hw_timer;
-	log_d("[DISP] %s enable_hw_timer:0x%x, address:0x%x\n", __func__,
-			display_enable_hw_timer, &pdata->yyb_data.enable_hw_timer);
-/* #if ENABLE_HW_TIMER */
+	display_enable_hw_timer = pdata->yyb_data.display_enable_hw_timer;
+	log_d("[DISP] %s display_enable_hw_timer:0x%x, address:0x%x\n", __func__,
+			display_enable_hw_timer, &pdata->yyb_data.display_enable_hw_timer);
 	if(display_enable_hw_timer) {
 		err_code = display_drv_timer_init();
 	}

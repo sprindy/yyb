@@ -19,14 +19,40 @@ typedef struct
 static acc_context_t m_acc_ct = {0};
 static app_gpiote_user_id_t           m_gpiote_user_id;            /**< GPIOTE user id for buttons module. */
 //static pin_transition_t               m_pin_transition;            /**< pin transaction direction. */
+static uint8_t  acc_int_use_x = 0;
+static uint8_t  acc_int_use_y = 0;
+static uint8_t  acc_int_use_z = 0;
+static uint8_t  acc_enable_timer = 0;
+static uint32_t acc_timer_period = 0;
 
-#if ENABLE_ACC_TIMER
+uint32_t acc_timer_stop(void)
+{
+    if (m_acc_ct.timer_running) {
+        uint32_t err_code;
+
+        err_code = app_timer_stop(m_acc_ct.timer_id);
+		APP_ERROR_CHECK(err_code);
+
+        if (err_code != NRF_SUCCESS) {
+			log_d("[ACC] acc timer stop fail\n");
+            return err_code;
+        }
+		else {
+			log_d("[ACC] acc timer stop sucess\n");
+		}
+
+        m_acc_ct.timer_running = false;
+    }
+
+    return NRF_SUCCESS;
+}
+
 uint32_t acc_timer_start(void)
 {
     if (!m_acc_ct.timer_running) {
         uint32_t err_code;
 
-        err_code = app_timer_start(m_acc_ct.timer_id, ACC_TIMER_PERIOD, NULL);
+        err_code = app_timer_start(m_acc_ct.timer_id, acc_timer_period, NULL);
 		APP_ERROR_CHECK(err_code);
 
         if (err_code != NRF_SUCCESS) {
@@ -42,9 +68,8 @@ uint32_t acc_timer_start(void)
 
     return NRF_SUCCESS;
 }
-#endif
 
-#if ENABLE_ACC_TIMER
+
 static void acc_work_timerout(void *p_context)
 {
     int16_t acc_value[3];
@@ -87,7 +112,6 @@ static uint32_t acc_timer_init(void)
 
 	return err_code;
 }
-#endif
 
 /* failing edge will work */
 /**@brief Function for handling the GPIOTE event.
@@ -121,37 +145,37 @@ static void acc_gpiote_event_handler(uint32_t event_pins_low_to_high, uint32_t e
 		if(val & 0x10)
 			printf("0x%2x Z----\n", val);
 #endif
-#if ACC_INT_USE_Y
-		if(val & 0x08) {
+		if(acc_int_use_y) {
+			if(val & 0x08) {
 #if 0
-			int16_t acc_value[3];
-			AxesRaw_t buff;
-			LIS3DH_GetAccAxesRaw(&buff);
-			acc_value[1] = buff.AXIS_Y;
-			if(acc_value[1] > 0) {
-				display_change_direction(true);
-				printf("0x%2x %6d Y++++\n", val, acc_value[1]);
-			}
-			else {
-				display_change_direction(false);
-				printf("0x%2x %6d Y----\n", val, acc_value[1]);
-			}
+				int16_t acc_value[3];
+				AxesRaw_t buff;
+				LIS3DH_GetAccAxesRaw(&buff);
+				acc_value[1] = buff.AXIS_Y;
+				if(acc_value[1] > 0) {
+					display_change_direction(true);
+					printf("0x%2x %6d Y++++\n", val, acc_value[1]);
+				}
+				else {
+					display_change_direction(false);
+					printf("0x%2x %6d Y----\n", val, acc_value[1]);
+				}
 #else
-			display_change_direction(true);
-			log_d("[ACC] 0x%2x Y++++\n", val);
+				display_change_direction(true);
+				log_d("[ACC] 0x%2x Y++++\n", val);
 #endif
+			}
+			if(val & 0x04) {
+				display_change_direction(false);
+				log_d("[ACC] 0x%2x Y----\n", val);
+			}
 		}
-		if(val & 0x04) {
-			display_change_direction(false);
-			log_d("[ACC] 0x%2x Y----\n", val);
+		if(acc_int_use_x) {
+			if(val & 0x02)
+				printf("0x%2x X++++\n", val);
+			if(val & 0x01)
+				printf("0x%2x X----\n", val);
 		}
-#endif
-#if ACC_INT_USE_X
-		if(val & 0x02)
-			printf("0x%2x X++++\n", val);
-		if(val & 0x01)
-			printf("0x%2x X----\n", val);
-#endif
 	}
 }
 
@@ -179,10 +203,18 @@ static uint32_t acc_gpiote_init(void)
 	return app_gpiote_user_enable(m_gpiote_user_id);
 }
 
-uint32_t acc_init(void)
+uint32_t acc_init(beacon_flash_db_t *pdata)
 {
 	uint32_t err_code;
 	m_acc_ct.acc_en = false;
+
+	acc_enable_timer = pdata->yyb_data.acc_enable_timer;
+	acc_int_use_x = pdata->yyb_data.acc_int_use_x;
+	acc_int_use_y = pdata->yyb_data.acc_int_use_y;
+	acc_int_use_z = pdata->yyb_data.acc_int_use_z;
+	log_d("[ACC] %s: X interrupt %s\n", __func__, acc_int_use_x ? "enabled":"disabled");
+	log_d("[ACC] %s: Y interrupt %s\n", __func__, acc_int_use_y ? "enabled":"disabled");
+	log_d("[ACC] %s: Z interrupt %s\n", __func__, acc_int_use_z ? "enabled":"disabled");
 
 	//config nrf51822 spi interface
 	nrf_gpio_cfg_output(ACC_PIN_CSN);
@@ -207,9 +239,6 @@ uint32_t acc_init(void)
 #if 1
 	/* LIS3DH_WriteReg(LIS3DH_CTRL_REG1, 0x27); //10Hz */
 	LIS3DH_WriteReg(LIS3DH_CTRL_REG1, 0x47); //50Hz
-	uint8_t data = 0;
-	LIS3DH_ReadReg(LIS3DH_CTRL_REG1, &data);
-	log_d("[ACC] %s write reg CTRL_REG1:%s\n", __func__, data==0x47 ? "success":"fail");
 	LIS3DH_WriteReg(LIS3DH_CTRL_REG2, 0x01);
 	LIS3DH_WriteReg(LIS3DH_CTRL_REG3, 0x40);
 	/* LIS3DH_WriteReg(LIS3DH_CTRL_REG4, 0x88); //2g */
@@ -260,12 +289,19 @@ uint32_t acc_init(void)
 	}
 #endif
 
-#if ENABLE_ACC_TIMER
-	err_code = acc_timer_init();
-	if(err_code == NRF_SUCCESS) {
-		 err_code = acc_timer_start();
+	acc_enable_timer = pdata->yyb_data.acc_enable_timer;
+/* #if ENABLE_ACC_TIMER */
+	if(acc_enable_timer) {
+		acc_timer_period = pdata->yyb_data.acc_timer_period;
+		if((0xffffffff == acc_timer_period) || (0 == acc_timer_period)) {
+			acc_timer_period = 0x200;
+		}
+		err_code = acc_timer_init();
+		if(err_code == NRF_SUCCESS) {
+			 err_code = acc_timer_start();
+		}
 	}
-#endif
+/* #endif */
 
 	return err_code;
 }

@@ -49,14 +49,23 @@
 
 /* Nus command from smart phone */
 #define NUS_CMD_BLINK                   "blink"
+#define NUS_CMD_CLEAR                   "clear"
 #define NUS_CMD_DISPLAY                 "display"
 #define NUS_CMD_REBOOT                  "reboot"
 #define NUS_CMD_GET_PARAM               "get"
 #define NUS_CMD_SET_PARAM               "set"
 
-#define PARAM_LED_STATE                 "led"
+#define PARAM_ON                        "on"
+#define PARAM_OFF                       "off"
+#define PARAM_1_ACC                     "acc"
+#define PARAM_1_LED                     "led"
+#define PARAM_1_DISPLAY                 "disp"
+#define PARAM_2_TIMER                   "timer"
 #define PARAM_DISP_WORDS_NUM            "words"
 #define PARAM_DISP_TIMER_PERIOD         "dtp"
+#define PARAM_ACC_ENABLE_X_INT          "x"
+#define PARAM_ACC_ENABLE_Y_INT          "y"
+#define PARAM_ACC_ENABLE_Z_INT          "z"
 
 /* Button definitions */
 #define BOOTLOADER_BUTTON_PIN           BUTTON_0                                    /**< Button used to enter DFU mode. */
@@ -611,6 +620,20 @@ uint32_t parse_command_and_data(unsigned char *pLineBuf, unsigned char *argn, ui
     *argn = n;
     return n;
 }
+
+static uint32_t yyb_params_clear(void)
+{
+    uint32_t err_code;
+
+	if(NULL == &beacon_yyb_params_t)
+		return NRF_ERROR_NULL;
+
+    err_code = pstorage_clear(&m_pstorage_block_id, sizeof(beacon_flash_db_t));
+    APP_ERROR_CHECK(err_code);
+
+	return err_code;
+}
+
 static uint32_t yyb_params_store(void)
 {
     uint32_t err_code;
@@ -676,59 +699,203 @@ static void ble_nus_evt_handler(ble_nus_t * p_nus, uint8_t * p_data, uint16_t le
     }
 
 	if(!strcmp(argv[0], NUS_CMD_BLINK)) {
-		if(!strcmp(argv[1], "on")) {
+		if(!strcmp(argv[1], PARAM_ON)) {
 			led_softblink_start(APP_CONFIG_MODE_LED_MSK);
 			beacon_yyb_params_t.data.led_state = 1;
 			yyb_params_store();
-			goto exit;
+			return;;
 		}
-		else if(!strcmp(argv[1], "off")) {
+		else if(!strcmp(argv[1], PARAM_OFF)) {
 			led_softblink_stop(APP_CONFIG_MODE_LED_MSK);
 			beacon_yyb_params_t.data.led_state = 0;
 			yyb_params_store();
-			goto exit;
+			return;;
 		}
 	}
 	else if(!strcmp(argv[0], NUS_CMD_DISPLAY)) {
-		if(!strcmp(argv[1], "on")) {
+		if(!strcmp(argv[1], PARAM_ON)) {
 			display_timer_start();
-			beacon_yyb_params_t.yyb_data.enable_hw_timer = 1;
+			beacon_yyb_params_t.yyb_data.display_enable_hw_timer = 1;
 			yyb_params_store();
-			goto exit;
+			return;;
 		}
-		else if(!strcmp(argv[1], "off")) {
+		else if(!strcmp(argv[1], PARAM_OFF)) {
 			display_timer_stop();
-			beacon_yyb_params_t.yyb_data.enable_hw_timer = 0;
+			beacon_yyb_params_t.yyb_data.display_enable_hw_timer = 0;
 			yyb_params_store();
-			goto exit;
+			return;;
 		}
+	}
+	else if(!strcmp(argv[0], NUS_CMD_CLEAR)) {
+		yyb_params_clear();
 	}
 	else if(!strcmp(argv[0], NUS_CMD_REBOOT)) {
 		beacon_reset();
 	}
 	else if(!strcmp(argv[0], NUS_CMD_SET_PARAM)) {
-		if(!strcmp(argv[1], PARAM_DISP_WORDS_NUM)) {
-			beacon_yyb_params_t.yyb_data.display_words_num = atoi(argv[2]);
-			yyb_params_store();
-			goto exit;
+		/* display subsystem */
+		if(!strcmp(argv[1], PARAM_1_DISPLAY)) {
+			if(!strcmp(argv[2], PARAM_DISP_WORDS_NUM)) {
+				beacon_yyb_params_t.yyb_data.display_words_num = atoi(argv[3]);
+				yyb_params_store();
+				return;;
+			}
+			else if(!strcmp(argv[2], PARAM_2_TIMER)) {
+				if(!strcmp(argv[3], PARAM_ON)) {
+					display_timer_start();
+					beacon_yyb_params_t.yyb_data.display_enable_hw_timer = 1;
+					yyb_params_store();
+					return;
+				}
+				else if(!strcmp(argv[3], PARAM_OFF)) {
+					display_timer_stop();
+					beacon_yyb_params_t.yyb_data.display_enable_hw_timer = 0;
+					yyb_params_store();
+					return;
+				}
+				else {
+					int t = my_strtoul(argv[3]);
+					if(t) {
+						beacon_yyb_params_t.yyb_data.display_enable_hw_timer = 1;
+						beacon_yyb_params_t.yyb_data.display_hw_timer_period = t;
+						yyb_params_store();
+						return;
+					}
+					else {
+						display_timer_stop();
+						beacon_yyb_params_t.yyb_data.display_enable_hw_timer = 0;
+						yyb_params_store();
+						return;
+					}
+				}
+			}
 		}
-		else if(!strcmp(argv[1], PARAM_DISP_TIMER_PERIOD)) {
-			beacon_yyb_params_t.yyb_data.display_timer_period = my_strtoul(argv[2]);
-			yyb_params_store();
-			goto exit;
+		/* acc subsystem */
+		else if(!strcmp(argv[1], PARAM_1_ACC)) {
+			if(!strcmp(argv[2], PARAM_2_TIMER)) {
+				if(!strcmp(argv[3], PARAM_ON)) {
+					beacon_yyb_params_t.yyb_data.acc_enable_timer = 1;
+					yyb_params_store();
+					return;
+				}
+				else if(!strcmp(argv[3], PARAM_OFF)) {
+					acc_timer_stop();
+					beacon_yyb_params_t.yyb_data.acc_enable_timer = 0;
+					yyb_params_store();
+					return;
+				}
+				else {
+					int t = my_strtoul(argv[3]);
+					if(t) {
+						beacon_yyb_params_t.yyb_data.acc_enable_timer = 1;
+						beacon_yyb_params_t.yyb_data.acc_timer_period = t;
+						yyb_params_store();
+						return;
+					}
+					else {
+						acc_timer_stop();
+						beacon_yyb_params_t.yyb_data.acc_enable_timer = 0;
+						yyb_params_store();
+						return;
+					}
+				}
+			}
+			else if(!strcmp(argv[2], PARAM_ACC_ENABLE_X_INT)) {
+				if(!strcmp(argv[3], PARAM_ON)) {
+					beacon_yyb_params_t.yyb_data.acc_int_use_x = 1;
+					yyb_params_store();
+					return;
+				}
+				else if(!strcmp(argv[3], PARAM_OFF)) {
+					beacon_yyb_params_t.yyb_data.acc_int_use_x = 0;
+					yyb_params_store();
+					return;
+				}
+			}
+			else if(!strcmp(argv[2], PARAM_ACC_ENABLE_Y_INT)) {
+				if(!strcmp(argv[3], PARAM_ON)) {
+					beacon_yyb_params_t.yyb_data.acc_int_use_y = 1;
+					yyb_params_store();
+					return;
+				}
+				else if(!strcmp(argv[3], PARAM_OFF)) {
+					beacon_yyb_params_t.yyb_data.acc_int_use_y = 0;
+					yyb_params_store();
+					return;
+				}
+			}
+			else if(!strcmp(argv[2], PARAM_ACC_ENABLE_Z_INT)) {
+				if(!strcmp(argv[3], PARAM_ON)) {
+					beacon_yyb_params_t.yyb_data.acc_int_use_z = 1;
+					yyb_params_store();
+					return;
+				}
+				else if(!strcmp(argv[3], PARAM_OFF)) {
+					beacon_yyb_params_t.yyb_data.acc_int_use_z = 0;
+					yyb_params_store();
+					return;
+				}
+			}
 		}
 	}
 	else if(!strcmp(argv[0], NUS_CMD_GET_PARAM)) {
-		if(!strcmp(argv[1], PARAM_DISP_WORDS_NUM)) {
-			uint8_t num = '0' + beacon_yyb_params_t.yyb_data.display_words_num;
-			ble_nus_string_send(&m_nus, &num, sizeof(num));
-			goto exit;
+		char str[12];
+		memset(str, 0, sizeof(str));
+		/* display subsystem */
+		if(!strcmp(argv[1], PARAM_1_DISPLAY)) {
+			if(!strcmp(argv[2], PARAM_DISP_WORDS_NUM)) {
+				uint8_t num = '0' + beacon_yyb_params_t.yyb_data.display_words_num;
+				ble_nus_string_send(&m_nus, &num, sizeof(num));
+				return;;
+			}
+			else if(!strcmp(argv[2], PARAM_2_TIMER)) {
+				if(beacon_yyb_params_t.yyb_data.display_enable_hw_timer) {
+					sprintf(str, "%d", beacon_yyb_params_t.yyb_data.display_hw_timer_period);
+				}
+				else {
+					strcpy(str, "off\r\n");
+				}
+				ble_nus_string_send(&m_nus, (uint8_t *)str, sizeof(str));
+			}
 		}
-		else if(!strcmp(argv[1], PARAM_DISP_TIMER_PERIOD)) {
-			char str[12];
-			memset(str, 0, sizeof(str));
-			sprintf(str, "%d", beacon_yyb_params_t.yyb_data.display_timer_period);
-			ble_nus_string_send(&m_nus, str, sizeof(str));
+		/* acc subsystem */
+		if(!strcmp(argv[1], PARAM_1_ACC)) {
+			if(!strcmp(argv[2], PARAM_2_TIMER)) {
+				if(beacon_yyb_params_t.yyb_data.acc_enable_timer) {
+					sprintf(str, "%d", beacon_yyb_params_t.yyb_data.acc_timer_period);
+				}
+				else {
+					strcpy(str, "off\r\n");
+				}
+				ble_nus_string_send(&m_nus, (uint8_t *)str, sizeof(str));
+			}
+			else if(!strcmp(argv[2], PARAM_ACC_ENABLE_X_INT)) {
+				if(beacon_yyb_params_t.yyb_data.acc_int_use_x) {
+					strcpy(str, "on\r\n");
+				}
+				else {
+					strcpy(str, "off\r\n");
+				}
+				ble_nus_string_send(&m_nus, (uint8_t *)str, sizeof(str));
+			}
+			else if(!strcmp(argv[2], PARAM_ACC_ENABLE_Y_INT)) {
+				if(beacon_yyb_params_t.yyb_data.acc_int_use_y) {
+					strcpy(str, "on\r\n");
+				}
+				else {
+					strcpy(str, "off\r\n");
+				}
+				ble_nus_string_send(&m_nus, (uint8_t *)str, sizeof(str));
+			}
+			else if(!strcmp(argv[2], PARAM_ACC_ENABLE_Z_INT)) {
+				if(beacon_yyb_params_t.yyb_data.acc_int_use_z) {
+					strcpy(str, "on\r\n");
+				}
+				else {
+					strcpy(str, "off\r\n");
+				}
+				ble_nus_string_send(&m_nus, (uint8_t *)str, sizeof(str));
+			}
 		}
 	}
 	else {
@@ -738,7 +905,6 @@ static void ble_nus_evt_handler(ble_nus_t * p_nus, uint8_t * p_data, uint16_t le
 		ble_nus_string_send(&m_nus, (uint8_t *)log_buf, sizeof(log_buf));
 	}
 
-exit:
 #if 0
 	display_update_data(p_data, length);
 #endif
@@ -1028,7 +1194,7 @@ static beacon_flash_db_t * beacon_params_get(void)
 
     err_code = pstorage_register(&pstorage_param, &m_pstorage_block_id);
     APP_ERROR_CHECK(err_code);
-	log_d("[FLSH] %s: beacon params address:0x%x size:0x%x\n", __func__, m_pstorage_block_id.block_id, sizeof(beacon_flash_db_t));
+	log_d("[FLSH] %s: address:0x%x size:0x%x\n", __func__, m_pstorage_block_id.block_id, sizeof(beacon_flash_db_t));
 
     return (beacon_flash_db_t *)m_pstorage_block_id.block_id;
 }
@@ -1196,7 +1362,7 @@ int main(void)
     memcpy(&beacon_yyb_params_t, p_beacon, sizeof(beacon_flash_db_t));
 
     beacon_start(m_beacon_mode);
-	acc_init();
+	acc_init(&beacon_yyb_params_t);
 	display_init(&beacon_yyb_params_t);
 
     // Enter main loop.
