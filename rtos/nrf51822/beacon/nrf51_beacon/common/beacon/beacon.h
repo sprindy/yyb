@@ -82,10 +82,15 @@ typedef struct
 	uint8_t       pcb_id[8];               // = "20170208";
 	uint8_t       display_led_test;        // = 0
 	uint8_t       display_words_num;       // = 4
+	uint8_t       display_enable_hw_timer;
+	uint32_t      display_hw_timer_period; // = 40
 	uint32_t      display_timer_period;    // = 0x2000
 	uint8_t       display_line_delay;      // = 1
-	uint8_t       acc_timer_period[4];     // = 0x200
-	uint8_t       enable_hw_timer;
+	uint32_t      acc_timer_period;        // = 0x200
+	uint8_t       acc_enable_timer;
+	uint8_t       acc_int_use_x;
+	uint8_t       acc_int_use_y;
+	uint8_t       acc_int_use_z;
 	uint8_t       enable_nus_debug;
 	uint8_t       enable_uart_debug;
 	uint8_t       enable_uart_hwfc;        // = 0
