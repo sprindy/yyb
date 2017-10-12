@@ -754,8 +754,7 @@ uint32_t display_init(beacon_flash_db_t *pdata)
 	display_words_num = pdata->yyb_data.display_words_num;
 	log_d("[DISP] %s display words num:%d\n", __func__, display_words_num);
 	display_enable_hw_timer = pdata->yyb_data.display_enable_hw_timer;
-	log_d("[DISP] %s display_enable_hw_timer:0x%x, address:0x%x\n", __func__,
-			display_enable_hw_timer, &pdata->yyb_data.display_enable_hw_timer);
+	log_d("[DISP] %s display_enable_hw_timer:0x%x\n", __func__, display_enable_hw_timer);
 	if(display_enable_hw_timer) {
 		err_code = display_drv_timer_init();
 	}

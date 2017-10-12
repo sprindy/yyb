@@ -124,7 +124,6 @@ static uint32_t acc_timer_init(void)
  */
 static void acc_gpiote_event_handler(uint32_t event_pins_low_to_high, uint32_t event_pins_high_to_low)
 {
-    uint32_t err_code;
     STATIC_ASSERT(sizeof(void *) == sizeof(uint32_t));
 
 /* sleep: low to high */
@@ -139,12 +138,14 @@ static void acc_gpiote_event_handler(uint32_t event_pins_low_to_high, uint32_t e
 
 		uint8_t val = 0;
 		LIS3DH_GetInt1Src(&val);
-#if 0
-		if(val & 0x20)
-			printf("0x%2x Z++++\n", val);
-		if(val & 0x10)
-			printf("0x%2x Z----\n", val);
-#endif
+
+		if(acc_int_use_z) {
+			if(val & 0x20)
+				printf("0x%2x Z++++\n", val);
+			if(val & 0x10)
+				printf("0x%2x Z----\n", val);
+		}
+
 		if(acc_int_use_y) {
 			if(val & 0x08) {
 #if 0
@@ -296,6 +297,7 @@ uint32_t acc_init(beacon_flash_db_t *pdata)
 		if((0xffffffff == acc_timer_period) || (0 == acc_timer_period)) {
 			acc_timer_period = 0x200;
 		}
+		log_d("[ACC] %s: timer period %d\n", __func__, acc_timer_period);
 		err_code = acc_timer_init();
 		if(err_code == NRF_SUCCESS) {
 			 err_code = acc_timer_start();
