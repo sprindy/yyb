@@ -86,6 +86,8 @@ typedef struct
 	uint32_t      display_hw_timer_period; // = 40
 	uint32_t      display_timer_period;    // = 0x2000
 	uint8_t       display_line_delay;      // = 1
+	/* row delay control by display_hw_timer_period */
+	/* uint8_t       display_row_delay;       // = 1 */
 	uint32_t      acc_timer_period;        // = 0x200
 	uint8_t       acc_enable_timer;
 	uint8_t       acc_int_use_x;

@@ -61,6 +61,7 @@
 #define PARAM_1_LED                     "led"
 #define PARAM_1_DISPLAY                 "disp"
 #define PARAM_2_TIMER                   "timer"
+#define PARAM_DISP_LINE_DELAY           "line"
 #define PARAM_DISP_WORDS_NUM            "words"
 #define PARAM_DISP_TIMER_PERIOD         "dtp"
 #define PARAM_ACC_ENABLE_X_INT          "x"
@@ -740,6 +741,11 @@ static void ble_nus_evt_handler(ble_nus_t * p_nus, uint8_t * p_data, uint16_t le
 				yyb_params_store();
 				return;;
 			}
+			else if(!strcmp(argv[2], PARAM_DISP_LINE_DELAY)) {
+				beacon_yyb_params_t.yyb_data.display_line_delay = atoi(argv[3]);
+				yyb_params_store();
+				return;;
+			}
 			else if(!strcmp(argv[2], PARAM_2_TIMER)) {
 				if(!strcmp(argv[3], PARAM_ON)) {
 					display_timer_start();
@@ -845,6 +851,11 @@ static void ble_nus_evt_handler(ble_nus_t * p_nus, uint8_t * p_data, uint16_t le
 		if(!strcmp(argv[1], PARAM_1_DISPLAY)) {
 			if(!strcmp(argv[2], PARAM_DISP_WORDS_NUM)) {
 				uint8_t num = '0' + beacon_yyb_params_t.yyb_data.display_words_num;
+				ble_nus_string_send(&m_nus, &num, sizeof(num));
+				return;;
+			}
+			else if(!strcmp(argv[2], PARAM_DISP_LINE_DELAY)) {
+				uint8_t num = '0' + beacon_yyb_params_t.yyb_data.display_line_delay;
 				ble_nus_string_send(&m_nus, &num, sizeof(num));
 				return;;
 			}
