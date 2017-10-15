@@ -93,6 +93,8 @@ typedef struct
 	uint8_t       acc_int_use_x;
 	uint8_t       acc_int_use_y;
 	uint8_t       acc_int_use_z;
+	uint32_t      acc_int_ths;
+	uint8_t       acc_int_dur;
 	uint8_t       enable_nus_debug;
 	uint8_t       enable_uart_debug;
 	uint8_t       enable_uart_hwfc;        // = 0

@@ -8,6 +8,7 @@
 #include "sdk_config.h"
 #include "nrf_drv_timer.h"
 #include "uart_drv.h"
+#include "acc_drv.h"
 #include "log.h"
 
 #define DISPLAY_WORDS_CNT      4
@@ -25,9 +26,11 @@ typedef struct
 
 static display_context_t m_display_ct = {0};
 static bool display_dir = false;
+static bool display_hw_timer_running = false;
 static uint8_t display_cur_word = 0;
 static uint8_t display_repeat_cnt = 0;
 static uint8_t display_rcv_word_cnt = 0;
+static uint32_t display_acc_cnt = 0;
 static uint32_t display_cur_line = 0;
 static uint32_t display_timer_period = 0;
 static uint32_t display_hw_timer_period = 0;
@@ -467,7 +470,11 @@ uint32_t display_timer_start(void)
 {
 	uint32_t err_code = NRF_SUCCESS;
 	if(display_enable_hw_timer) {
+		if(display_hw_timer_running) {
+			return NRF_SUCCESS;
+		}
 		nrf_drv_timer_resume(&TIMER_LED);
+		display_hw_timer_running = true;
 	}
 
 /* #if ENABLE_DISPLAY_TIMER */
@@ -496,6 +503,7 @@ uint32_t display_timer_stop(void)
 	uint32_t err_code = NRF_SUCCESS;
 	if(display_enable_hw_timer) {
 		nrf_drv_timer_pause(&TIMER_LED);
+		display_hw_timer_running = false;
 	}
 
 /* #if ENABLE_DISPLAY_TIMER */
@@ -567,16 +575,16 @@ static void display_work()
 		display_one_line(tmp);
 	}
 
-	/* skip cnt timers of interrupt for line delay
-	   delay time: cnt_line_skip * display_hw_timer_period */
-	if(cnt_line_skip++ < display_line_delay) {
-		return;
-	}
-	else {
-		cnt_line_skip = 0;
-	}
+	if(cnt_line % DISPLAY_LED_NUM == 0) {
+		/* skip cnt timers of interrupt for line delay
+		   delay time: cnt_line_skip * display_hw_timer_period */
+		if(cnt_line_skip++ < display_line_delay) {
+			return;
+		}
+		else {
+			cnt_line_skip = 0;
+		}
 
-	if(++cnt_line % DISPLAY_LED_NUM == 0) {
 		/* if(cnt_line%(DISPLAY_LED_NUM << 4) == 0) { */
 			/* log_d("[DISP] l:%3d cnt:%8d, t:0x%x\n", display_cur_line, cnt_line, tmp); */
 			/* ble_printf(&wData[display_cur_line], 4); */
@@ -626,7 +634,7 @@ static void display_work()
 			}
 		}
 	}
-
+	cnt_line++;
 
 }
 
@@ -687,6 +695,26 @@ void timer_led_event_handler(nrf_timer_event_t event_type, void* p_context)
 					nrf_gpio_pin_set(LED_RGB_RED);
 			}
 #else
+#if 0
+			static uint8_t  cnt_static = 0;
+			static uint32_t cnt = 0;
+			cnt = acc_get_int_cnt();
+			if(cnt > display_acc_cnt) {
+				display_acc_cnt = cnt;
+			}
+			else if(cnt == display_acc_cnt){
+				if(cnt_static++ >= 100) {
+					cnt_static = 0;
+					for(uint8_t i=0; i<DISPLAY_LED_NUM; i++) {
+						display_turn_led_on(i, false);
+					}
+					/* display_timer_stop(); */
+					return;
+				}
+
+			}
+		log_d("[DISP] cnt:%d, display_acc_cnt:%d, static:%d.\n", cnt, display_acc_cnt, cnt_static);
+#endif
 			display_work();
 #endif
             break;
@@ -704,6 +732,7 @@ static uint32_t display_drv_timer_init(void)
     err_code = nrf_drv_timer_init(&TIMER_LED, &timer_cfg, timer_led_event_handler);
 	APP_ERROR_CHECK(err_code);
 	if(err_code == NRF_SUCCESS) {
+		display_hw_timer_running = true;
 		log_d("[DISP] %s success.\n", __func__);
 	}
 
@@ -751,7 +780,7 @@ uint32_t display_init(beacon_flash_db_t *pdata)
 	log_d("[DISP] display_enable_hw_timer:0x%x\n", display_enable_hw_timer);
 	if(display_enable_hw_timer) {
 		display_hw_timer_period = pdata->yyb_data.display_hw_timer_period;
-		if((0xffffffff == display_hw_timer_period) || (0 == display_hw_timer_period)) {
+		if((0xffffffff == display_hw_timer_period) || (30 >= display_hw_timer_period)) {
 			display_hw_timer_period = 40;
 		}
 		log_d("[DISP] display hw timer period:%d\n", display_hw_timer_period);

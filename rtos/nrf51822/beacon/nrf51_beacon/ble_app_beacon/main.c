@@ -67,6 +67,8 @@
 #define PARAM_ACC_ENABLE_X_INT          "x"
 #define PARAM_ACC_ENABLE_Y_INT          "y"
 #define PARAM_ACC_ENABLE_Z_INT          "z"
+#define PARAM_ACC_INT_DURATION          "dur"
+#define PARAM_ACC_INT_THRESHOLD         "ths"
 
 /* Button definitions */
 #define BOOTLOADER_BUTTON_PIN           BUTTON_0                                    /**< Button used to enter DFU mode. */
@@ -842,6 +844,16 @@ static void ble_nus_evt_handler(ble_nus_t * p_nus, uint8_t * p_data, uint16_t le
 					return;
 				}
 			}
+			else if(!strcmp(argv[2], PARAM_ACC_INT_THRESHOLD)) {
+				beacon_yyb_params_t.yyb_data.acc_int_ths= atoi(argv[3]);
+				yyb_params_store();
+				return;;
+			}
+			else if(!strcmp(argv[2], PARAM_ACC_INT_DURATION)) {
+				beacon_yyb_params_t.yyb_data.acc_int_dur= atoi(argv[3]);
+				yyb_params_store();
+				return;;
+			}
 		}
 	}
 	else if(!strcmp(argv[0], NUS_CMD_GET_PARAM)) {
@@ -905,6 +917,14 @@ static void ble_nus_evt_handler(ble_nus_t * p_nus, uint8_t * p_data, uint16_t le
 				else {
 					strcpy(str, "off\r\n");
 				}
+				ble_nus_string_send(&m_nus, (uint8_t *)str, sizeof(str));
+			}
+			else if(!strcmp(argv[2], PARAM_ACC_INT_THRESHOLD)) {
+				sprintf(str, "%d", beacon_yyb_params_t.yyb_data.acc_int_ths);
+				ble_nus_string_send(&m_nus, (uint8_t *)str, sizeof(str));
+			}
+			else if(!strcmp(argv[2], PARAM_ACC_INT_DURATION)) {
+				sprintf(str, "%d", beacon_yyb_params_t.yyb_data.acc_int_dur);
 				ble_nus_string_send(&m_nus, (uint8_t *)str, sizeof(str));
 			}
 		}

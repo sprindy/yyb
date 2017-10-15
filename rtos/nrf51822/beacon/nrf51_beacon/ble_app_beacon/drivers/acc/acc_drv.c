@@ -22,8 +22,16 @@ static app_gpiote_user_id_t           m_gpiote_user_id;            /**< GPIOTE u
 static uint8_t  acc_int_use_x = 0;
 static uint8_t  acc_int_use_y = 0;
 static uint8_t  acc_int_use_z = 0;
+static uint8_t  acc_int_dur = 2;
+static uint32_t acc_int_ths = 400;
+static uint32_t acc_int_cnt = 0;
 static uint8_t  acc_enable_timer = 0;
 static uint32_t acc_timer_period = 0;
+
+uint32_t acc_get_int_cnt(void)
+{
+	return acc_int_cnt;
+}
 
 uint32_t acc_timer_stop(void)
 {
@@ -162,6 +170,7 @@ static void acc_gpiote_event_handler(uint32_t event_pins_low_to_high, uint32_t e
 					printf("0x%2x %6d Y----\n", val, acc_value[1]);
 				}
 #else
+				acc_int_cnt++;
 				display_change_direction(true);
 				log_d("[ACC] 0x%2x Y++++\n", val);
 #endif
@@ -172,6 +181,10 @@ static void acc_gpiote_event_handler(uint32_t event_pins_low_to_high, uint32_t e
 			}
 		}
 		if(acc_int_use_x) {
+			/* display_timer_start(); */
+			/* acc_int_cnt++; */
+			/* printf("acc_int_cnt: %d\n", acc_int_cnt); */
+			display_change_direction(true);
 			if(val & 0x02)
 				printf("0x%2x X++++\n", val);
 			if(val & 0x01)
@@ -217,6 +230,10 @@ uint32_t acc_init(beacon_flash_db_t *pdata)
 	log_d("[ACC] %s: Y interrupt %s\n", __func__, acc_int_use_y ? "enabled":"disabled");
 	log_d("[ACC] %s: Z interrupt %s\n", __func__, acc_int_use_z ? "enabled":"disabled");
 
+	acc_int_ths = pdata->yyb_data.acc_int_ths;
+	acc_int_dur = pdata->yyb_data.acc_int_dur;
+	log_d("[ACC] threshold:%d, duration:%d\n", acc_int_ths, acc_int_dur);
+
 	//config nrf51822 spi interface
 	nrf_gpio_cfg_output(ACC_PIN_CSN);
 	nrf_gpio_cfg_output(ACC_PIN_SCK);
@@ -248,8 +265,10 @@ uint32_t acc_init(beacon_flash_db_t *pdata)
 
 	/* LIS3DH_WriteReg(LIS3DH_INT1_THS, 0x08); */
 	/* LIS3DH_WriteReg(LIS3DH_INT1_THS, 0x18); */
-	LIS3DH_WriteReg(LIS3DH_INT1_THS, 400);
-	LIS3DH_WriteReg(LIS3DH_INT1_DURATION, 0x2);
+	/* LIS3DH_WriteReg(LIS3DH_INT1_THS, 400); */
+	LIS3DH_WriteReg(LIS3DH_INT1_THS, acc_int_ths);
+	/* LIS3DH_WriteReg(LIS3DH_INT1_DURATION, 0x2); */
+	LIS3DH_WriteReg(LIS3DH_INT1_DURATION, acc_int_dur);
 	/* LIS3DH_WriteReg(LIS3DH_INT1_CFG, 0x95); //all /and interrupt */
 	/* LIS3DH_WriteReg(LIS3DH_INT1_CFG, 0x85); //no Z /and interrupt */
 	/* LIS3DH_WriteReg(LIS3DH_INT1_CFG, 0x84); //Y only /and interrupt */
