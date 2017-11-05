@@ -58,6 +58,12 @@ public class MainActivity extends Activity {
     private static final int UART_PROFILE_CONNECTED = 20;
     private static final int UART_PROFILE_DISCONNECTED = 21;
     public String TAG = "sprindy_yyb";
+//    private String SEND_DATA_INTENT = "com.sprindy.handdraw.sent_data_broadcast";
+//    private IntentFilter intentFilter;
+//    private LocalReceiver localReceiver;
+//    private LocalBroadcastManager localBroadcastManager;
+
+
     private BleController mBleController = new BleController();
     private ImageView mIVSign;
     private TextView mTVSign;
@@ -95,6 +101,7 @@ public class MainActivity extends Activity {
         emboss = new EmbossMaskFilter(new float[]{1.5f,1.5f,1.5f},0.6f,6,4.2f);
         blur = new BlurMaskFilter(8,BlurMaskFilter.Blur.NORMAL);
 
+//        localBroadcastManager = LocalBroadcastManager.getInstance(this);
 
 //        mIVSign = (ImageView) findViewById(R.id.iv_sign);
 //        mTVSign = (TextView) findViewById(R.id.tv_sign);
@@ -197,14 +204,29 @@ public class MainActivity extends Activity {
         btn_ble_send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int[] array = new int[128];
-                array = mPaintView.getFontArray();
-                writeDisplayData(array);
+//                Intent intent = new Intent(SEND_DATA_INTENT);
+//                localBroadcastManager.sendBroadcast(intent);
 
-//                writeDisplayData(mPaintView.getFontArray());
+                int[] dataArray = mPaintView.getFontArray();
+                if (mBtAdapter == null)
+                    return;
+                if (dataArray.length == 0) {
+                    Log.e(TAG, "writeDisplayData no data");
+                    return;
+                }
+                if (dataArray.length%16 !=0) {
+                    Log.e(TAG, "writeDisplayData length not 16 multiple: " + dataArray.length);
+                    return;
+                }
+                SendBleDataThread(dataArray);
 
             }
         });
+
+//        intentFilter = new IntentFilter();
+//        intentFilter.addAction(SEND_DATA_INTENT);
+//        localReceiver = new LocalReceiver();
+//        localBroadcastManager.registerReceiver(localReceiver, intentFilter);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             // Android M Permission check
@@ -214,6 +236,51 @@ public class MainActivity extends Activity {
         }
     }
 
+    /*
+    Create a new thread to send ble data
+     */
+    private void SendBleDataThread(final int[] data) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                final byte[] packageData = new byte[20];
+                //TODO 0xff will regards as -1
+                for (int i = 0; i < data.length / 16; i++) {
+                    packageData[0] = (byte) (data.length / 16);
+                    packageData[1] = (byte) i;
+                    packageData[2] = (byte) 1; //led enable
+                    packageData[3] = (byte) 0; //reserved
+                    for (int j = 0; j < 16; j++) {
+                        packageData[j + 4] = (byte) data[i * 16 + j];   //usefull display data
+                    }
+
+                    mService.writeRXCharacteristic(packageData);
+
+                    //wait for YYB receive ok
+                    try {
+                        Thread.sleep(10);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            }
+        }).start();
+    }
+
+//    class LocalReceiver extends BroadcastReceiver {
+//
+//        @Override
+//        public void onReceive(Context context, Intent intent) {
+//
+////            writeDisplayData(mPaintView.getFontArray());
+//
+//            Toast.makeText(context, "sprindy received local broadcast", Toast.LENGTH_SHORT).show();
+//
+//        }
+//
+//    }
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
@@ -362,48 +429,6 @@ public class MainActivity extends Activity {
 //        }
 //    }
 
-    // the device will reboot when receive too fast
-    public void delay() {
-        for (int j = 0; j < 0xffff; j++) {
-            for (int k = 0; k < 50; k++) {
-                ;
-            }
-        }
-    }
-
-    public boolean writeDisplayData(int[] data) {
-        if (mBtAdapter == null)
-            return false;
-        if (data.length == 0) {
-            Log.d(TAG, "writeDisplayData no data");
-            return false;
-        }
-        if (data.length%16 !=0) {
-            Log.d(TAG, "writeDisplayData length not 16 multiple: " + data.length);
-            return false;
-        }
-
-        if (true) {
-            final byte[] packageData = new byte[20];
-            //TODO 0xff will regards as -1
-            for (int i=0; i<data.length/16; i++) {
-                packageData[0] = (byte) (data.length/16);
-                packageData[1] = (byte) i;
-                packageData[2] = (byte) 1; //led enable
-                packageData[3] = (byte) 0; //reserved
-                for (int j = 0; j < 16; j++) {
-                    packageData[j+4] = (byte) data[i*16 + j];   //usefull display data
-                }
-
-                mService.writeRXCharacteristic(packageData);
-                Log.d(TAG, "writeDisplayData " + i);
-                delay();
-            }
-            return true;
-        }
-        return false;
-    }
-
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -543,4 +568,5 @@ public class MainActivity extends Activity {
                     .show();
         }
     }
+
 }

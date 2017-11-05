@@ -20,7 +20,8 @@ public class PaintView extends View {
     private Bitmap mBitmap;
     private Canvas mCanvas;
 //    private BleController bleController;
-
+    private int TOTAL_COUNT_X = 32 * 2;
+    private int TOTAL_COUNT_Y = 32;
     private int screenWidth, screenHeight;
     private float currentX, currentY;
 
@@ -192,9 +193,9 @@ public class PaintView extends View {
                         | paintArray[i][8*j +1] << 6
                         | paintArray[i][8*j +2] << 5
                         | paintArray[i][8*j +3] << 4
-                        | paintArray[i][8*j +4]  << 3
+                        | paintArray[i][8*j +4] << 3
                         | paintArray[i][8*j +5] << 2
-                        | paintArray[i][8*j +6]  << 1
+                        | paintArray[i][8*j +6] << 1
                         | paintArray[i][8*j +7]);
             }
         }
